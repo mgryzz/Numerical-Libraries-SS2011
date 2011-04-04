@@ -1,0 +1,16 @@
+# Ignore all temporary Latex files
+*.aux
+*.dvi
+*.log
+*.nav
+*.out
+*.ps
+*.snm
+*.tex~
+*.toc
+*.bbl
+*.blg
+
+# If needed, also ignore PDF documents (for use in Latex-Folders only)
+*.pdf
+
