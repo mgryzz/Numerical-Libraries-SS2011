@@ -1,0 +1,158 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage[german]{babel}
+\usepackage{amssymb}
+\usepackage{amsxtra}
+\usepackage[dvips]{epsfig,psfrag}
+\usepackage{listings}
+
+\newcommand{\refchapter}[1]{Kapitel~\ref{#1}}
+\newcommand{\refsec}[1]{Sektion~\ref{#1}}
+\newcommand{\refeqn}[1]{Gleichung~(\ref{#1})}
+\newcommand{\reffig}[1]{Abbildung~\ref{#1}}
+
+\title{
+{\bf \scriptsize RHEINISCH-WESTF\"ALISCHE TECHNISCHE HOCHSCHULE AACHEN \\
+LuFG Informatik 12 (Prof. Dr. rer. nat. Uwe Naumann)}
+\vspace{.5cm} \\
+\epsfig{file=figures/STCE_Logo_WWW.eps,width=.7\textwidth}
+\vspace{1cm} \\
+{\bf \Large Mustertitel} \\
+{\large Seminararbeit} 
+}
+
+\author{vorgelegt von Uschi Musterfrau (Matr.-Nr. 0815)}
+
+\begin{document}
+
+\lstloadlanguages{[ISO]C++}
+\lstset{basicstyle=\small, numbers=left, numberstyle=\footnotesize,
+  stepnumber=1, numbersep=5pt, breaklines=true, escapeinside={/*@}{@*/}}
+
+
+\pagestyle{headings}
+
+\maketitle
+\newpage
+
+\section*{Erkl\"arung}
+
+Hiermit versichere ich, dass ich die Arbeit selbst\"andig verfasst und keine
+anderen als die angegebenen Quellen und Hilfsmittel benutzt sowie Zitate 
+kenntlich gemacht habe. \\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+Uschi Musterfrau \\
+\\
+Ort, Datum.
+
+\newpage
+\section*{Danksagung}
+
+{\em an Mamma, Papa, Freund(in), Betreuer(in), Hund, ... (falls zutreffend)}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{In die Breite gehend ...}
+\label{ch:2}
+
+{\em Titel anpassen}
+
+
+\subsection{Aufgabenstellung und Struktur des Dokuments}
+\label{sec:2.0}
+
+\subsection{Grundlagen}
+\label{sec:2.1}
+
+\subsection{Stand von Forschung und Entwicklung}
+\label{sec:2.2}
+
+{\em Referenzen auf relevante Literatur (z.B. \cite{Ries1522Rad})}
+
+\section{In die Tiefe gehend ...}
+\label{ch:3}
+
+{\em Titel anpassen}
+
+\subsection{Theoetische Resultate}
+\label{sec:3.1}
+
+\subsection{Implementierung}
+\label{sec:3.2}
+
+\subsection{Anwendung}
+\label{sec:3.3}
+
+\section{Fazit}
+\label{ch:4}
+
+\subsection{Zusammenfassung}
+\label{sec:4.1}
+
+\subsection{Diskussion}
+\label{sec:4.2}
+
+\subsection{Ausblick}
+\label{sec:4.3}
+
+\nocite{}
+\bibliographystyle{plain}
+\bibliography{report}
+
+\newpage
+\appendix
+
+\section{Benutzerdokumentation}
+\label{app1}
+
+{\em wohlstrukturierte und gut lesbare Dokumentation der entwickelten Software aus Nutzersicht (falls zutreffend)}
+
+\section{Entwicklerdokumentation}
+\label{app2}
+
+{\em wohlstrukturierte und gut lesbare Dokumentation der Software aus 
+Entwicklersicht; zahlreiche Referenzen in den
+Quellcode in \refchapter{app4}} (falls zutreffend) \\
+\\
+Die Signatur der Funktion {\tt bar} finden Sie in Zeile~\ref{zn_bar} des Quellcodes~\ref{klasse1.1.hpp} in \refsec{ssec:6.1.1}.
+
+\section{Fallstudien}
+\label{app3}
+
+{\em dokumentierte zus\"atzliche Beispielanwendungen der entwickelten Software}
+
+\section{Quellcode}
+\label{app4}
+
+{\em einfach referenzierbare Version des Quelltexts} 
+
+\subsection{Paket 1}
+\label{sec:6.1}
+
+\subsubsection{Klasse 1.1}
+\label{ssec:6.1.1}
+
+\begin{lstlisting}[caption=Dokumentierter Quellcode in {\tt klasse1.1.hpp},label=klasse1.1.hpp]
+class foo {
+  public:
+    int bar(const float& f); /*@\label{zn_bar}@*/
+}
+\end{lstlisting}
+
+\subsubsection{Klasse 1.2}
+
+\subsection{Paket 2}
+
+\subsection{Paket 3}
+
+\end{document}
+
