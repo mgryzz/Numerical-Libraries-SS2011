@@ -10,6 +10,7 @@
 *.toc
 *.bbl
 *.blg
+*.backup
 
 # If needed, also ignore PDF documents (for use in Latex-Folders only)
 *.pdf
