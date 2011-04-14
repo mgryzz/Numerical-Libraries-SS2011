@@ -1,7 +1,10 @@
 \documentclass{beamer}
 \usetheme{STCE}
 \usepackage{beamerfoils}
+\usepackage{listings}
 
+% Setze Codesprache auf C
+\lstset{language=C}
 
 \MyLogo{
 \centering
@@ -72,7 +75,11 @@
 \begin{frame}
  \frametitle{Regressions Beispiel}
 
- An animation, which shows regression graphically
+ \centering
+  \only<1>{\includegraphics[width=10cm]{./figures/ad-plot-1.eps}}%
+  \only<2>{\includegraphics[width=10cm]{./figures/ad-plot-2.eps}}%
+  \only<3>{\includegraphics[width=10cm]{./figures/ad-plot-3.eps}}%
+
 \end{frame}
 
 \begin{frame}
@@ -97,9 +104,28 @@
 \end{frame}
 
 \begin{frame}
- \frametitle{NAG Funktionen}
+ \frametitle{Einige NAG Regressions Funktionen}
+ \begin{itemize}
+  \item Einfache Lineare Regression: \hfill \lstinline{nag\_simple\_linear\_regression}
+  \item \alert<2>{Multiple Lineare Regression: \hfill \lstinline{nag\_regsn\_mult\_linear}}
+    \begin{itemize}
+     \item Mehrere unabh\"angige Variablen
+    \end{itemize}
+  \item \alert<2>{Robuste Regression: \hfill \lstinline{nag\_robust\_m\_regsn\_user\_fn}}
+    \begin{itemize}
+     \item Weniger Einflu\ss~ von einzelnen Ausrei\ss ern
+    \end{itemize}
+  \item Allgemeinere Regression: \hfill \lstinline{nag\_glm\_normal}
+    \begin{itemize}
+     \item Mehr Flexibilit\"at f\"ur den Benutzer
+    \end{itemize}
+  \item Ridge Regression \hfill \lstinline{nag\_regsn\_ridge\_opt}
+    \begin{itemize}
+      \item Wenn Regressoren correliert sind
+    \end{itemize}
 
- Give some functions names with their functionality 
+ \end{itemize}
+
 \end{frame}
 
 
