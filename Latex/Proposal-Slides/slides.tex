@@ -39,6 +39,13 @@
    \item Wie h\"angen bestimmte Merkmale mit Krankheiten zusammen?
   \end{itemize}
 
+\item Sozialwissenschaften
+  \begin{itemize}
+   \item Wie wirken sich demograpische Merkmale aus?
+  \end{itemize}
+
+\item ...
+
  \end{itemize}
 
 \end{frame}
@@ -48,15 +55,118 @@
 \section{Korrelation}
 
 \begin{frame}
- \frametitle{Korrelation 1}
+	
+	\frametitle{Korrelation}
+	
+	\begin{itemize}
+		
+		\item bi-/multivariate Statistik
+		\begin{itemize}
+			\item gleichzeitige Analyse zweier bzw. mehrerer Merkmale statistischer Objekte (z.B. Personen)
+			\item Merkmal $X$ mit Merkmalsauspr\"agungen $x_1, x_2, ..., x_m$ sowie Merkmal $Y$ mit Merkmalsauspr\"agungen $y_1, y_2, ..., y_n$ (z.B. K\"orpergr\"o\ss e und Gewicht von Personen)
+		\end{itemize}
+		
+		\item Streudiagramm
+		\begin{itemize}
+			\item graphische Darstellung aller auftretenden Merkmalspaare $(x_i,y_j)$ als Punkte im zweidimensionalen Koordinatensystem
+		\end{itemize}
+
+		\item Korrelation
+		\begin{itemize}
+			\item St\"arke des Zusammenhangs von Merkmalen
+			\item mit Hilfe verschiedener Korrelationskoeffizienten messbar
+		\end{itemize}
+		
+	\end{itemize}
+	
 \end{frame}
 
 \begin{frame}
- \frametitle{Korrelation 2}
+	
+	\frametitle{Korrelationskoeffizienten}
+	
+	\begin{itemize}
+		
+		\item Korrelationskoeffizient nach Bravais und Pearson
+		\begin{itemize}
+			\item misst linearen Zusammenhang von Merkmalen
+			\item f\"ur mind. intervallskalierte Merkmale
+		\end{itemize}
+		
+		\item Rangkorrelationskoeffizienten 
+		\begin{itemize}
+			\item messen monotonen Zusammenhang von Merkmalen
+			\item f\"ur mind. ordinalskalierte Merkmale
+			\item Umwandlung der Merkmalsauspr\"agungen in R\"ange
+			\item nach Spearman (Spearmans Rho)
+			\begin{itemize}
+				\item genaue Berechnung der Rangdifferenzen
+			\end{itemize}
+			\item nach Kendall (Kendalls Tau)
+			\begin{itemize}
+				\item einfache Anordnung der R\"ange
+			\end{itemize}
+		\end{itemize}
+
+		\item f\"ur Korrelationskoeffizienten $r$ gilt allgemein $-1 \leq r \leq +1$
+				
+	\end{itemize}
+	
 \end{frame}
 
 \begin{frame}
- \frametitle{Korrelation 3}
+	
+	\frametitle{Beispiele}
+	
+	\centering
+ 		\only<1>{\includegraphics[width=10cm]{./figures/streudiagramme.png}}%
+	
+\end{frame}
+
+\begin{frame}
+	
+	\frametitle{Partielle Korrelation}
+	
+	\begin{itemize}
+		
+		\item Korrelation ist kein Beleg f\"ur kausalen Zusammenhang
+		
+		\item Scheinkorrelation
+		\begin{itemize}
+			\item scheinbare Korrelation zwischen Merkmalen $X$ und $Y$ (z.B. K\"orpergr\"o\ss e und Wortschatz von Kindern) kann unter Umst\"anden auf Einfluss eines zus\"atzlichen Merkmals $Z$ (z.B. Alter) zur\"uckgef\"uhrt werden
+		\end{itemize}
+		
+		\item \"Uberpr\"ufung durch partielle Korrelation
+		
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+
+	\frametitle{Einige NAG-Funktionen zur Korrelation}
+ 
+	\begin{itemize}
+
+		\item Korrelationskoeffizient nach Bravais und Pearson: \hfill \lstinline{nag\_corr\_cov}
+		\begin{itemize}
+			\item berechnet Korrelationsmatrix
+		\end{itemize}
+		
+		\item Rangkorrelationskoeffizienten: \hfill \lstinline{nag\_ken\_spe\_corr\_coeff}
+
+		\item Partielle Korrelation: \hfill \lstinline{nag\_partial\_corr}
+		\begin{itemize}
+			\item verwendet Korrelationsmatrix von nag\_corr\_cov
+		\end{itemize}
+		
+		\item Robuste Korrelation: \hfill \lstinline{nag\_robust\_corr\_estim}
+		\begin{itemize}
+			\item reduziert den Einfluss von "Ausrei\ss ern"
+		\end{itemize}
+
+	\end{itemize}
+
 \end{frame}
 
 %%%%% Regressions Analyse %%%%%
@@ -129,14 +239,25 @@
 \end{frame}
 
 
-%%%%% Alternative Bibliotheken %%%%%
-\section{Alternative Bibliotheken}
+%%%%% Alternativen %%%%%
+\section{Alternativen}
 
 \begin{frame}
+ \frametitle{Alternativen}
  \begin{itemize}
-  \item GSL
-  \item IMSL
-  \item R Project
+  \item GSL (GNU Scientific Library)
+   \begin{itemize}
+    \item numerische Bibliothek f\"ur C und  C++
+    \item frei unter GNU-Lizenz erh\"altlich
+   \end{itemize}
+  \item IMSL (International Mathematics and Statistics Library)
+   \begin{itemize}
+    \item kommerzielle numerische Bibliothek f\"ur Fortran, C, C\#.NET, Java und Python
+   \end{itemize}
+  \item R Project for Statistical Computing
+  \begin{itemize}
+    \item freie Software zur statischen Berechnung und Darstellung
+   \end{itemize}
  \end{itemize}
 
 \end{frame}
@@ -166,7 +287,7 @@
 \section{Zusammenfassung}
 
 \begin{frame}
- \frametitle{Zusamenfassung}
+ \frametitle{Zusammenfassung}
  
  \begin{block}{Korrelation...}
   \begin{itemize}
