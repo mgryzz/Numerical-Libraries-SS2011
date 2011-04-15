@@ -39,6 +39,12 @@
    \item Wie h\"angen bestimmte Merkmale mit Krankheiten zusammen?
   \end{itemize}
 
+  \item Sozialwissenschaften
+  \begin{itemize}
+   \item Kann von der H\"ohe des Einkommens auf den Besitz eines Autos geschlossen werden?
+  \end{itemize}
+
+
  \end{itemize}
 
 \end{frame}
@@ -63,17 +69,64 @@
 \section{Regressions Analyse}
 
 \begin{frame}
- \frametitle{Regressions Analyse}
+ \frametitle{Regression}
  
+ \begin{block}{Ziel}
+  Darstellung des Verh\"altnisses zwischen zwei Variablen als Funktion:\\
+  \centering $Y = a + bX + \epsilon$
+ \end{block}
+
 
  \begin{itemize}
-  \item 
+  \item Grundlage: Beobachtete Messreihe $(x_1, y_1), \dots, (x_n, y_n)$
  \end{itemize}
+
+ \pause
+
+ \begin{block}{Methode der kleinsten Quadrate}
+  \centering
+  \only<1-2>{$Q(f) = \sum\limits_{i=1}^{n} (y_i - f(x_i))^2 = \sum\limits_{i=1}^{n} \epsilon_i^2 \rightarrow min$}
+  \only<3->{$Q($\alert{$a, b$}$) = \sum\limits_{i=1}^{n} (y_i - $\alert{$(a + bx_i)$}$)^2 = \sum\limits_{i=1}^{n} \epsilon_i^2 \rightarrow min$}\\
+  \only<4>{$\widehat{a} = \overline{y} - \widehat{b} \overline{x}$\\~\\}
+  \only<4>{$\widehat{b} = \frac{\frac{1}{n} \sum\limits^n_{i=1} x_i y_i - \overline{x} \cdot \overline{y}}{\frac{1}{n} \sum\limits^n_{i=1} x_i^2 - \overline{x}^2}$}
+  %\only<4>{$\widehat{b} = \frac{\frac{1}{n} \sum\limits^n__{i=1} x_i y_i - \overline{x} \cdot \overline{y}}{\frac{1}{n} \sum\limits^n_{i=1} x_i^2 - \overline{x}^2}$}
+ \end{block}
+
+ 
+
 
 \end{frame}
 
 \begin{frame}
- \frametitle{Regressions Beispiel}
+ \frametitle{Regressionsbeispiel 1}
+
+ \begin{itemize}
+  \item Eine Firma hat in den letzten Monaten mehrere Werbungskampagnen mit unterschiedlichem Aufwand durchgef\"uhrt.
+  \begin{itemize}
+   \item Steigt der Umsatz mit h\"oherem Aufwand?
+   \item Wieviel Werbung ist f\"ur ein Umsatzziel n\"otig?
+  \end{itemize}
+
+ \end{itemize}
+
+ \pause
+  
+ \begin{figure}
+    \begin{tabular}{ccccccc}
+      \hline
+      Monat	& 1	& 2	& 3	& 4	& 5	& 6	\\
+      \hline
+      Kosten	& 23	& 15	& 43	& 45	& 30	& 51	\\
+      Umsatz	& 2,3	& 1,1	& 2,7	& 2,9	& 2,1	& 3,3	\\ 
+      \hline
+    \end{tabular}
+    \caption{Kosten und Umsatz der bisherigen Kampagnen.}
+ \end{figure} 
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Regressionsbeispiel 2}
 
  \centering
   \only<1>{\includegraphics[width=10cm]{./figures/ad-plot-1.eps}}%
