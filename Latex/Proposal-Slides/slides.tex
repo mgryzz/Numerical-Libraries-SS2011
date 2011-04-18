@@ -24,6 +24,29 @@
  \tableofcontents
 \end{frame}
 
+%%%%% Alternativen %%%%%
+\section{Alternativen}
+
+\begin{frame}
+ \frametitle{Alternativen}
+ \begin{itemize}
+  \item GSL (GNU Scientific Library)
+   \begin{itemize}
+    \item numerische Bibliothek f\"ur C und  C++
+    \item frei unter GNU-Lizenz erh\"altlich
+   \end{itemize}
+  \item IMSL (International Mathematics and Statistics Library)
+   \begin{itemize}
+    \item kommerzielle numerische Bibliothek f\"ur Fortran, C, C\#.NET, Java und Python
+   \end{itemize}
+  \item R Project for Statistical Computing
+  \begin{itemize}
+    \item freie Software zur statischen Berechnung und Darstellung
+   \end{itemize}
+ \end{itemize}
+
+\end{frame}
+
 %%%%% Anwendungsbereiche %%%%%
 \begin{frame}
  \frametitle{Anwendungsbereiche}
@@ -48,7 +71,6 @@
  \end{itemize}
 
 \end{frame}
-
 
 %%%%% Korrelation %%%%%
 \section{Korrelation}
@@ -118,7 +140,7 @@
 	\frametitle{Beispiele}
 	
 	\centering
- 		\only<1>{\includegraphics[width=10cm]{./figures/streudiagramme.png}}%
+ 		\only<1>{\includegraphics[width=10cm]{./figures/streudiagramme.eps}}%
 	
 \end{frame}
 
@@ -147,14 +169,14 @@
  
 	\begin{itemize}
 
-		\item Korrelationskoeffizient nach Bravais und Pearson: \hfill \lstinline{nag\_corr\_cov}
+		\item \alert<2>{Korrelationskoeffizient nach Bravais und Pearson: \hfill \lstinline{nag\_corr\_cov}}
 		\begin{itemize}
 			\item berechnet Korrelationsmatrix
 		\end{itemize}
 		
-		\item Rangkorrelationskoeffizienten: \hfill \lstinline{nag\_ken\_spe\_corr\_coeff}
+		\item \alert<2>{Rangkorrelationskoeffizienten: \hfill \lstinline{nag\_ken\_spe\_corr\_coeff}}
 
-		\item Partielle Korrelation: \hfill \lstinline{nag\_partial\_corr}
+		\item \alert<2>{Partielle Korrelation: \hfill \lstinline{nag\_partial\_corr}}
 		\begin{itemize}
 			\item verwendet Korrelationsmatrix von nag\_corr\_cov
 		\end{itemize}
@@ -189,7 +211,7 @@
  \begin{block}{Methode der kleinsten Quadrate}
   \centering
   \only<1-2>{$Q(f) = \sum\limits_{i=1}^{n} (y_i - f(x_i))^2 = \sum\limits_{i=1}^{n} \epsilon_i^2 \rightarrow min$}
-  \only<3->{$Q($\alert{$a, b$}$) = \sum\limits_{i=1}^{n} (y_i - $\alert{$(a + bx_i)$}$)^2 = \sum\limits_{i=1}^{n} \epsilon_i^2 \rightarrow min$}\\
+  \only<3->{$Q($\alert<3>{$a, b$}$) = \sum\limits_{i=1}^{n} (y_i - $\alert<3>{$(a + bx_i)$}$)^2 = \sum\limits_{i=1}^{n} \epsilon_i^2 \rightarrow min$}\\
   \only<4>{$\widehat{a} = \overline{y} - \widehat{b} \overline{x}$\\~\\}
   \only<4>{$\widehat{b} = \frac{\frac{1}{n} \sum\limits^n_{i=1} x_i y_i - \overline{x} \cdot \overline{y}}{\frac{1}{n} \sum\limits^n_{i=1} x_i^2 - \overline{x}^2}$}
   %\only<4>{$\widehat{b} = \frac{\frac{1}{n} \sum\limits^n__{i=1} x_i y_i - \overline{x} \cdot \overline{y}}{\frac{1}{n} \sum\limits^n_{i=1} x_i^2 - \overline{x}^2}$}
@@ -241,7 +263,7 @@
 \begin{frame}
  \frametitle{Analyse}
  \begin{itemize}
-  \item Mögliche Probleme:
+  \item M\"ogliche Probleme:
   \begin{itemize}
    \item Die Variablen k\"onnten unkorreliert sein
    \item Oft reicht lineare Regression nicht aus
@@ -262,7 +284,7 @@
 \begin{frame}
  \frametitle{Einige NAG Regressions Funktionen}
  \begin{itemize}
-  \item Einfache Lineare Regression: \hfill \lstinline{nag\_simple\_linear\_regression}
+  \item \alert<2>{Einfache Lineare Regression: \hfill \lstinline{nag\_simple\_linear\_regression}}	
   \item \alert<2>{Multiple Lineare Regression: \hfill \lstinline{nag\_regsn\_mult\_linear}}
     \begin{itemize}
      \item Mehrere unabh\"angige Variablen
@@ -280,30 +302,6 @@
       \item Wenn Regressoren correliert sind
     \end{itemize}
 
- \end{itemize}
-
-\end{frame}
-
-
-%%%%% Alternativen %%%%%
-\section{Alternativen}
-
-\begin{frame}
- \frametitle{Alternativen}
- \begin{itemize}
-  \item GSL (GNU Scientific Library)
-   \begin{itemize}
-    \item numerische Bibliothek f\"ur C und  C++
-    \item frei unter GNU-Lizenz erh\"altlich
-   \end{itemize}
-  \item IMSL (International Mathematics and Statistics Library)
-   \begin{itemize}
-    \item kommerzielle numerische Bibliothek f\"ur Fortran, C, C\#.NET, Java und Python
-   \end{itemize}
-  \item R Project for Statistical Computing
-  \begin{itemize}
-    \item freie Software zur statischen Berechnung und Darstellung
-   \end{itemize}
  \end{itemize}
 
 \end{frame}
@@ -337,19 +335,17 @@
  
  \begin{block}{Korrelation...}
   \begin{itemize}
-   \item kann benutzt werden um Verh\"altnisse zwischen statistischen Variablen zu bestimmen
+   \item kann benutzt werden um Zusammenh\"ange zwischen Merkmalen zu bestimmen.
+   \item Bravis-Pearson Koeffizient, Rangkorrelationskoeffizient, partielle Korrelation
   \end{itemize}
  \end{block}
 
  \begin{block}{Regressions Analyse...}
   \begin{itemize}
    \item berechnet eine Funktion, die das Verh\"altnis einer abh\"angigen Variable zu einer oder mehr unabh\"angigen beschreibt.
+   \item Einfache Regression, Multiple Regression, Robuste Regression
   \end{itemize}
  \end{block}
-
- \begin{itemize}
-  \item NAG Library ROCKT!
- \end{itemize}
 
 \end{frame}
 
