@@ -67,6 +67,10 @@
    \item Kann von der H\"ohe des Einkommens auf den Besitz eines Autos geschlossen werden?
   \end{itemize}
 
+  \item Psychologie
+  \begin{itemize}
+   \item Wie wirkt sich h\"aufiges Fernsehen bei Kindern auf das Schlafverhalten aus?
+  \end{itemize}
 
  \end{itemize}
 
@@ -262,22 +266,59 @@
 
 \begin{frame}
  \frametitle{Analyse}
- \begin{itemize}
-  \item M\"ogliche Probleme:
-  \begin{itemize}
-   \item Die Variablen k\"onnten unkorreliert sein
-   \item Oft reicht lineare Regression nicht aus
-  \end{itemize}
 
-  \item Fehlererkennung
+ \begin{itemize}
+
+  \item Modellauswahl
   \begin{itemize}
-   \item Korrelationskoeffizient
-   \item T-Tests
-   \item F-Tests
-   \item Varianzen
+   \item Residualstreuung 
+   \begin{itemize}
+    \item Verändert sich die Streuung mit einer Gr\"o\ss e?
+   \end{itemize}
+   \item Bestimmtheitsma\ss~ $\mathcal{R}^2$
+   \begin{itemize}
+    \item Quadratischer Bravis-Pearson Korrelationskoeffizient.
+   \end{itemize}
+  \end{itemize}
+  ~\\
+  \pause
+  \item Modellvalidierung
+  \begin{itemize}
+   \item Cooks-Abstand
+   \begin{itemize}
+    \item Ermittlung von Ausrei\ss ern und einflussreichen Punkten.
+   \end{itemize}
+   \item T-Statistik
+   \begin{itemize}
+    \item Ist eine unabh\"angigen Variable \"uberhaupt von Bedeutung?
+   \end{itemize}
+   \item Durbin-Watson-Test
+   \begin{itemize}
+    \item Ermittelt, ob die Residuen unabhängig sind.
+   \end{itemize}
+
+
   \end{itemize}
 
  \end{itemize}
+
+
+% \begin{itemize}
+%  \item M\"ogliche Probleme:
+%  \begin{itemize}
+%   \item Die Variablen k\"onnten unkorreliert sein
+%   \item Oft reicht lineare Regression nicht aus
+%  \end{itemize}
+%
+%  \item Fehlererkennung
+%  \begin{itemize}
+%   \item Korrelationskoeffizient
+%   \item T-Tests
+%   \item F-Tests
+%   \item Varianzen
+%  \end{itemize}
+%
+% \end{itemize}
 
 \end{frame}
 
