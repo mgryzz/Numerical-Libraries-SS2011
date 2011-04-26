@@ -27,7 +27,7 @@ LuFG Informatik 12 (Prof. Dr. rer. nat. Uwe Naumann)}
 {\large Proposal} 
 }
 
-\author{vorgelegt von Patrick Neidig (Matr.-Nr. ??????)\\
+\author{vorgelegt von Patrick Neidig (Matr.-Nr. 272582)\\
 	und Marius Grysla (Matr.-Nr. 274047)}
 
 \begin{document}
@@ -49,9 +49,50 @@ LuFG Informatik 12 (Prof. Dr. rer. nat. Uwe Naumann)}
 \section{Einleitung}
 Wer behandelt welches Thema?
 
+Im Rahmen dieser Arbeit werden wir uns mit den Funktionen beschäftigen, welche die {\it NAG C Library}, eine Sammlung numerischer Algorithmen der {\it Numerical Algorithms Group} für die Programmiersprache {\it C}/{\it C++}, ihren Anwendern zur {\it Korrelation} und zur {\it Regressionsanalyse} zur Verfügung stellt.\\
+Die Begriffe "`Korrelation"' und "`Regressionsanalyse"' sind der {\it deskriptiven Statistik} zuzuordnen, welche sich mit der Beschreibung und Darstellung von Daten befasst, die zuvor durch Erhebungen (z.B. Befragungen) oder Experimente gewonnen wurden.\\
+Ein Beispiel für eine Erhebung wäre etwa die Studentische Lehrveranstaltungsbewertung, die an der {\it RWTH Aachen} regelmäßig durchgeführt wird. Die bei Erhebungen und Experimenten gewonnenen Daten umfassen {\it Merkmale} bestimmter {\it Merkmalsträger}: In unserem Beispiel wären die Merkmalsträger unter anderem die Studenten, die an der jeweiligen Erhebung teilnehmen, da sie zu mehreren persönlichen Merkmale befragt werden -- nämlich zu ihrem Geschlecht, ihrem Fachsemester und ihrer Nationalität. Weitere Merkmalsträger sind selbstverständlich die Lehrveranstaltung, der Dozent sowie die Rahmenbedingungen, deren unterschiedliche Merkmale von den Studenten bewertet werden. Die einzelnen Merkmale können verschiedene {\it Merkmalsausprägungen} annehmen: Das Merkmal "`Fachsemester"' eines Studenten kann bspw. die Ausprägungen "`1-2"', "`3-4"', ..., "`9-10"' oder "`über 10"' annehmen. Die Merkmale der Lehrveranstaltung und des Dozenten können von den Studenten überwiegend auf einer fünfstufigen Skala von "`trifft völlig zu"' bis "`trifft nicht zu"' oder mit Noten von "`sehr gut"' bis "`mangelhaft"' bewertet werden, wodurch sie eben diese möglichen Ausprägungen erhalten.\\
+Im Anschluss an eine Erhebung oder ein Experiment lässt sich  der jeweils gewonnene Datensatz wie bereits erwähnt mit Hilfe der deskriptiven Statistik auf unterschiedliche Art und Weise beschreiben und darstellen. Eine Möglichkeit ist es, ein einzelnes Merkmal zu betrachten und z.B. den Mittelwert der Noten zu berechnen, welche die Studenten der Lehrveranstaltung gegeben haben. Dies ist das Feld der {\it univariaten Statistik}. Eine weitere Möglichkeit ist es, zwei oder mehrere Merkmale gleichzeitig zu betrachten, um sie auf eventuelle Zusammenhänge zu prüfen. Es wäre bspw. denkbar, dass das Merkmal "Fachsemester" eines Studenten und seine Bewertung des Merkmals "Schwierigkeitsgrad" der Lehrveranstaltung auf gewisse Weise zusammenhängen, was wichtig für die Interpretation des letzteren Merkmals wäre. Dies ist das Feld der {\it bi-} bzw. {\it multivariaten Statistik}. Hier sind schließlich auch die Korrelation und die Regressionsanalyse einzuordnen, welche sich beide mit der Beschreibung zweier oder mehrerer Merkmale und ihres Zusammenhangs beschäftigen. Wir werden uns in dieser Arbeit hauptsächlich auf die gleichzeitige Betrachtung zweier Merkmale beschränken, da eine Verallgemeinerung auf mehrere Merkmale ihren Rahmen sprengen würde.
+
 \subsection{Motivation}
 
+Es ist natürlich nicht nur im Rahmen der Studentischen Lehrveranstaltungsbewertung an der RWTH Aachen interessant, die möglichen Zusammenhänge von Merkmalen festzustellen. Die Anwendungsbereiche der Korrelation und der Regressionanalyse erstrecken sich von der Wirtschaft (Wie wirken sich Werbemaßnahmen auf die Verkaufszahlen eines Produkts aus?) über die Medizin (Durch welche genetischen Veranlagungen wird eine Krankheit begünstigt?) bis hin zu Sozial- und Naturwissenschaften, um nur einige Beispiele zu nennen. Auf Grund der vielfachen Anwendung ist es wünschenswert und oft sogar nötig (etwa bei sehr großen Datensätzen), solche statistischen Berechnungen automatisiert ausführen zu lassen. Die {\it NAG C Library} ist dabei ein wichtiges Hilfsmittel, stellt sie doch viele der nötigen Funktionen bereits in fertiger Form zur Verfügung, so dass sie in beliebige Anwendungsprogramme integriert werden können -- vorausgesetzt, sie wurden in{\it C}/{\it C++} oder einer anderen unterstützten Programmiersprache geschrieben.
+
 \section{Korrelation}
+
+Der Begriff {\it Korrelation} bezeichnet einen Zusammenhang zwischen zwei oder mehreren Merkmalen. Man sagt auch, dass diese Merkmale {\it korrelieren}. Wie stark dieser Zusammenhang ist, lässt sich messen, indem man verschiedene sog. {\it Korrelationskoeffizienten} berechnet. Im Folgenden werden wir zwei dieser Korrelationskoeffizienten vorstellen und im weiteren Verlauf der Arbeit näher untersuchen, wie ihre Berechnung in den entsprechenden Funktionen der {\it NAG C Library} implementiert ist.
+
+\subsection{Korrelationskoeffizient nach Bravais und Pearson}
+
+Der Korrelationskoeffizient $r$ nach Bravais und Pearson (auch {\it empirischer Korrelationskoeffizient} oder {\it Produkt-Moment-Korrelation} genannt) misst die Stärke des \underline{linearen} Zusammenhangs zweier Merkmale $X$ und $Y$ mit den Merkmalsausprägungen $x_1,x_2,...,x_n$ bzw. $y_1,y_2,...,y_n$ und ist definiert als
+\begin{equation*}
+    r=\dfrac{s_{XY}}{s_Xs_Y}=\dfrac{\sum_{i=1}^{n}{(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum_{i=1}^{n}{(x_i-\bar{x})^2\sum_{i=1}^{n}{(y_i-\bar{y})^2}}}},\\
+\end{equation*}
+wobei $s_{XY}\) für die {\it Kovarianz} der Merkmale $X\) und $Y$ steht sowie $s_{X}$ bzw.  $s_{Y}$ für ihre jeweiligen {\it Standardabweichungen}. Dabei ist zusätzlich anzumerken, dass beide Merkmale mindestens in {\it intervallskalierter} Form vorliegen müssen, d.h. alle möglichen Merkmalsausprägungen müssen als Zahlen interpretierbar sein, deren Abstände genau messbar sind.\\
+Der Wertebereich von $r$ ist $-1 \leq r \leq +1$. Der für zwei Merkmale berechnete Wert von $r$ ist folgendermaßen zu interpretieren:
+\begin{itemize}
+    \item $r>0$: Positive Korrelation: Es besteht ein gleichsinniger linearer Zusammenhang zwischen den Merkmalen, d.h. alle Paare $(x_i, y_i)$ mit $i=1,...,n$ der Merkmalsausprägungen bilden annähernd eine Gerade mit positiver Steigung.
+    \item $r<0$: Negative Korrelation: Es besteht ein gegensinniger linearer Zusammenhang zwischen den Merkmalen, d.h. alle Paare bilden annähernd eine Gerade mit negativer Steigung.
+    \item $r=0$: Keine Korrelation: Es besteht kein linearer Zusammenhang und somit keine Korrelation zwischen den Merkmalen.
+\end{itemize}
+In der {\it NAG C Library} dient die Funktion nag\_corr\_cov zur Berechnung dieses Korrelationskoeffizienten.\\
+Liegen die Merkmale, deren Korrelationsstärke gemessen werden soll, nur in {\it ordinalskalierter} Form vor, d.h. sind alle möglichen Merkmalsausprägungen lediglich nach einer Reihenfolge sortierte Kategorien, kann auf den folgenden Korrelationskoeffizienten zurückgegriffen werden.
+
+\subsection{Rangkorrelationskoeffizient nach Spearman}
+
+Der Rangkorrelationskoeffizient $r_{SP}$ nach Spearman misst die Stärke des \underline{mono-}\\\underline{tonen} Zusammenhangs zweier mindestens ordinalskalierter Merkmale, indem die ursprünglichen $x$- und $y$-Merkmalsausprägungen vor der eigentlichen Berechnung in {\it Ränge} transformiert werden.\\
+Dabei wird jedem $x_i$ mit $i=1,...,n$ als Rang die Zahl der Position zugewiesen, die $x_i$ erhält, wenn man $x_1, x_2, ..., x_n$ der Größe nach anordnet. Für die so geordneten Merkmalsausprägungen $x_{(1)}<x_{(2)}<...<x_{(n)}$ gilt dann $rg(x_{(i)})=i$. Analog wird unabhängig von den $x$-Werten auch mit den $y$-Werten verfahren. Somit ergeben sich aus den ursprünglichen Paaren $(x_i, y_i)$ neue Rangpaare $(rg(x_i), rg(y_i))$ mit $i=1,...,n$.\\
+Treten $x$- oder $y$-Merkmalsausprägungen doppelt auf, ist die Rangvergabe nicht eindeutig. In einem solchen Fall werden deshalb {\it Durchschnittsränge} gebildet, d.h. jeder der betroffenen Merkmalsausprägungen wird als Rang der arithmetische Mittelwert der potentiellen Ränge zugewiesen. Ein Beispiel: In einem Datensatz liegen drei gleiche Merkmalsausprägungen vor, welche die Ränge 5, 6 und 7 belegen könnten. Weil sie jedoch nicht eindeutig der Größe nach angeordnet werden können, erhalten alle drei den Durchschnittsrang $rg=(5+6+7):3=6$.\\
+Der eigentliche Rangkorrelationseffizient wird schließlich berechnet, indem der Korrelationskoeffizient nach Bravais und Pearson auf die transformierten Rangpaare $(rg(x_i), rg(y_i))$ mit $i=1,...,n$ angewendet wird. Er ist somit definiert als
+\begin{equation*}
+    r_{SP}=\dfrac{\sum_{i=1}^{n}{(rg(x_i)-\bar{rg}_X)(rg(y_i)-\bar{rg}_Y)}}{\sqrt{\sum_{i=1}^{n}{(rg(x_i)-\bar{rg}_X)^2\sum_{i=1}^{n}{(rg(y_i)-\bar{rg}_Y)^2}}}},\\
+\end{equation*}
+wobei $\bar{rg}_X$ und $\bar{rg}_Y$ für die Mittelwerte aller Ränge des Merkmals $X$ bzw. $Y$ stehen. Der Wertebereich von $r_{SP}$ ist entsprechend gleich dem Wertebereich vom $r$ und der berechnete Wert analog für den monotonen Zusammenhang zu interpretieren.
+In der {\it NAG C Library} dient die Funktion nag\_ken\_spe\_corr\_coeff zur Berechnung dieses Korrelationskoeffizienten.
+
+\subsection{Weiterführende Berechnungen}
+
+Liegt eine Korrelation zwischen zwei Merkmalen vor, ist damit nicht bewiesen, dass auch ein \underline{kausaler} Zusammenhang vorliegt. Das Phänomen der sog. {\it Scheinkorrelation} besagt, dass eine Korrelation zwischen den Merkmale $X$ und $Y$ (z.B. Körpergröße und Wortschatz von Kindern) unter Umständen auf den Einfluss eines weiteren Merkmals $Z$ (z.B. Alter) zurückgeführt werden kann. Dies kann durch die Berechnung der partiellen Korrelation überprüft werden, wozu in der {\it NAG C Library} die Funktion nag\_partial\_corr dient. Diese und ggf. weitere Funktionen werden wir ebenfalls näher betrachten, sofern es der Rahmen dieser Arbeit erlaubt.
 
 \section{Regressionsanalyse}
 
