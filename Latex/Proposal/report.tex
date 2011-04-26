@@ -56,17 +56,35 @@ Wer behandelt welches Thema?
 \section{Regressionsanalyse}
 
 Der zweite große Teil der Arbeit wird sich mit der Regressionsanalyse beschäftigen.
-Die NAG-Bibliothek bietet dazu zahlreiche Funktionen, von verschiedenen Regressionsarten bis hin zu Hilfen für die Bewertung und Validierung von Regressionsmodellen.
-Daher wird sich dieser Teil wieder in zwei Teile 
+Mittels dieser wird wieder, wie bei der Korrelation, die Beziehung einer abhängigen Variable zu einer oder mehreren unabhängigen Variablen untersucht.
+Allerdings wird nun versucht, diesen Zusammenhang graphisch durch das fitten einer Kurve an den gemessenen Datensatz zu erreichen.
+
+Die NAG-Bibliothek bietet dazu zahlreiche Funktionen, von verschiedenen Regressionsarten bis hin zu Hilfen für die Bewertung und Validierung von Regressionsmodellen, die nun kurz vorgestellt werden.
+Für die theoretischen Grundlagen wurden \cite{Cramer2007} und \cite{Fahrmeier2010} zusammen mit der Einführung der NAG-Bibliothek\cite{nag:intro} verwendet.
 
 \subsection{Regressionsmodelle}
-Welche Regressionsarten werden von der Bibliothek unterstützt? $\Rightarrow$ Referenzen auf Grundlagen zu den Regressionsarten\\
-Welche davon werden in der Arbeit behandelt? $\Rightarrow$ Einfache, Multivariante, robuste
+
+Um 
+%Welche Regressionsarten werden von der Bibliothek unterstützt? $\Rightarrow$ Referenzen auf Grundlagen zu den Regressionsarten\\
+%Welche davon werden in der Arbeit behandelt? $\Rightarrow$ Einfache, Multivariante, robuste
+
+\subsection{Analyse}
+
+Zusätzlich zu der Berechnung der verschieden Regressionsmodelle bietet die NAG-Bibliothek auch Funktionen zur Auswahl des Regressionsmodells und zur Modellvalidierung.
+
+Für die Auswahl des Modells sollen in der Arbeit zwei Metriken behandelt werden: Die Residualstreuung und das Bestimmtheitsmaß $\mathcal{R}^2$.
+Beide können uns eine Idee davon geben, wie gut die unabhängigen Variablen die Werte der abhängigen Variablen erklären können.
+Die Residualstreuung gibt die Verteilung der Differenzen zwischen der angenäherten Funktion und den wirklichen Daten an.
+Sollte sie unregelmäßig sein (wenn die Residuen beispielsweise mit einer Variablen anwachsen) ist dies ein starkes Indiz dafür, dass ein zu simples Modell gewählt wurde. 
+Das Bestimmtheitsmaß gibt dagegen an, wie gut abhängige Variable durch die Regression erklärt werden kann.
+Berechnet werden kann es auch durch eine Quadrierung des Bravais-Pearson Korrelationskoeffizienten, was den starken Zusammenhang von Korrelation und Regressionsanalyse zeigt.
+
+Für die Modellvalidierung 
 
 
 \section{Leistungsanalyse}
 
-Die zwei wichtigsten Eigenschaften von mathematischen Funktionen sind Korrektheit und Ressourcenverbrauch.
+Die zwei wichtigsten Qualitätskriterien für mathematischen Funktionen sind Korrektheit und der Verbrauch von Ressourcen.
 Eine gute Funktion sollte daher für alle möglichen Parameter den mathematisch korrekten Wert berechnen und dies zudem mit möglichst wenig Ressourcen, wie Speicher oder Prozessor-Laufzeit.
 Da die NAG C-Bibliothek bereits seit 1990 entwickelt wird\cite{Wikipedia:nag} und zudem alle Methoden vor der Veröffentlichung auf Korrektheit geprüft werden\cite{NAG2011}, ist nicht davon auszugehen, dass Fehler vorhanden sind.
 Daher wird in der Ausarbeitung nur die Leistung behandelt.
