@@ -99,16 +99,16 @@ Liegt eine Korrelation zwischen zwei Merkmalen vor, ist damit nicht bewiesen, da
 
 \section{Regressionsanalyse}
 
-Der zweite große Teil der Arbeit wird sich mit der Regressionsanalyse beschäftigen.
-Mittels dieser wird wieder, wie bei der Korrelation, die Beziehung einer abhängigen Variable zu einer oder mehreren unabhängigen Variablen untersucht.
-Allerdings wird nun versucht, diesen Zusammenhang graphisch durch das fitten einer Kurve an den gemessenen Datensatz zu erreichen.
+Der zweite Teil der Arbeit wird sich mit der Regressionsanalyse beschäftigen.
+Mittels dieser wird wieder, wie bei der Korrelation, die Beziehung eines abhängigen Merkmals zu einem oder mehreren unabhängigen Merkmalen untersucht.
+Allerdings wird nun versucht, diesen Zusammenhang graphisch durch die Erstellung einer Kurve darzustellen, die die gemessenen Datensatz möglichst gut wiedergibt.
 
 Die NAG-Bibliothek bietet dazu zahlreiche Funktionen, von verschiedenen Regressionsarten bis hin zu Hilfen für die Bewertung und Validierung von Regressionsmodellen, die nun kurz vorgestellt werden.
 Für die theoretischen Grundlagen wurden \cite{Cramer2007} und \cite{Fahrmeier2010} zusammen mit der Einführung der NAG-Bibliothek (\cite{nag:intro}) verwendet.
 
 \subsection{Regressionsmodelle}
 
-Der einfachste Ansatz für eine Regression ist die lineare Regression mit einer unabhängigen Variablen.
+Der einfachste Ansatz für eine Regression ist die lineare Regression mit einem unabhängigen Merkmal als Regressanden.
 Dabei wird versucht eine lineare Funktion zu finden die die zuvor gemessene Daten möglichst gut annähert, die sog. "`Ausgleichsgerade"'.
 Der Ansatz dazu ist
 \begin{equation*}
@@ -141,11 +141,11 @@ Berechnet werden kann es auch durch eine Quadrierung des Bravais-Pearson Korrela
 
 Für die Modellvalidierung stehen verschiedene Werkzeuge zur Verfügung, welche bei der Bewertung der Güte der Regression und deren Verbesserung genutzt werden können.
 In diese Kategorie fallen zum Beispiel der Cooks-Abstand (ermittelt besonders einflußreiche Punkte), die T-Statistik (Testet, ob eine unabhängige Variable für die Regression wichtig ist) oder der Durbin-Watson-Test (Ermittelt, ob die Residuen von den zuvor gemessenen Werten abhängig sind.
-In der Ausarbeitung werden diese allerdings aus Platzgründen nicht behandelt werden.
+In dieser Arbeit werden diese allerdings nicht weiter behandelt werden.
 
 \section{Leistungsanalyse}
 
-Die zwei wichtigsten Qualitätskriterien für mathematischen Funktionen sind Korrektheit und der Verbrauch von Ressourcen.
+Die zwei wichtigsten Qualitätskriterien für mathematischen Funktionen sind Korrektheit und ein möglichst geringer Verbrauch von Ressourcen.
 Eine gute Funktion sollte daher für alle möglichen Parameter den mathematisch korrekten Wert berechnen und dies zudem mit möglichst wenig Ressourcen, wie Speicher oder Prozessor-Laufzeit.
 Da die NAG C-Bibliothek bereits seit 1990 entwickelt wird\cite{Wikipedia:nag} und zudem alle Methoden vor der Veröffentlichung auf Korrektheit geprüft werden\cite{NAG2011}, ist nicht davon auszugehen, dass Fehler vorhanden sind.
 Daher wird in der Ausarbeitung nur die Leistung behandelt.
@@ -170,7 +170,7 @@ Der erste Teil besteht aus der Einarbeitung in die statistischen Grundlagen, sow
 Darauf folgt eine Literatursuche, deren Fokus auf auf den mathematischen Funktionen hinter den NAG-Funktionen liegt.
 Nach der Abgabe dieses Proposals werden wir mit dem Schreiben des ersten Teils der Arbeit beginnen. 
 %TODO: @Patrick: Ist das richtig so?
-Dieser soll neben der Einleitung aus der Behandlung von jeweils einer Funktion für Korrelation und Regression bestehen, welche dann auch in der Zwischenpräsentation vorgestellt werden.
+Dieser soll neben der Einleitung aus der Behandlung von jeweils einer Funktion für Korrelation und Regression bestehen, welche dann auch in der Zwischenpräsentation vorgestellt werden (vorraussichtlich wird es sich um den Bravais-Pearson Korrelationskoeffizienten und die Multiple lineare Regression handeln).
 Bis zum ersten Abgabetermin Mitte Juni wird die Ausarbeitung dann noch um weitere Algorithmen und eine Laufzeitanalyse erweitert.
 %TODO: Was wird noch in der Hauptpräsentation vorgestellt?
 In der letzten Präsentation werden die Ergebnisse der Analyse präsentiert und außerdem wird die Benutzung der Bibliothek anhand eines größeren Beispiels demonstriert.
