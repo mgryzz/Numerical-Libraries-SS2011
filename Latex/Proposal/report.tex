@@ -54,12 +54,12 @@ LuFG Informatik 12 (Prof. Dr. rer. nat. Uwe Naumann)}
 Im Rahmen dieser Arbeit werden wir uns mit den Funktionen beschäftigen, welche die {\it NAG C Library}, eine Sammlung numerischer Algorithmen der {\it Numerical Algorithms Group} für die Programmiersprache {\it C}/{\it C++}, ihren Anwendern zur {\it Korrelation} und zur {\it Regressionsanalyse} zur Verfügung stellt.\\
 Die Begriffe "`Korrelation"' und "`Regressionsanalyse"' sind der {\it deskriptiven Statistik} zuzuordnen, welche sich mit der Beschreibung und Darstellung von Daten befasst, die zuvor durch Erhebungen (z.B. Befragungen) oder Experimente gewonnen wurden.\\
 Ein Beispiel für eine Erhebung wäre etwa die Studentische Lehrveranstaltungsbewertung, die an der {\it RWTH Aachen} regelmäßig durchgeführt wird. Die bei Erhebungen und Experimenten gewonnenen Daten umfassen {\it Merkmale} bestimmter {\it Merkmalsträger}: In unserem Beispiel wären die Merkmalsträger unter anderem die Studenten, die an der jeweiligen Erhebung teilnehmen, da sie zu mehreren persönlichen Merkmale befragt werden -- nämlich zu ihrem Geschlecht, ihrem Fachsemester und ihrer Nationalität. Weitere Merkmalsträger sind selbstverständlich die Lehrveranstaltung, der Dozent sowie die Rahmenbedingungen, deren unterschiedliche Merkmale von den Studenten bewertet werden. Die einzelnen Merkmale können verschiedene {\it Merkmalsausprägungen} annehmen: Das Merkmal "`Fachsemester"' eines Studenten kann bspw. die Ausprägungen "`1-2"', "`3-4"', ..., "`9-10"' oder "`über 10"' annehmen. Die Merkmale der Lehrveranstaltung und des Dozenten können von den Studenten überwiegend auf einer fünfstufigen Skala von "`trifft völlig zu"' bis "`trifft nicht zu"' oder mit Noten von "`sehr gut"' bis "`mangelhaft"' bewertet werden, wodurch sie eben diese möglichen Ausprägungen erhalten.\\
-Im Anschluss an eine Erhebung oder ein Experiment lässt sich  der jeweils gewonnene Datensatz wie bereits erwähnt mit Hilfe der deskriptiven Statistik auf unterschiedliche Art und Weise beschreiben und darstellen. Eine Möglichkeit ist es, ein einzelnes Merkmal zu betrachten und z.B. den Mittelwert der Noten zu berechnen, welche die Studenten der Lehrveranstaltung gegeben haben. Dies ist das Feld der {\it univariaten Statistik}. Eine weitere Möglichkeit ist es, zwei oder mehrere Merkmale gleichzeitig zu betrachten, um sie auf eventuelle Zusammenhänge zu prüfen. Es wäre bspw. denkbar, dass das Merkmal "Fachsemester" eines Studenten und seine Bewertung des Merkmals "Schwierigkeitsgrad" der Lehrveranstaltung auf gewisse Weise zusammenhängen, was wichtig für die Interpretation des letzteren Merkmals wäre. Dies ist das Feld der {\it bi-} bzw. {\it multivariaten Statistik}. Hier sind schließlich auch die Korrelation und die Regressionsanalyse einzuordnen, welche sich beide mit der Beschreibung zweier oder mehrerer Merkmale und ihres Zusammenhangs beschäftigen.
+Im Anschluss an eine Erhebung oder ein Experiment lässt sich  der jeweils gewonnene Datensatz wie bereits erwähnt mit Hilfe der deskriptiven Statistik auf unterschiedliche Art und Weise beschreiben und darstellen. Eine Möglichkeit ist es, ein einzelnes Merkmal zu betrachten und z.B. den Mittelwert der Noten zu berechnen, welche die Studenten der Lehrveranstaltung gegeben haben. Dies ist das Feld der {\it univariaten Statistik}. Eine weitere Möglichkeit ist es, zwei oder mehrere Merkmale gleichzeitig zu betrachten, um sie auf eventuelle Zusammenhänge zu prüfen. Es wäre bspw. denkbar, dass das Merkmal "`Fachsemester"' eines Studenten und seine Bewertung des Merkmals "`Schwierigkeitsgrad"' der Lehrveranstaltung auf gewisse Weise zusammenhängen, was wichtig für die Interpretation des letzteren Merkmals wäre. Dies ist das Feld der {\it bi-} bzw. {\it multivariaten Statistik}. Hier sind schließlich auch die Korrelation und die Regressionsanalyse einzuordnen, welche sich beide mit der Beschreibung zweier oder mehrerer Merkmale und ihres Zusammenhangs beschäftigen.
 %TODO: Mehrere unabhängige Variablen sollen nicht möglich sein? - Ich hab die Sätzel einfach rausgenommen.
 
 \subsection{Motivation}
 
-Es ist natürlich nicht nur im Rahmen der Studentischen Lehrveranstaltungsbewertung an der RWTH Aachen interessant, die möglichen Zusammenhänge von Merkmalen festzustellen. Die Anwendungsbereiche der Korrelation und der Regressionanalyse erstrecken sich von der Wirtschaft (Wie wirken sich Werbemaßnahmen auf die Verkaufszahlen eines Produkts aus?) über die Medizin (Durch welche genetischen Veranlagungen wird eine Krankheit begünstigt?) bis hin zu Sozial- und Naturwissenschaften, um nur einige Beispiele zu nennen. Auf Grund der vielfachen Anwendung ist es wünschenswert und oft sogar nötig (etwa bei sehr großen Datensätzen), solche statistischen Berechnungen automatisiert ausführen zu lassen. Die {\it NAG C Library} ist dabei ein wichtiges Hilfsmittel, stellt sie doch viele der nötigen Funktionen bereits in fertiger Form zur Verfügung, so dass sie in beliebige Anwendungsprogramme integriert werden können -- vorausgesetzt, sie wurden in{\it C}/{\it C++} oder einer anderen unterstützten Programmiersprache geschrieben.
+Es ist natürlich nicht nur im Rahmen der Studentischen Lehrveranstaltungsbewertung an der RWTH Aachen interessant, die möglichen Zusammenhänge von Merkmalen festzustellen. Die Anwendungsbereiche der Korrelation und der Regressionanalyse erstrecken sich von der Wirtschaft (Wie wirken sich Werbemaßnahmen auf die Verkaufszahlen eines Produkts aus?) über die Medizin (Durch welche genetischen Veranlagungen wird eine Krankheit begünstigt?) bis hin zu Sozial- und Naturwissenschaften, um nur einige Beispiele zu nennen. Auf Grund der vielfachen Anwendung ist es wünschenswert und oft sogar nötig (etwa bei sehr großen Datensätzen), solche statistischen Berechnungen automatisiert ausführen zu lassen. Die {\it NAG C Library} ist dabei ein wichtiges Hilfsmittel, stellt sie doch viele der nötigen Funktionen bereits in fertiger Form zur Verfügung, so dass sie in beliebige Anwendungsprogramme integriert werden können -- vorausgesetzt, sie wurden in {\it C}/{\it C++} oder einer anderen unterstützten Programmiersprache geschrieben.
 
 \section{Korrelation}
 
@@ -84,8 +84,8 @@ Der zweite Teil der Arbeit wird sich mit der Regressionsanalyse beschäftigen.
 Mittels dieser wird wieder, wie bei der Korrelation, die Beziehung eines abhängigen Merkmals zu einem oder mehreren unabhängigen Merkmalen untersucht.
 Allerdings wird nun versucht, diesen Zusammenhang graphisch durch die Erstellung einer Kurve darzustellen, die die gemessenen Datensatz möglichst gut wiedergibt.
 
-Die NAG-Bibliothek bietet dazu zahlreiche Funktionen, von verschiedenen Regressionsarten bis hin zu Hilfen für die Bewertung und Validierung von Regressionsmodellen, die nun kurz vorgestellt werden.
-Für die theoretischen Grundlagen wurden \cite{Cramer2007} und \cite{Fahrmeier2010} zusammen mit der Einführung der NAG-Bibliothek (\cite{nag:intro}) verwendet.
+Die {\it NAG C Library} bietet dazu zahlreiche Funktionen, von verschiedenen Regressionsarten bis hin zu Hilfen für die Bewertung und Validierung von Regressionsmodellen, die nun kurz vorgestellt werden.
+Für die theoretischen Grundlagen wurden \cite{Cramer2007} und \cite{Fahrmeier2010} zusammen mit der Einführung zur {\it NAG C Library} (\cite{nag:intro}) verwendet.
 
 \subsection{Regressionsmodelle}
 
@@ -97,7 +97,7 @@ Der Ansatz dazu ist
 \end{equation*}
 wobei $X$ und $Y$ metrisch skalierte Merkmale sind und $\epsilon$ ein Fehler, der nicht durch $X$ erklärt werden kann.
 %TODO: Methode kleinster Quadrate
-In der NAG-Bibliothek wird diese Funktionalität durch die Funktion nag\_simple\_linear\_regression zur Verfügung gestellt.
+In der {\it NAG C Library} wird diese Funktionalität durch die Funktion nag\_simple\_linear\_regression zur Verfügung gestellt.
 
 Der Schwerpunkt in der Regressionsanalyse soll bei dieser Arbeit allerdings auf der lineare Mehrfachregression (nag\_regsn\_mult\_linear) liegen.
 Diese ermöglicht es mehr als nur ein erklärendes Merkmal in die Regression mit einzubeziehen und ist somit eine Verallgemeinerung der einfachen Regression.
@@ -111,7 +111,7 @@ Als theoretische Grundlage sollen hier die Bücher \cite{Hampel1986} und \cite{H
 
 \subsection{Analyse}
 
-Zusätzlich zu der Berechnung der verschieden Regressionsmodelle bietet die NAG-Bibliothek auch Funktionen zur Auswahl des Regressionsmodells und zur Modellvalidierung.
+Zusätzlich zu der Berechnung der verschieden Regressionsmodelle bietet die {\it NAG C Library} auch Funktionen zur Auswahl des Regressionsmodells und zur Modellvalidierung.
 
 Für die Auswahl des Modells sollen in der Arbeit zwei Metriken behandelt werden: Die Residualstreuung und das Bestimmtheitsmaß $\mathcal{R}^2$.
 Beide können uns eine Idee davon geben, wie gut die unabhängigen Variablen die Werte der abhängigen Variablen erklären können.
@@ -128,7 +128,7 @@ In dieser Arbeit werden diese allerdings nicht weiter behandelt werden.
 
 Die zwei wichtigsten Qualitätskriterien für mathematischen Funktionen sind Korrektheit und ein möglichst geringer Verbrauch von Ressourcen.
 Eine gute Funktion sollte daher für alle möglichen Parameter den mathematisch korrekten Wert berechnen und dies zudem mit möglichst wenig Ressourcen, wie Speicher oder Prozessor-Laufzeit.
-Da die NAG C-Bibliothek bereits seit 1990 entwickelt wird\cite{Wikipedia:nag} und zudem alle Methoden vor der Veröffentlichung auf Korrektheit geprüft werden\cite{NAG2011}, ist nicht davon auszugehen, dass Fehler vorhanden sind.
+Da die {\it NAG C Library} bereits seit 1990 entwickelt wird\cite{Wikipedia:nag} und zudem alle Methoden vor der Veröffentlichung auf Korrektheit geprüft werden\cite{NAG2011}, ist nicht davon auszugehen, dass Fehler vorhanden sind.
 Daher wird in der Ausarbeitung nur die Leistung behandelt.
 
 Dazu sollen zwei Algorithmen der Bibliothek auf ihren Ressourcenverbrauch untersucht werden: Der Bravais-Pearson Korrelationskoeffizient und die multiple lineare Regression.
@@ -150,10 +150,8 @@ Auf der x-Achse ist dabei der Zeitverlauf und auf der y-Achse die Arbeitsschritt
 Der erste Teil besteht aus der Einarbeitung in die statistischen Grundlagen, sowie in die verfügbaren Funktionen der Bibliothek.
 Darauf folgt eine Literatursuche, deren Fokus auf auf den mathematischen Funktionen hinter den NAG-Funktionen liegt.
 Nach der Abgabe dieses Proposals werden wir mit dem Schreiben des ersten Teils der Arbeit beginnen. 
-%TODO: @Patrick: Ist das richtig so? - Ja, kann so bleiben.
 Dieser soll neben der Einleitung aus der Behandlung von jeweils einer Funktion für Korrelation und Regression bestehen, welche dann auch in der Zwischenpräsentation vorgestellt werden (vorraussichtlich wird es sich um den Bravais-Pearson Korrelationskoeffizienten und die Multiple lineare Regression handeln).
 Bis zum ersten Abgabetermin Mitte Juni wird die Ausarbeitung dann noch um weitere Algorithmen und eine Laufzeitanalyse erweitert.
-%TODO: Was wird noch in der Hauptpräsentation vorgestellt? - Ich denk das reicht erst mal vom Genauigkeitsgrad her... ;)
 In der letzten Präsentation werden die Ergebnisse der Analyse präsentiert und außerdem wird die Benutzung der Bibliothek anhand eines größeren Beispiels demonstriert.
 Zuletzt soll die Ausarbeitung noch einmal überarbeitet und Fehler korrigiert werden.
 
