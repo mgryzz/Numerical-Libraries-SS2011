@@ -1,0 +1,45 @@
+\section{Regressionsanalyse}
+
+Der zweite Teil der Arbeit wird sich mit der Regressionsanalyse beschäftigen.
+Mittels dieser wird wieder, wie bei der Korrelation, die Beziehung eines abhängigen Merkmals zu einem oder mehreren unabhängigen Merkmalen untersucht.
+Allerdings wird nun versucht, diesen Zusammenhang graphisch durch die Erstellung einer Kurve darzustellen, die die gemessenen Datensatz möglichst gut wiedergibt.
+
+Die {\it NAG C Library} bietet dazu zahlreiche Funktionen, von verschiedenen Regressionsarten bis hin zu Hilfen für die Bewertung und Validierung von Regressionsmodellen, die nun kurz vorgestellt werden.
+Für die theoretischen Grundlagen wurden \cite{Cramer2007} und \cite{Fahrmeier2010} zusammen mit der Einführung zur {\it NAG C Library} (\cite{nag:intro}) verwendet.
+
+\subsection{Regressionsmodelle}
+
+Der einfachste Ansatz für eine Regression ist die lineare Regression mit einem unabhängigen Merkmal als Regressanden.
+Dabei wird versucht eine lineare Funktion zu finden die die zuvor gemessene Daten möglichst gut annähert, die sog. "`Ausgleichsgerade"'.
+Der Ansatz dazu ist
+\begin{equation*}
+ Y = \alpha + \beta X +\epsilon
+\end{equation*}
+wobei $X$ und $Y$ metrisch skalierte Merkmale sind und $\epsilon$ ein Fehler, der nicht durch $X$ erklärt werden kann.
+%TODO: Methode kleinster Quadrate
+In der {\it NAG C Library} wird diese Funktionalität durch die Funktion nag\_simple\_linear\_regression zur Verfügung gestellt.
+
+Der Schwerpunkt in der Regressionsanalyse soll bei dieser Arbeit allerdings auf der lineare Mehrfachregression (nag\_regsn\_mult\_linear) liegen.
+Diese ermöglicht es mehr als nur ein erklärendes Merkmal in die Regression mit einzubeziehen und ist somit eine Verallgemeinerung der einfachen Regression.
+Dabei sind auch verschieden skalierte Regressanden möglich (zB. metrisch und binär skaliert), was in der Arbeit durch ein Beispiel verdeutlicht werden soll.
+
+Weiterhin soll die robuste Regression (nag\_robust\_m\_regsn\_user\_fn) in der Arbeit behandelt werden, insofern der Platz ausreicht.
+Ihr Ziel ist es, extremen Beobachtungen weniger Einfluss auf die Regression zu geben.
+Dies kann vor allem bei Meßdaten von Vorteil sein, da sich Meßfehler somit nicht so stark auf die Regression auswirken.
+Als theoretische Grundlage sollen hier die Bücher \cite{Hampel1986} und \cite{Huber1981} dienen.
+
+
+\subsection{Analyse}
+
+Zusätzlich zu der Berechnung der verschieden Regressionsmodelle bietet die {\it NAG C Library} auch Funktionen zur Auswahl des Regressionsmodells und zur Modellvalidierung.
+
+Für die Auswahl des Modells sollen in der Arbeit zwei Metriken behandelt werden: Die Residualstreuung und das Bestimmtheitsmaß $\mathcal{R}^2$.
+Beide können uns eine Idee davon geben, wie gut die unabhängigen Variablen die Werte der abhängigen Variablen erklären können.
+Die Residualstreuung gibt die Verteilung der Differenzen zwischen der angenäherten Funktion und den wirklichen Daten an.
+Sollte sie unregelmäßig sein (wenn die Residuen beispielsweise mit einer Variablen anwachsen) ist dies ein starkes Indiz dafür, dass ein zu simples Modell gewählt wurde. 
+Das Bestimmtheitsmaß gibt dagegen an, wie gut abhängige Variable durch die Regression erklärt werden kann.
+Berechnet werden kann es auch durch eine Quadrierung des Bravais-Pearson Korrelationskoeffizienten, was den starken Zusammenhang von Korrelation und Regressionsanalyse zeigt.
+
+Für die Modellvalidierung stehen verschiedene Werkzeuge zur Verfügung, welche bei der Bewertung der Güte der Regression und deren Verbesserung genutzt werden können.
+In diese Kategorie fallen zum Beispiel der Cooks-Abstand (ermittelt besonders einflußreiche Punkte), die T-Statistik (Testet, ob eine unabhängige Variable für die Regression wichtig ist) oder der Durbin-Watson-Test (Ermittelt, ob die Residuen von den zuvor gemessenen Werten abhängig sind.
+In dieser Arbeit werden diese allerdings nicht weiter behandelt werden.
