@@ -1,7 +1,11 @@
 \documentclass{beamer}
 \usetheme{STCE}
-\usepackage{beamerfoils}
 
+\usepackage{beamerfoils}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[german]{babel} % Für deutche Umlaute
+\usepackage{tabularx} % Für die TabularX Umgebung
 
 \MyLogo{
 \centering
@@ -28,17 +32,177 @@
 
 \section{Multiple Regression}
 \begin{frame}
- 
+ \frametitle{Das multiple lineare Regressionsmodell}
+ \begin{itemize}
+ \item 
+ \end{itemize}
 \end{frame}
 
-\subsection{Algorithmus}
+
 \begin{frame}
+ \frametitle{Das multiple lineare Regressionsmodell}
+
+ \begin{itemize}
+  \item Wie groß sind die Einflüsse von verschiedenen Regressanden auf ein abhängiges Merkmal?
+ \end{itemize}
  
+ \begin{block}{Lineare Einfachregression}
+  \begin{equation*}
+   Y_i = \alpha + \beta x_i + \epsilon_i, \quad i = 1, \dots, n
+  \end{equation*}
+ \end{block}
+
+ \begin{block}{Multiple Lineare Regression}
+  \begin{equation*}
+   Y_i = \beta_0 + \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i, \quad i = 1, \dots, n
+  \end{equation*}
+  \begin{itemize}
+   \item Anzahl der Regressanden: $p$
+  \end{itemize}
+
+ \end{block}
+
 \end{frame}
 
-\subsection{Beispiel}
 \begin{frame}
+  \frametitle{Anwendung}
+  % Hier sollte die Verwendung der Regression mit dem Mietspiegel Beispiel verdeutlicht werden
+  \begin{itemize}
+  \item Beispieldatensatz:\\
+    \begin{tabular}[h]{c|c|c|c}
+      1 & 2 & 3 & 4 \\
+      5 & 6 & 7 & 8
+    \end{tabular}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Funktionssignatur}
+  
+  \begin{itemize}
+  \item Funktionsname: nag\_regsn\_mult\_linear (g02dac)
+  \item Argumente:
+    \begin{itemize}
+    \item Anzahl der Beobachtungen $n$
+    \item $m \times n$ Matrix $X$ mit den Beobachteten Werten für alle Variablen
+    \item \dots
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+\subsection{NAG Algorithmus}
+\begin{frame}
+  \frametitle{NAG Algorithmus}
  
+  \begin{block}{Für Berechnung wird eine Matrixschreibweise benötigt}
+    {\centering $y = X \beta + \epsilon$ \\}
+    wobei \\
+    \qquad $y$ = Vektor mit $n$ Beobachtungen von $y$ \\
+    \qquad $X$ = Matrix mit den Beobachtungen der Regressanden \\
+    \qquad $\beta$ = Vektor mit unbekannten Faktoren \\
+    \qquad $\epsilon$ = Vektor mit Fehlertermen \\
+  \end{block}
+  
+  \pause
+  
+  \begin{block}{Methode der kleinsten Quadrate}
+    In Matrixschreibweise:\\
+    {\centering
+      $\sum\limits^{N}_{n=1} \epsilon^2_n = \epsilon^T \epsilon = (y - X \beta)^T (y - X \beta) \rightarrow \min\limits_{\beta}$\\}
+    oder: \\
+    {\centering
+      $\Vert X\beta - y \Vert_2 \rightarrow \min\limits_{\beta}$
+      \\}
+  \end{block}
+
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{QR-Zerlegung}
+  
+  \begin{itemize}
+  \item Wie kann das benötigte Minimum berechnet werden?\\
+    $\Rightarrow$ QR-Zerlegung der Matrix $X$
+  \end{itemize}
+
+  \begin{block}{QR-Zerlegung}
+    Zerlegung von $X$ in zwei Matrizen $Q$ und $R$, sodass \\
+    \qquad $Q$ ist orthogonale Matrix \\
+    \qquad $R$ enthält obere Dreiecksmatrix \\
+  \end{block}
+
+  \pause
+
+  \begin{itemize}
+  \item Algorithmen:
+    % Hier Vor-/Nachteile erwähnen
+    \begin{itemize}
+    \item Householder Transformationen 
+    \item Givens Rotationen 
+    \item Modifizierter Gram-Schmidt Algorithmus 
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{QR-Zerlegung (Beispiel)}
+  % Eine QR-Zerlegung mit den Beispieldaten durchführen
+  % Zum Beispiel die ersten Schritte der Givens Rotation durchführen
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gleichungssystem Lösen}
+  
+  \begin{itemize}
+  \item Wir haben: $X = QR^*$, wobei $R^* = \binom{R}{0}$
+  \item Es gilt: $\Vert X\beta - y \Vert_2 = \Vert Q^T X \beta - Q^T y \Vert_2 = \Vert R \beta - c \Vert_2 + \Vert d \Vert_2w$
+  \item $Q^T * y = \binom{c}{d}$
+  \item Löse $R \hat{\beta} = c$ durch Rückwärtseinsetzen
+    
+  \pause
+
+  \item Funktioniert nur bei vollem Rang von $R$!
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gleichungssystem Lösen (Beispiel)}
+  
+\end{frame}
+
+% Zu Komplex für den Vortrag?
+%\begin{frame}
+%  \frametitle{Gleichungssystem Lösen II}
+%  
+%\end{frame}
+
+\begin{frame}
+  \frametitle{Ergebnis}
+  % Plots mit Mieten im Verhältnis zu Regressoren zeigen
+  % Ergebnis der Beispielrechnung mit dem Regressionsergebnis mit vollständigen Daten vergleichen. 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Ausblick}
+  
+  Im nächsten Vortrag folgt:
+  \begin{itemize}
+  \item Wie werden die Methoden angewendet
+    \begin{itemize}
+    \item Am Beispiel des Münchener Mietspiegels
+    \end{itemize}
+  \item Performance Analyse
+    \begin{itemize}
+    \item Wie verhalten sich die Algorithmen bei verschiedenen Datensätzen/Parametern 
+    \end{itemize}
+  \end{itemize}
+
 \end{frame}
 
 \end{document}

@@ -13,6 +13,11 @@
 *.backup
 *.bak
 *.orig
+\#*.tex\#
+.\#*.tex
+_*_.tex
+auto/
+*.fmt
 
 # If needed, also ignore PDF documents (for use in Latex-Folders only)
 *.pdf
