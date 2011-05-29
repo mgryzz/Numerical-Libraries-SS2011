@@ -34,9 +34,20 @@
 \begin{frame}
  \frametitle{Das multiple lineare Regressionsmodell}
  \begin{itemize}
- \item 
+ \item Korrelationen:
+   \begin{itemize}
+   \item Verschiedene Merkmale haben einen Einfluß auf die Nettomiete
+   \end{itemize}
+ \item Offene Fragen:
+   \begin{itemize}
+   \item Mit welchem Aufpreis muss bei einer Wohnung in bester Wohnlage gerechnet werden?
+   \item Hat das Baujahr einen Einfluss auf den Mietpreis/qm Verteilung?
+   \end{itemize}
  \end{itemize}
+
+ 
 \end{frame}
+
 
 
 \begin{frame}
@@ -65,8 +76,40 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Verteilung Nettomieten}
+  \begin{center}
+    \includegraphics[width=10cm]{figures/nm_wfl_distribution}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Verteilung Nettomieten II}
+  \begin{center}
+    \includegraphics[width=10cm]{figures/nm_wfl_distribution_log}
+  \end{center}
+\end{frame}
+
+\begin{frame}
   \frametitle{Anwendung}
-  % Hier sollte die Verwendung der Regression mit dem Mietspiegel Beispiel verdeutlicht werden
+  % Hier sollte die Verwendung der Regression mit dem Mietspiegel Beispiel verdeutlicht 
+  
+  % TODO: Welche Merkmale für Regression verwenden?
+  %  - wohnfläche
+  %  - wohnlage (gut, beste)
+  %  - baujahr
+  % TODO: Welche Zeilen auswählen
+
+  \begin{itemize}
+  \item Regressoren: Wohnfläche, gute Wohnlage, Baujahr
+  \item Regressand: Nettomiete
+  \end{itemize}
+
+  \begin{block}{Regressionsansatz}
+    \begin{equation*}
+      NM = \beta_0 + \beta_1 Wfl + \beta_2 gL + \beta_3 Bj + \epsilon
+    \end{equation*}
+  \end{block}
+
   \begin{itemize}
   \item Beispieldatensatz:\\
     \begin{tabular}[h]{c|c|c|c}
@@ -184,8 +227,17 @@
 
 \begin{frame}
   \frametitle{Ergebnis}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Ergebnis II}
   % Plots mit Mieten im Verhältnis zu Regressoren zeigen
   % Ergebnis der Beispielrechnung mit dem Regressionsergebnis mit vollständigen Daten vergleichen. 
+  \begin{center}
+    \includegraphics[width=10cm]{figures/nm_wfl_bj_log_approach}
+  \end{center}
+
 \end{frame}
 
 \begin{frame}
