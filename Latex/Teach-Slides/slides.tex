@@ -13,7 +13,8 @@
 }
 
 \begin{document}
-\title{Correlation and Regression Analysis}
+\title{Correlation and Regression Analysis\\
+TEACH}
 \author{Patrick Neidig \and Marius Grysla}
 \institute{Software and Tools for Computational Engeneering}
 \date{31.5.2011}
@@ -106,17 +107,17 @@
 
   \begin{block}{Regressionsansatz}
     \begin{equation*}
-      NM = \beta_0 + \beta_1 Wfl + \beta_2 gL + \beta_3 Bj + \epsilon
+      log(NM) = \beta_0 + \beta_1 Wfl + \beta_2 Bj + \beta_3 gL + \epsilon
     \end{equation*}
   \end{block}
 
-  \begin{itemize}
-  \item Beispieldatensatz:\\
-    \begin{tabular}[h]{c|c|c|c}
-      1 & 2 & 3 & 4 \\
-      5 & 6 & 7 & 8
-    \end{tabular}
-  \end{itemize}
+  % \begin{itemize}
+  % \item Beispieldatensatz:\\
+  %   \begin{tabular}[h]{c|c|c|c}
+  %     1 & 2 & 3 & 4 \\
+  %     5 & 6 & 7 & 8
+  %   \end{tabular}
+  % \end{itemize}
 
 \end{frame}
 
@@ -193,9 +194,85 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Householder Verfahren}
+  \begin{block}{Householder Matrix}
+    \[ P = I - 2vv^T / v^Tv \]    
+    \begin{itemize}
+    \item Erzeugt in einer Spalte $x$ Nullen
+    \end{itemize}
+  \end{block}
+  
+  \begin{itemize}
+  \item Berechnung von $v$:\\
+    $v = x / \beta,$\hspace{1cm} $v(1) = 1$ \\
+    $\beta = x(1) + sign(x(1)) \|x\|_2$
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
   \frametitle{QR-Zerlegung (Beispiel)}
-  % Eine QR-Zerlegung mit den Beispieldaten durchführen
-  % Zum Beispiel die ersten Schritte der Givens Rotation durchführen
+  $X = \small \begin{pmatrix}
+    1	& 36	& 1948	& 0 \\
+    1	& 65	& 1966	& 0 \\
+    1	& 79	& 1986	& 1 \\
+    1	& 93	& 1918	& 1 \\
+    1	& 102	& 1918	& 0 \\
+    1	& 121	& 1924	& 1 \\
+    1	& 128	& 1991	& 1 \\
+    1	& 150	& 1966	& 0 
+  \end{pmatrix},$
+  $x = \small \begin{pmatrix}
+    1 \\ 1 \\ 1 \\ 1 \\ 1 \\ 1 \\ 1 \\ 1
+  \end{pmatrix},$ 
+  \pause
+  $\beta = 3.83,$
+  $v = \begin{pmatrix}
+    1.00 \\ 0.26 \\ 0.26 \\ 0.26 \\ 0.26 \\ 0.26 \\ 0.26 \\ 0.26
+  \end{pmatrix}$ \\
+
+  \pause
+  
+  $(I - 2vv^T/v^Tv) X = \small \begin{pmatrix}
+    -2.83 & -273.65 & -5521.44 & -1.41 \\
+    0 & -15.88 & 14.95 & -0.37 \\
+    0 &	-1.88 &	34.95 &	0.63 \\
+    0 &	12.12 & -33.05 & 0.63 \\
+    0 & 21.12 &	-33.05 & -0.37 \\
+    0 &	40.12 & -27.05 & 0.63 \\
+    0 &	47.12 &	39.95 & 0.63 \\
+    0 & 69.12 & 14.95 & -0.37 
+  \end{pmatrix}$
+\end{frame}
+
+\begin{frame}
+  \frametitle{QR-Zerlegung (Beispiel) II}
+  $\underbrace{P_4 P_3 P_2 P_1 X}_{R} = \footnotesize \begin{pmatrix}
+    -2.83 & -273.65 & -5521.44 & -1.41 \\
+    0 & 97.24 & 4.41 & 0.35 \\
+    0 & 0 & -78.49 & -0.11 \\
+    0 & 0 & 0 & -1.37 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+  \end{pmatrix}$
+  
+  \vspace{1cm}
+  \pause
+
+  $\underbrace{H_1  H_2  H_3  H_4}_{Q} = \nobreak
+  \footnotesize
+  \begin{pmatrix}
+    0.25 & -0.62 & -0.02 & -0.20 & -0.08 & 0.26 & 0.52 & 0.31 \\
+    0.35 & -0.33 & 0.20 & -0.30 & -0.14 & 0.21 & -0.56 & -0.51 \\
+    0.35 & -0.18 & 0.44 & 0.38 & 0.17 &	-0.42 &	-0.32 &	0.44 \\
+    0.35 & -0.04 & -0.43 & 0.41 & -0.54 & -0.37 & 0.12 & -0.27 \\
+    0.35 & 0.05 & -0.44 & -0.34 & 0.63 & -0.38 & 0.02 & -0.11 \\
+    0.35 & 0.25 & -0.37 & 0.33 & 0.15 & 0.63 & -0.27 & 0.26 \\
+    0.35 & 0.32 & 0.48 & 0.24 & 0.23 & 0.15 & 0.47 & -0.43 \\
+    0.35 & 0.55 & 0.15 & -0.52 & -0.42 & -0.09 & 0.01 & 0.32 
+  \end{pmatrix}$
 \end{frame}
 
 \begin{frame}
@@ -203,10 +280,10 @@
   
   \begin{itemize}
   \item Wir haben: $X = QR^*$, wobei $R^* = \binom{R}{0}$
-  \item Es gilt: $\Vert X\beta - y \Vert_2 = \Vert Q^T X \beta - Q^T y \Vert_2 = \Vert R \beta - c \Vert_2 + \Vert d \Vert_2w$
+  \item Es gilt: $\Vert X\beta - y \Vert_2 = \Vert Q^T X \beta - Q^T y \Vert_2 = \Vert R \beta - c \Vert_2 + \Vert d \Vert_2$
   \item $Q^T * y = \binom{c}{d}$
   \item Löse $R \hat{\beta} = c$ durch Rückwärtseinsetzen
-    
+
   \pause
 
   \item Funktioniert nur bei vollem Rang von $R$!
@@ -216,18 +293,43 @@
 
 \begin{frame}
   \frametitle{Gleichungssystem Lösen (Beispiel)}
-  
-\end{frame}
+  \begin{itemize}
+  \item $c$ berechnen: \\ 
+    $Q^T * log NM = $
+    $Q^T * \scriptsize \begin{pmatrix} 5.37 \\ 6.01 \\ 6.40 \\ 6.72 \\ 6.91 \\ 7.11 \\ 7.23 \\ 7.42 \end{pmatrix} = $
+    $\scriptsize \begin{pmatrix} 18.80 \\ 1.79 \\ -0.14 \\ 0.20 \\ 0.16 \\ -0.17 \\ -0.06 \\ -0.11 \end{pmatrix}$
+    % TODO: Ist es möglich rechts eine Klammer um die Werte von c zu machen?
 
-% Zu Komplex für den Vortrag?
-%\begin{frame}
-%  \frametitle{Gleichungssystem Lösen II}
-%  
-%\end{frame}
+    \pause
+
+  \item Lösen: \\
+    $R * \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \beta_3 \end{pmatrix} = \begin{pmatrix} 18.80 \\ 1.79 \\ -0.14 \\ 0.2 \end{pmatrix}$
+    \pause
+    $\Rightarrow \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \beta_3 \end{pmatrix} = \begin{pmatrix} 8.63 \\ 0.02 \\ -0.002 \\ 0.15 \end{pmatrix}$
+  \end{itemize}
+  \end{frame}
 
 \begin{frame}
   \frametitle{Ergebnis}
-  
+  \begin{block}{Regressionsansatz}
+    \centering
+    $ log(NM) = \alt<2->{\alert<2>{8.68}}{\beta_0} + \alt<2->{\alert<2>{0.02}}{\beta_1} Wfl \alt<2->{\alert<2>{- 0.002}}{+ \beta_2} Bj + \alt<2->{\alert<2>{0.15}}{\beta_3} gL + \epsilon $
+      \pause\pause
+    \[ \Rightarrow NM = exp(8.68) exp(0.02 Wfl) exp(-0.002 Bj) exp(0.15 gL) \]
+        
+  \end{block}
+
+  \pause
+
+  \begin{itemize}
+  \item $NM = NM_B \alpha$
+  \item Basismiete: \\
+    $NM_B = 5619 \times exp(0.02 Wfl) exp(-0.002 Bj)$ \\
+    \only<5>{\alert{$NM_B = 0.059 \times exp(0.012 Wfl) exp(0.004 Bj)$}}
+  \item Zuschlag: \\
+    $\alpha = exp(0.146) = 1.158$ \\
+    \only<5>{\alert{$\alpha = exp(0.105) = 1.111$}}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
