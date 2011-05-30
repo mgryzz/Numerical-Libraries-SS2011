@@ -11,6 +11,8 @@
 
 \bibliographystyle{plainnat}
 
+\parindent0pt % verhindert einrücken nach Leerzeile
+
 \title{
 {\bf \scriptsize RHEINISCH-WESTF\"ALISCHE TECHNISCHE HOCHSCHULE AACHEN \\
 LuFG Informatik 12 (Prof. Dr. rer. nat. Uwe Naumann)}\\
@@ -30,15 +32,48 @@ Seminar ``Numerische Bibliotheken''\\
 
 Hallo!\cite{Cramer2007}\cite{Golub1989}
 
-\section{Beispiel}
+\section*{Beispiel}
 Die verwendete Datensatz ist unter \cite{Fahrmeier2011} erhältlich.
 
-\section{Korrelation}
+\section*{Korrelation}
 
-\section{Multiple Regression}
+\section*{Multiple Regression}
 
+{\bf Funktion:} nag\_regsn\_mult\_linear (g02dac)\cite{nag:intro}
 \begin{itemize}
-\item In der NAG-Library zur Verfügung gestellt durch die Funktion nag\_regsn\_mult\_linear \cite{nag:intro}.
+\item Führt eine multiple lineare Regression mit einem Regressanden und mehreren Regressoren durch.
+\item Berechnet zusätzlich Standartfehler, Residuen und Statistiken zur Bewertung.
+\end{itemize}
+
+{\bf Allgemeiner Ansatz zur multiplen Regression:}
+\begin{equation*}
+  Y_i = \beta_0 + \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i, \quad i = 1, \dots, n
+\end{equation*}
+
+{\bf Regressionsansatz zu Beispieldatensatz:}
+\begin{equation*}
+  log(NM) = \beta_0 + \beta_1 Wfl + \beta_2 Bj + \beta_3 gL + \epsilon
+\end{equation*}
+\begin{itemize}
+\item Berechnung der Nettomiete nach Regression:
+  \begin{equation*}
+    NM = NM_B \alpha,\qquad
+    NM_B = \beta_0 \times exp(\beta_1 Wfl) exp(\beta_2 Bj),\qquad
+    \alpha = exp(\beta_3)
+  \end{equation*}
+\end{itemize}
+
+
+{\bf Lösen des Ausgleichsproblems durch QR-Zerlegung mit Householder:}
+\begin{itemize}
+\item Householder Matrix (Multiplikation erzeugt Nullern in einer Spalte):
+  \begin{equation*}
+    P = I - 2vv^T / v^Tv
+  \end{equation*}
+\item Householder Vektor:
+  \begin{equation*}
+    v = x / \beta,\qquad v(1) = 1, \qquad \beta = x(1) + sign(x(1)) \|x\|_2
+  \end{equation*}
 \end{itemize}
 
 
