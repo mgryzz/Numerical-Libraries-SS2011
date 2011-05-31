@@ -33,9 +33,43 @@ Seminar ``Numerische Bibliotheken''\\
 Hallo!\cite{Cramer2007}\cite{Golub1989}
 
 \section*{Beispiel}
-Die verwendete Datensatz ist unter \cite{Fahrmeier2011} erhältlich.
+\begin{itemize}
+	\item Ausschnitt (2053 Fälle) aus Münchens Mietspiegel im Jahr 2003
+	\item insbesondere zur Ermittlung der ortsüblichen Vergleichsmiete (Nettomiete in Abhängigkeit der Größe, Art, Ausstattung, Beschaffenheit und Lage der Wohnung) interessant
+\end{itemize}
+
+\par \textbf{Reduzierter Datensatz (8 Fälle ohne Variablen zur Ausstattung)}\\
+	
+	\begin{tabular}[ht]{|l|l|l|l|l|l|l|l|}
+  	\hline
+  	\textit{Nettomiete} & \textit{pro qm} & \textit{Wohnfläche} & \textit{Zimmer} & \textit{Baujahr} & \textit{Bezirk} & \textit{gute Wohnlage} & \textit{beste Wohnlage}\\
+  	\hline \hline
+  	214,14 & 5,95 & 36 & 2 & 1948 & 17 & 0 & 0\\ \hline
+  	406,93 & 6,26 & 65 & 2 & 1966 & 10 & 0 & 0\\ \hline
+		603,34 & 7,64 & 79 & 3 & 1986 & 13 & 1 & 0\\ \hline
+		826,26 & 8,88 & 93 & 3 & 1918 & 5 & 1 &0\\ \hline
+		1000,41 & 9,81 & 102 & 3 & 1918 & 8 & 0 & 0\\ \hline
+		1227,12 & 10,14 & 121 & 5 & 1924 & 9 & 1 & 0\\ \hline
+		1385,12 & 10,82 & 128 & 6 & 1991 & 9 & 1 & 0\\ \hline
+		1661,55 & 11,08 & 150 & 5 & 1966 & 13 & 0 & 0\\
+  	\hline
+	\end{tabular} \\\\
+
+Die gesamte verwendete Datensatz ist unter \cite{Fahrmeier2011} erhältlich.
 
 \section*{Korrelation}
+
+{\bf Funktion}: nag\_corr\_cov (g02bxc)\cite{nag:intro}
+\begin{itemize}
+	\item Frage: Welche Variablen haben Einfluss auf die Nettomiete?
+	\item Lösung durch Algorithmus
+		\begin{itemize}
+			\item Eingabe: komplette Datenmatrix mit allen Variablen und Fällen
+			\item sukzessive Berechnung der Erwartungswerte (analog zum arithmetischen Mittel, da ungewichtet) und Standardabweichungen für alle Variablen sowie Berechnung der Kovarianzmatrix
+			\item abschließende Berechnung der Korrelationsmatrix (enthält die Korrelationskoeffizienten für alle Variablenpaare)
+			\item Ausgabe: alle oben berechneten Werte
+		\end{itemize}
+	\end{itemize}
 
 \section*{Multiple Regression}
 
