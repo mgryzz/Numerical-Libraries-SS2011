@@ -13,12 +13,14 @@
 *.backup
 *.bak
 *.orig
-\#*.tex\#
-.\#*.tex
-_*_.tex
+*.tex*
 auto/
 *.fmt
 
+# Ignoriere Matlab Workspace
+*.mat
+
 # If needed, also ignore PDF documents (for use in Latex-Folders only)
 *.pdf
+*.pdf\#
 
