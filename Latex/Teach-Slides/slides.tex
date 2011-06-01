@@ -9,7 +9,7 @@
 
 \MyLogo{
 \centering
-\includegraphics[width=0.12\textwidth]{./figures/logo.eps}
+\includegraphics[width=0.12\textwidth]{figures/logo.eps}
 }
 
 \begin{document}
@@ -114,13 +114,13 @@ TEACH}
   	\hline \hline
   	$n$ & Anzahl der Fälle im Datensatz ($n > 1$)\\ \hline
   	$m$ & Anzahl der Variablen im Datensatz ($m \geq 1$)\\ \hline
-		$x[n \times tdx]$ & Datenmatrix: $x[i - 1][j - 1]$ enthält \newline
-		den $i$-ten Fall der $j$-ten Variable\\ \hline
-		$tdx$ & Zeilenlänge der Datenmatrix $x$ ($tdx \geq m$)\\ \hline
-		$sx[m]$ & gibt für jede Variable an, ob sie in die Analyse einbezogen wird: einbezogen falls $sx[j] > 0$, sonst nicht ($sx[j] \geq 0$)\\ \hline
-		$wt[m]$ & gibt für jeden Fall eine Gewicht an ($wt[i] \geq 0$)\\ \hline
-		$sw$ & Summe der Gewichte falls $wt$ gesetzt, sonst gleich $n$\\ \hline
-		$tdr$, $tdv$ & beide analog zu $tdx$\\
+        $x[n \times tdx]$ & Datenmatrix: $x[i - 1][j - 1]$ enthält \newline
+        den $i$-ten Fall der $j$-ten Variable\\ \hline
+        $tdx$ & Zeilenlänge der Datenmatrix $x$ ($tdx \geq m$)\\ \hline
+        $sx[m]$ & gibt für jede Variable an, ob sie in die Analyse einbezogen wird: einbezogen falls $sx[j] > 0$, sonst nicht ($sx[j] \geq 0$)\\ \hline
+        $wt[m]$ & gibt für jeden Fall eine Gewicht an ($wt[i] \geq 0$)\\ \hline
+        $sw$ & Summe der Gewichte falls $wt$ gesetzt, sonst gleich $n$\\ \hline
+        $tdr$, $tdv$ & beide analog zu $tdx$\\
   	\hline
 	\end{tabular}
 \end{frame}
@@ -353,6 +353,9 @@ TEACH}
 \end{frame}
 
 \section{Multiple Regression}
+
+\subsection{Das Regressionsmodell}
+
 \begin{frame}
  \frametitle{Das multiple lineare Regressionsmodell}
  \begin{itemize}
@@ -376,7 +379,7 @@ TEACH}
  \frametitle{Das multiple lineare Regressionsmodell}
 
  \begin{itemize}
-  \item Wie groß sind die Einflüsse von verschiedenen Regressanden auf ein abhängiges Merkmal?
+  \item Wie groß sind die Einflüsse von verschiedenen Regressoren auf ein abhängiges Merkmal?
  \end{itemize}
  
  \begin{block}{Lineare Einfachregression}
@@ -390,7 +393,7 @@ TEACH}
    Y_i = \beta_0 + \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i, \quad i = 1, \dots, n
   \end{equation*}
   \begin{itemize}
-   \item Anzahl der Regressanden: $p$
+   \item Anzahl der Regressoren: $p$
   \end{itemize}
 
  \end{block}
@@ -442,22 +445,38 @@ TEACH}
 
 \end{frame}
 
+\subsection{NAG Library Funktion}
+
 \begin{frame}
-  \frametitle{Funktionssignatur}
+  \frametitle{Multiple Regression: Funktionssignatur}
   
+  \par \textbf{Spezifikation}\\[3mm]
+  
+  \par void nag\_regsn\_mult\_linear (Nag\_IncludeMean mean, Integer \alert<2>{$n$}, \linebreak
+  \hspace*{5mm} const double \alert<2>{$x[]$}, Integer $tdx$, Integer \alert<2>{$m$}, const Integer \alert<2>{$sx[]$}, 
+  \hspace*{5mm} Integer \alert<2>{$ip$}, const double \alert<2>{$y[]$}, const double $wt[]$, double \alert<3>{*$rss$}, \linebreak
+  \hspace*{5mm} double *$df$, double \alert<3>{$b[]$}, double \alert<3>{$se[]$}, double $cov[]$, double \alert<3>{$res[]$},
+  \hspace*{5mm} double $h[]$, double \alert<3>{$q[]$}, Integer $tdq$, Nag\_Boolean *$svd$, \linebreak
+  \hspace*{5mm} Integer *$rank$, double $p[]$, double $tol$, double $com\_ar$, \linebreak
+  \hspace*{5mm} NagError *$fail$)
+    
   \begin{itemize}
-  \item Funktionsname: nag\_regsn\_mult\_linear (g02dac)
-  \item Argumente:
-    \begin{itemize}
-    \item Anzahl der Beobachtungen $n$
-    \item $m \times n$ Matrix $X$ mit den Beobachteten Werten für alle Variablen
-    \item \dots
-    \end{itemize}
+  \item Führt eine generelle multiple lineare Regression aus.
   \end{itemize}
+
+  %\par void nag\_regsn\_mult\_linear (Integer $n$, Integer $m$, const double $x[]$, Integer $tdx$,
+  %\qquad const Integer $sx[]$, const double $wt[]$, double *$sw$, double $wmean[]$,
+  %\hspace*{5mm} double $std[]$, double $r[]$, Integer $tdr$, double $v[]$, Integer $tdv$,
+  %\hspace*{5mm} NagError *$fail$)
+  
+  %\begin{itemize}
+  %\item Führt eine generelle multiple lineare Regression aus.
+  %\end{itemize}
 
 \end{frame}
 
-\subsection{NAG Algorithmus}
+\subsection{Berechnung der Funktion}
+
 \begin{frame}
   \frametitle{NAG Algorithmus}
  
@@ -617,7 +636,7 @@ TEACH}
   \begin{itemize}
   \item $c$ berechnen: \\ 
     $Q^T * log NM = $
-    $Q^T * \scriptsize \begin{pmatrix} 5.37 \\ 6.01 \\ 6.40 \\ 6.72 \\ 6.91 \\ 7.11 \\ 7.23 \\ 7.42 \end{pmatrix} = $
+    $Q^T * \footnotesize \begin{pmatrix} 5.37 \\ 6.01 \\ 6.40 \\ 6.72 \\ 6.91 \\ 7.11 \\ 7.23 \\ 7.42 \end{pmatrix} = $
     $\scriptsize \begin{pmatrix} 18.80 \\ 1.79 \\ -0.14 \\ 0.20 \\ 0.16 \\ -0.17 \\ -0.06 \\ -0.11 \end{pmatrix}$
     % TODO: Ist es möglich rechts eine Klammer um die Werte von c zu machen?
 
@@ -629,6 +648,8 @@ TEACH}
     $\Rightarrow \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \beta_3 \end{pmatrix} = \begin{pmatrix} 8.63 \\ 0.02 \\ -0.002 \\ 0.15 \end{pmatrix}$
   \end{itemize}
   \end{frame}
+
+\subsection{Ergebnis}
 
 \begin{frame}
   \frametitle{Ergebnis}
