@@ -79,7 +79,33 @@ In der NAG-Bibliothek wird die multiple Regression hauptsächlich durch die Funk
   \Vert X\beta - y \Vert_2 = \Vert Q^T X \beta - Q^T y \Vert_2 = \Vert R \beta - c \Vert_2 + \Vert d \Vert_2
 \end{equation}
 
-\subsection{Analyse}
+\begin{figure}[t]
+  \centering
+  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
+    \subfloat[][Subfloat 1]{
+      \includegraphics[width=0.7\textwidth]{figures/nm_wfl_distribution}
+      \label{fig:nm_wfl_distributions:normal}
+    }
+    \subfloat[][Subfloat 2]{
+      \includegraphics[width=0.7\textwidth]{figures/nm_wfl_distribution_log}
+      \label{fig:nm_wfl_distributions:log}
+    }
+    \caption{Global caption}
+  \end{narrow}
+  \label{fig:nm_wfl_distributions}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=10cm]{figures/nm_wfl_bj_log_approach}
+  \caption{Caption}
+  \label{fig:3d_result}
+\end{figure}
+
+
+
+
+%\subsection{Analyse}
 
 %TODO:Überarbeiten oder herausnehmen!
 %Zusätzlich zu der Berechnung der verschieden Regressionsmodelle bietet die {\it NAG C Library} auch Funktionen zur Auswahl des Regressionsmodells und zur Modellvalidierung.

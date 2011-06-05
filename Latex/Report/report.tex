@@ -11,6 +11,7 @@
 \usepackage[numbers]{natbib}
 \usepackage{hyperref}
 \usepackage{verbatim}
+\usepackage[lofdepth,lotdepth]{subfig} 
 
 \bibliographystyle{plainnat}
 
@@ -18,6 +19,17 @@
 \newcommand{\refsec}[1]{Sektion~\ref{#1}}
 \newcommand{\refeqn}[1]{Gleichung~(\ref{#1})}
 \newcommand{\reffig}[1]{Abbildung~\ref{#1}}
+
+\newenvironment{narrow}[2]{% Für extra breite Bilder
+  \begin{list}{}{%
+  \setlength{\topsep}{0pt}%
+  \setlength{\leftmargin}{#1}%
+  \setlength{\rightmargin}{#2}%
+  \setlength{\listparindent}{\parindent}%
+  \setlength{\itemindent}{\parindent}%
+  \setlength{\parsep}{\parskip}}%
+\item[]}{\end{list}}
+
 
 \title{
 {\bf \scriptsize RHEINISCH-WESTF\"ALISCHE TECHNISCHE HOCHSCHULE AACHEN \\
@@ -58,6 +70,7 @@ LuFG Informatik 12 (Prof. Dr. rer. nat. Uwe Naumann)}
 
 \input{zusammenfassung}
 
+
 %TODO: Bibtex Einträge sollten auf Deutsch sein (``und'' statt ``and'')
 \bibliography{report}
 
@@ -70,3 +83,4 @@ Hier den Quelltext einfügen...
 
 
 \end{document}
+% LocalWords:  aloha
