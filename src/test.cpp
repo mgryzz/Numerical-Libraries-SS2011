@@ -3,6 +3,7 @@
 #include <nag_stdlib.h>
 #include <nagg02.h>
 #include <time.h>
+#include <sys/time.h>
 
 #include "utils.h"
 
@@ -16,11 +17,11 @@ int main(void) {
   
   // Variables
   int iterations = 100;
-  time_t starttime, runtime;
-  tm *timestruct;
+  timeval start, end;
+  long runtime_sec, runtime_usec;
 
   // Running Benchmark
-  starttime = time(0);
+  gettimeofday(&start, 0);
 
   for(int i=1; i<=iterations; i++){
     cout << "iteration " << i << endl;
@@ -75,10 +76,11 @@ int main(void) {
     }
   }
   
-  runtime = time(0) - starttime;
-  timestruct = localtime(&runtime);
-
-  cout << "Runtime: " << runtime << endl;
+  gettimeofday(&end, 0);
+  runtime_sec = end.tv_sec - start.tv_sec;
+  runtime_usec = end.tv_usec - start.tv_usec;
+  
+  cout << "Runtime (Sek.+Mikrosek.): " << runtime_sec << "+" << runtime_usec << endl;
 
   return(0);
 }
