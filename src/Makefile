@@ -5,8 +5,8 @@ CFLAGS =
 COMPILE = $(CC) $(INCLUDES) $(CFLAGS) -c
 
 # Für das einfache Testprogramm
-test: test.o utils.o	
-	$(CXX) $(INCLUDES) -o test test.o utils.o
+test: test.o utils.o Timer.o
+	$(CXX) $(INCLUDES) -o test test.o utils.o Timer.o
 
 %.o: %.cpp
 	$(COMPILE) -o $@ $<	

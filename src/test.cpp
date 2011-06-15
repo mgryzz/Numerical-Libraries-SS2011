@@ -2,9 +2,8 @@
 #include <nag.h>
 #include <nag_stdlib.h>
 #include <nagg02.h>
-#include <time.h>
-#include <sys/time.h>
 
+#include "Timer.h"
 #include "utils.h"
 
 #define X(I, J) x[(I) * tdx + J]
@@ -17,11 +16,13 @@ int main(void) {
   
   // Variables
   int iterations = 100;
-  timeval start, end;
-  long runtime_sec, runtime_usec;
+  //  timeval start, end;
+  //  long runtime_sec, runtime_usec;
+  Timer timer;
+  timer.start();
 
   // Running Benchmark
-  gettimeofday(&start, 0);
+  // gettimeofday(&start, 0);
 
   for(int i=1; i<=iterations; i++){
     cout << "iteration " << i << endl;
@@ -78,11 +79,13 @@ int main(void) {
     }
   }
   
-  gettimeofday(&end, 0);
-  runtime_sec = end.tv_sec - start.tv_sec;
-  runtime_usec = end.tv_usec - start.tv_usec;
+  // gettimeofday(&end, 0);
+  // runtime_sec = end.tv_sec - start.tv_sec;
+  // runtime_usec = end.tv_usec - start.tv_usec;
   
-  cout << "Runtime (Sek.+Mikrosek.): " << runtime_sec << "+" << runtime_usec << endl;
+  timer.stop();
+
+  cout << timer.getTimeString() << endl;
   
   return(0);
 }
