@@ -29,9 +29,13 @@ void read_matrix_from_file(double *matrix, const string &filename, int x_size,
 
     while(getline(lineStream, cell, '\t') && cellcount < x_size){
 
-      M(cellcount, linecount) = string_to_double(cell);
+      M(linecount, cellcount) = string_to_double(cell);
       cout << "\t" << cell << "(" << M(cellcount, linecount) << ")";
+      cellcount++;
     }
+
+    // Ignoriere alle restlichen Daten in dieser Zeile
+    //data.ignore(numeric_limits<std::streamsize>::max(), '\n');
     
     cout << endl;
 

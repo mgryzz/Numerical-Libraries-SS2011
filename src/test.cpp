@@ -54,7 +54,7 @@ int main(void) {
 //     X(8,0) = 9; X(8,1) = 18;
 //     X(9,0) = 10; X(9,1) = 20;
 
-    read_matrix_from_file(x, "data/miete03.asc", 10, 10);
+    read_matrix_from_file(x, "data/miete03.asc", m, n);
 
     for (int i = 0; i < n; i++){
       for (int j = 0; j < m; j++){
