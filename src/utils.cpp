@@ -24,8 +24,7 @@ void read_matrix_from_file(double *matrix, const string &filename, int x_size,
     stringstream lineStream(line);
     string cell;
     int cellcount = 0;
-    
- 
+     
 
     while(getline(lineStream, cell, '\t') && cellcount < x_size){
 
@@ -44,6 +43,23 @@ void read_matrix_from_file(double *matrix, const string &filename, int x_size,
   
   // Schließe Datenstream
   data.close();
+}
+
+void create_random_matrix(double* matrix, int x_size, int y_size, 
+			  double min_value, double max_value){
+  
+  // Initialisiere seed
+  srand((unsigned)time(0)); 
+
+  for(int i=0; i < y_size; i++){
+    for(int j=0; j < x_size; j++){
+      // Erzeuge Zufallsnummer
+      double random = min_value + ((double)rand() / RAND_MAX) * 
+	(max_value - min_value);
+
+      M(i,j) = random;
+    }
+  }
 }
 
 

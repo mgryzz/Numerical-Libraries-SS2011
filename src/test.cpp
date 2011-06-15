@@ -55,7 +55,9 @@ int main(void) {
 //     X(8,0) = 9; X(8,1) = 18;
 //     X(9,0) = 10; X(9,1) = 20;
 
-    read_matrix_from_file(x, "data/miete03.asc", m, n);
+    // read_matrix_from_file(x, "data/miete03.asc", m, n);
+
+    create_random_matrix(x, m, n);
 
     for (int i = 0; i < n; i++){
       for (int j = 0; j < m; j++){
@@ -81,6 +83,6 @@ int main(void) {
   runtime_usec = end.tv_usec - start.tv_usec;
   
   cout << "Runtime (Sek.+Mikrosek.): " << runtime_sec << "+" << runtime_usec << endl;
-
+  
   return(0);
 }
