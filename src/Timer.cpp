@@ -2,17 +2,21 @@
 
 using namespace std;
 
-Timer::Timer(){}
+Timer::Timer()
+{
+  _time_sec = 0;
+  _time_usec = 0;
+}
 
 Timer::~Timer(){}
 
 void Timer::start(){
-  gettimeofday(&this->_start, 0);
+  gettimeofday(&(this->_start), 0);
 }
 
 
 void Timer::stop(){
-  gettimeofday(&this->_end, 0);
+  gettimeofday(&(this->_end), 0);
   
 
   long add_sec = this->_end.tv_sec - _start.tv_sec;
@@ -20,7 +24,8 @@ void Timer::stop(){
 
   this->_time_usec += add_usec;
   this->_time_sec += add_sec;
-  
+
+
   // Überlauf bei den Mikrosekunden?
   if(this->_time_usec > 1000000){
     this->_time_sec++;
@@ -35,9 +40,9 @@ void Timer::reset(){
 
 string Timer::getTimeString(){
   ostringstream o;
-  
-  o << "Runtime (Sek.+Mikrosek.): " << this->_time_sec << "+" << 
-    this->_time_usec;
+
+  o << "Runtime: " << this->_time_sec << "s " << this->_time_usec/1000 << "ms " 
+    << this->_time_usec%1000 << "us";
 
   return o.str();
 }

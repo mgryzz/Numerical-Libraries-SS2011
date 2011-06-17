@@ -1,6 +1,7 @@
 #include <string>
 #include <sstream>
 #include <sys/time.h>
+#include <iostream.h>
 //#include <time.h>
 
 class Timer{
