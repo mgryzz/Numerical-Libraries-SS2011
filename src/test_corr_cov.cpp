@@ -2,8 +2,9 @@
 #include <nag.h>
 #include <nag_stdlib.h>
 #include <nagg02.h>
-#include <time.h>
-#include <sys/time.h>
+
+#include "Timer.h"
+#include "utils.h"
 
 #define X(I, J) x[(I) * tdx + J]
 #define R(I, J) r[(I) * tdr + J]
@@ -12,15 +13,14 @@
 using namespace std;
 
 int main(void) {
-  cout << "Starting Speedtest!" << endl;
+  cout << "Starting Speedtest of nag_corr_cov!" << endl;
   
   // Variables
   int iterations = 100;
-  timeval start, end;
-  long runtime_sec, runtime_usec;
+  Timer timer;
 
   // Running Benchmark
-  gettimeofday(&start, 0);
+  timer.start();
 
   for(int i=1; i<=iterations; i++){
     cout << "iteration " << i << endl;
@@ -70,11 +70,9 @@ int main(void) {
     }
   }
   
-  gettimeofday(&end, 0);
-  runtime_sec = end.tv_sec - start.tv_sec;
-  runtime_usec = end.tv_usec - start.tv_usec;
+  timer.stop();
   
-  cout << "Runtime (Sek.+Mikrosek.): " << runtime_sec << "+" << runtime_usec << endl;
+  cout << timer.getTimeString() << endl;
 
   return(0);
 }

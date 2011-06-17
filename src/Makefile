@@ -4,9 +4,20 @@ INCLUDES = -I/rwthfs/rz/SW/NAG/mmu/c/intel_ilp64_mark9/include -I/opt/intel/Comp
 CFLAGS = 
 COMPILE = $(CC) $(INCLUDES) $(CFLAGS) -c
 
-# Für das einfache Testprogramm
-test: test.o utils.o Timer.o
-	$(CXX) $(INCLUDES) -o test test.o utils.o Timer.o
+all: test_corr_ken test_corr_cov test_reg_sim test_reg_mul
+
+test_corr_ken: test_corr_ken.o utils.o Timer.o
+	$(CXX) $(INCLUDES) -o test_corr_ken test_corr_ken.o utils.o Timer.o
+
+test_corr_cov: test_corr_cov.o utils.o Timer.o
+	$(CXX) $(INCLUDES) -o test_corr_cov test_corr_cov.o utils.o Timer.o
+
+test_reg_sim: test_reg_sim.o utils.o Timer.o
+	$(CXX) $(INCLUDES) -o test_reg_sim test_reg_sim.o utils.o Timer.o
+
+test_reg_mul: test_reg_mul.o utils.o Timer.o
+	$(CXX) $(INCLUDES) -o test_reg_mul test_reg_mul.o utils.o Timer.o
+
 
 %.o: %.cpp
 	$(COMPILE) -o $@ $<	

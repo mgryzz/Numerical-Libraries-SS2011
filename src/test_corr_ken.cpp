@@ -12,17 +12,14 @@
 using namespace std;
 
 int main(void) {
-  cout << "Starting Speedtest!" << endl;
+  cout << "Starting Speedtest of nag_ken_spe_corr_coeff!" << endl;
   
   // Variables
   int iterations = 100;
-  //  timeval start, end;
-  //  long runtime_sec, runtime_usec;
   Timer timer;
-  timer.start();
 
   // Running Benchmark
-  // gettimeofday(&start, 0);
+  timer.start();
 
   for(int i=1; i<=iterations; i++){
     cout << "iteration " << i << endl;
@@ -60,23 +57,23 @@ int main(void) {
 
     create_random_matrix(x, m, n);
 
-    for (int i = 0; i < n; i++){
-      for (int j = 0; j < m; j++){
- 	cout << "\t" << X(i,j);
-      }
-      cout << endl;
-    }
+    // for (int i = 0; i < n; i++){
+//       for (int j = 0; j < m; j++){
+//  	cout << "\t" << X(i,j);
+//       }
+//       cout << endl;
+//     }
 
     nag_ken_spe_corr_coeff(n, m, x, tdx, svar, sobs, corr, tdc, &fail);
 
-    cout << "correlation matrix:" << endl;
+    // cout << "correlation matrix:" << endl;
 
-    for (int i = 0; i < m; i++){
-      for (int j = 0; j < m; j++){
- 	cout << "\t" << CORR(i,j);
-      }
-      cout << endl;
-    }
+//     for (int i = 0; i < m; i++){
+//       for (int j = 0; j < m; j++){
+//  	cout << "\t" << CORR(i,j);
+//       }
+//       cout << endl;
+//     }
   }
   
   // gettimeofday(&end, 0);
