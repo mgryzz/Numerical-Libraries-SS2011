@@ -1,20 +1,64 @@
 \section{Einleitung}
 
-Im Rahmen dieser Arbeit werden wir uns mit den Funktionen beschäftigen, welche die {\it NAG C Library}, eine Sammlung numerischer Algorithmen der {\it Numerical Algorithms Group} für die Programmiersprache {\it C}/{\it C++}, ihren Anwendern zur {\it Korrelation} und zur {\it Regressionsanalyse} zur Verfügung stellt.\\
-Die Begriffe "`Korrelation"' und "`Regressionsanalyse"' sind der {\it deskriptiven Statistik} zuzuordnen, welche sich mit der Beschreibung und Darstellung von Daten befasst, die zuvor durch Erhebungen (z.B. Befragungen) oder Experimente gewonnen wurden.\\
-Ein Beispiel für eine Erhebung wäre etwa die Studentische Lehrveranstaltungsbewertung, die an der {\it RWTH Aachen} regelmäßig durchgeführt wird. Die bei Erhebungen und Experimenten gewonnenen Daten umfassen {\it Merkmale} bestimmter {\it Merkmalsträger}: In unserem Beispiel wären die Merkmalsträger unter anderem die Studenten, die an der jeweiligen Erhebung teilnehmen, da sie zu mehreren persönlichen Merkmale befragt werden -- nämlich zu ihrem Geschlecht, ihrem Fachsemester und ihrer Nationalität. Weitere Merkmalsträger sind selbstverständlich die Lehrveranstaltung, der Dozent sowie die Rahmenbedingungen, deren unterschiedliche Merkmale von den Studenten bewertet werden. Die einzelnen Merkmale können verschiedene {\it Merkmalsausprägungen} annehmen: Das Merkmal "`Fachsemester"' eines Studenten kann bspw. die Ausprägungen "`1-2"', "`3-4"', ..., "`9-10"' oder "`über 10"' annehmen. Die Merkmale der Lehrveranstaltung und des Dozenten können von den Studenten überwiegend auf einer fünfstufigen Skala von "`trifft völlig zu"' bis "`trifft nicht zu"' oder mit Noten von "`sehr gut"' bis "`mangelhaft"' bewertet werden, wodurch sie eben diese möglichen Ausprägungen erhalten.\\
-Im Anschluss an eine Erhebung oder ein Experiment lässt sich  der jeweils gewonnene Datensatz wie bereits erwähnt mit Hilfe der deskriptiven Statistik auf unterschiedliche Art und Weise beschreiben und darstellen. Eine Möglichkeit ist es, ein einzelnes Merkmal zu betrachten und z.B. den Mittelwert der Noten zu berechnen, welche die Studenten der Lehrveranstaltung gegeben haben. Dies ist das Feld der {\it univariaten Statistik}. Eine weitere Möglichkeit ist es, zwei oder mehrere Merkmale gleichzeitig zu betrachten, um sie auf eventuelle Zusammenhänge zu prüfen. Es wäre bspw. denkbar, dass das Merkmal "`Fachsemester"' eines Studenten und seine Bewertung des Merkmals "`Schwierigkeitsgrad"' der Lehrveranstaltung auf gewisse Weise zusammenhängen, was wichtig für die Interpretation des letzteren Merkmals wäre. Dies ist das Feld der {\it bi-} bzw. {\it multivariaten Statistik}. Hier sind schließlich auch die Korrelation und die Regressionsanalyse einzuordnen, welche sich beide mit der Beschreibung zweier oder mehrerer Merkmale und ihres Zusammenhangs beschäftigen.
+Im Rahmen dieser Arbeit werden wir uns mit den Funktionen beschäftigen, welche die {\it NAG C Library}, eine Sammlung numerischer Algorithmen der {\it Numerical Algorithms Group} (kurz {\it NAG}) für die Programmiersprache {\it C}/{\it C++}, ihren Anwendern zur {\it Korrelation} und zur {\it Regressionsanalyse} zur Verfügung stellt.
+
+Die Begriffe "`Korrelation"' und "`Regressionsanalyse"' stammen aus der {\it deskriptiven Statistik}, welche sich mit der Beschreibung, Darstellung und Analyse von Daten und Datensätzen befasst, die zuvor durch Erhebungen (z.B. Befragungen) oder Experimente gewonnen wurden.
+
+Ein Beispiel für eine Erhebung wäre etwa die sog. {\it Studentische Lehrveranstaltungsbewertung}, die an der {\it RWTH Aachen} regelmäßig durchgeführt wird. Die bei Erhebungen oder Experimenten gewonnenen Daten umfassen {\it Merkmale} bestimmter {\it Merkmalsträger}: In unserem Beispiel wären die Merkmalsträger unter anderem die Studenten, die an der jeweiligen Erhebung teilnehmen, da sie zu mehreren persönlichen Merkmale befragt werden -- nämlich zu ihrem Geschlecht, ihrem Fachsemester und ihrer Nationalität. Weitere Merkmalsträger sind selbstverständlich die jeweilige Lehrveranstaltung, der Dozent und die Rahmenbedingungen, deren unterschiedliche Merkmale von den Studenten bewertet werden. Die einzelnen Merkmale können verschiedene {\it Merkmalsausprägungen} annehmen: Das Merkmal "`Fachsemester"' eines Studenten kann etwa die Ausprägungen "`1-2"', "`3-4"', "`5-6", "`7-8", "`9-10"' oder "`über 10"' annehmen. Die Merkmale der Lehrveranstaltung und des Dozenten können von den Studenten überwiegend auf einer fünfstufigen Skala von "`trifft völlig zu"' bis "`trifft nicht zu"' oder mit Noten von "`sehr gut"' bis "`mangelhaft"' bewertet werden, wodurch sie eben diese möglichen Ausprägungen haben. Die tatsächlichen Ausprägungen bzw. {\it Messwerte} aller Merkmale, die für einen einzelnen Merkmalsträger ermittelt wurden, werden in ihrer Gesamtheit {\it Beobachtung} genannt.
+
+Anschließend an eine Erhebung oder ein Experiment lässt sich  der jeweils gewonnene Datensatz wie bereits erwähnt mit Hilfe der deskriptiven Statistik auf unterschiedliche Art und Weise beschreiben, darstellen und analysieren. Eine Möglichkeit ist es, ein einzelnes Merkmal zu betrachten und z.B. den Mittelwert der Noten zu berechnen, welche die Studenten der Lehrveranstaltung gegeben haben. Dies ist das Feld der {\it univariaten Statistik}. Eine weitere Möglichkeit ist es, zwei oder mehrere Merkmale gleichzeitig zu betrachten, um sie auf eventuelle Zusammenhänge zu prüfen. Es wäre etwa denkbar, dass das Merkmal "`Fachsemester"' eines Studenten und seine Bewertung des Merkmals "`Schwierigkeitsgrad"' der Lehrveranstaltung auf gewisse Weise zusammenhängen, was wichtig für die Interpretation der Messwerte des letzteren Merkmals wäre. Dies ist das Feld der {\it bi-} bzw. {\it multivariaten Statistik}. Hier sind schließlich auch die Korrelation und die Regressionsanalyse einzuordnen, welche sich beide mit der Beschreibung und Analyse zweier oder mehrerer Merkmale und ihres Zusammenhangs beschäftigen.
+
+Zur Erläuterung der theoretischen Grundlagen der deskriptiven Statistik werden wir vorrangig auf Quelle \cite{Fahrmeir2010} zurückgreifen.
 
 \subsection{Motivation}
 
-Es ist natürlich nicht nur im Rahmen der Studentischen Lehrveranstaltungsbewertung an der RWTH Aachen interessant, die möglichen Zusammenhänge von Merkmalen festzustellen. Die Anwendungsbereiche der Korrelation und der Regressionanalyse erstrecken sich von der Wirtschaft (Wie wirken sich Werbemaßnahmen auf die Verkaufszahlen eines Produkts aus?) über die Medizin (Durch welche genetischen Veranlagungen wird eine Krankheit begünstigt?) bis hin zu Sozial- und Naturwissenschaften, um nur einige Beispiele zu nennen. Auf Grund der vielfachen Anwendung ist es wünschenswert und oft sogar nötig (etwa bei sehr großen Datensätzen), solche statistischen Berechnungen automatisiert ausführen zu lassen. Die {\it NAG C Library} ist dabei ein wichtiges Hilfsmittel, stellt sie doch viele der nötigen Funktionen bereits in fertiger Form zur Verfügung, so dass sie in beliebige Anwendungsprogramme integriert werden können -- vorausgesetzt, sie wurden in {\it C}/{\it C++} oder einer anderen unterstützten Programmiersprache geschrieben.
+Es ist natürlich nicht nur im Rahmen der {\it Studentischen Lehrveranstaltungsbewertung} an der {\it RWTH Aachen} interessant, die möglichen Zusammenhänge von Merkmalen festzustellen. Die Anwendungsbereiche der Korrelation und der Regressionanalyse erstrecken sich von der Wirtschaft (Wie wirken sich Werbemaßnahmen auf die Verkaufszahlen eines Produkts aus?) über die Medizin (Durch welche genetischen Veranlagungen wird eine Krankheit begünstigt?) bis hin zu Sozialwissenschaften (Wie wirken sich Bildungsmaßnahmen auf die Leistung von Schülern aus?) und natürlich auch Naturwissenschaften, um nur einige Beispiele zu nennen. Auf Grund der vielfachen Anwendung ist es wünschenswert und oft sogar nötig, solche statistischen Berechnungen automatisiert ausführen zu lassen, z.B. bei sehr großen Datensätzen. Die {\it NAG C Library} ist dabei ein wichtiges Hilfsmittel, stellt sie doch viele Funktionen für statistische Berechnungen bereits in fertiger Form zur Verfügung, so dass sie in beliebige Anwendungsprogramme integriert werden können -- vorausgesetzt, sie wurden in {\it C}/{\it C++} oder einer anderen unterstützten Programmiersprache geschrieben.
 
-\subsection{Beispielanwendung}
-\label{Beispielanwendung}
+Zur Erklärung der implementierten Funktionen wird uns die Dokumentation der {\it NAG C Library} als haupsächliche Quelle dienen, insbesondere die Einleitung zum Kapitel {\it Correlation and Regression Analysis} \cite{nag:intro} sowie die Unterkapitel zu den jeweils vorgestellten Funktionen.
 
-\begin{comment}
-Erklärung der Beispielanwendung.
-Ziel?
-Woher kamen die Daten?
-Referenz aufs Buch?
-\end{comment}
+\subsection{Anwendungsbeispiel}
+
+Weil statistische Beschreibungen und Analysen zwangsläufig Daten voraussetzen, die idealerweise repräsentativ sein sollten, werden wir in dieser Arbeit immer wieder auf den Datensatz {\it Münchner Mietspiegel 2003} zurückgreifen, welcher unter \cite{Fahrmeir2011} zu finden ist. Ein {\it Mietspiegel} dient Mietern, Vermietern und Mietberatungsstellen als Orientierungshilfe bei Mietfragen. Insbesondere lässt sich mit ihm die sog. {\it ortsübliche Vergleichsmiete}, d.h. die Nettomiete einer Wohnung in Abhängigkeit ihrer Größe, Art, Ausstattung, Beschaffenheit und Lage, ermitteln. Der vorliegende Mietspiegel ist ein Ausschnitt aus dem Mietspiegel der Stadt München im Jahr 2003, welchem eine repräsentative Zufallsstichprobe aus der Gesamtheit aller Wohnungen zu Grunde liegt.  Im Datensatz sind insgesamt 2053 Beobachtungen enthalten. Die interessierenden Merkmale wurden von Interviewern mit Hilfe von Fragebögen ermittelt. Welche dies im einzelnen sind, kann der Tabelle auf der folgenden Seite entnommen werden.
+
+Zunächst jedoch noch ein kleiner Exkurs zum in der Tabelle erwähnten {\it Skalenniveau}, welches auch für die folgenden Kapitel von Bedeutung ist. Das Skalenniveau bezieht sich auf den Typ der Ausprägungen des jeweiligen Merkmals: Bilden die Ausprägungen eines Merkmals lediglich unabhängige Kategorien, wird es {\it nominalskaliert} genannt. Ein {\it dichotomes} Merkmal ist ein Sonderfall dieses Typs, der genau zwei Ausprägungen besitzt (im Beispiel immer "`ja"/"`nein"). Lassen sich die Ausprägungen außerdem nach einer logischen Reihenfolge ordnen, liegt ein {\it ordinalskaliertes} Merkmal vor. Können alle Ausprägungen zusätzlich als Zahlen interpretiert werden, deren Differenzen genau messar sind, so ist das Merkmal {\it intervallskaliert}. Besitzen die Ausprägungen schließlich auch noch einen natürlichen Nullpunkt, so dass sich ihr Verhältnis zueinander sinnvoll messen lässt, wird das Merkmal {\it verhältnisskaliert} genannt. Die letzten beiden Typen werden häufig auch als {\it metrisch} zusammengefasst.\\
+
+\noindent {\bf Übersicht der Merkmale}\\
+
+\noindent \begin{tabular}[ht]{|l|l|l|}
+	\hline
+	\textit{Name} & \textit{Beschreibung} & \textit{Skalenniveau}\\
+	\hline \hline
+	nm & Nettomiete in Euro & verhältnisskaliert\\ \hline
+	nmqm & Nettomiete pro Quadratmeter in Euro & verhältnisskaliert\\ \hline
+	wfl & Wohnfläche in Quadratmeter & verhältnisskaliert\\ \hline
+	rooms & Anzahl der Zimmer & verhältnisskaliert\\ \hline
+	bj & Baujahr & intervallskaliert\\ \hline
+	bez & Stadtbezirk & nominalskaliert\\ \hline
+	wohngut & gute Wohnlage & dichotom\\ \hline
+	wohnbest & beste Wohnlage & dichotom\\ \hline
+	ww0 & Warmwasserversorgung & dichotom\\ \hline
+	zh0 & Zentralheizung & dichotom\\ \hline
+	badkach0 & gekacheltes Bad & dichotom\\ \hline
+	badextra & Zusatzausstattung im Bad & dichotom\\ \hline
+	kueche & gehobene Küche & dichotom\\
+	\hline
+\end{tabular}\\\\
+
+\noindent Der Übersichtlichkeit halber werden wir uns in dieser Arbeit auf den folgenden reduzierten Datensatz beziehen, welcher von uns zur Veranschaulichung konkreter Berechnungen zusammengestellt wurde:\\
+
+\noindent {\bf Reduzierter Datensatz}\\
+
+\noindent \begin{tabular}[ht]{|l|l|l|l|l|l|l|l|}
+	\hline
+	\textit{nm} & \textit{nmqm} & \textit{wfl} & \textit{rooms} & \textit{bj} & \textit{bez} & \textit{wohngut} & \textit{wohnbest}\\
+	\hline \hline
+	214,14 & 5,95 & 36 & 2 & 1948 & 17 & 0 & 0\\ \hline
+	406,93 & 6,26 & 65 & 2 & 1966 & 10 & 0 & 0\\ \hline
+	603,34 & 7,64 & 79 & 3 & 1986 & 13 & 1 & 0\\ \hline
+	826,26 & 8,88 & 93 & 3 & 1918 & 5 & 1 &0\\ \hline
+	1000,41 & 9,81 & 102 & 3 & 1918 & 8 & 0 & 0\\ \hline
+	1227,12 & 10,14 & 121 & 5 & 1924 & 9 & 1 & 0\\ \hline
+	1385,12 & 10,82 & 128 & 6 & 1991 & 9 & 1 & 0\\ \hline
+	1661,55 & 11,08 & 150 & 5 & 1966 & 13 & 0 & 0\\
+	\hline
+\end{tabular}
