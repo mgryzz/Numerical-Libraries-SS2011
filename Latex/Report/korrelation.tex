@@ -2,15 +2,250 @@
 
 Der Begriff {\it Korrelation} bezeichnet einen Zusammenhang zwischen zwei oder mehreren Merkmalen. Man sagt auch, dass diese Merkmale {\it korrelieren}. Wie stark dieser Zusammenhang ist, lässt sich messen, indem man verschiedene sog. {\it Korrelationskoeffizienten} berechnet. Im Folgenden werden wir zwei dieser Korrelationskoeffizienten vorstellen und im weiteren Verlauf der Arbeit näher untersuchen, wie ihre Berechnung in den entsprechenden Funktionen der {\it NAG C Library} implementiert ist.
 
-\subsection{Korrelationskoeffizient nach Bravais und Pearson}
+\subsection{Bravais-Pearson-Korrelationskoeffizient}
 
-Der Korrelationskoeffizient $r$ nach Bravais und Pearson (auch {\it empirischer Korrelationskoeffizient} oder {\it Produkt-Moment-Korrelation} genannt) misst die Stärke des \underline{linearen} Zusammenhangs zweier Merkmale. Dabei ist zusätzlich anzumerken, dass beide Merkmale mindestens in {\it intervallskalierter} Form vorliegen müssen, d.h. alle möglichen Merkmalsausprägungen müssen als Zahlen interpretierbar sein, deren Abstände genau messbar sind. Der Wertebereich von $r$ ist $-1 \leq r \leq +1$. Der für zwei Merkmale berechnete Wert von $r$ ist so zu interpretieren, dass $r > 0$ positive, $r < 0$ negative und $r = 0$ keine lineare Korrelation bedeutet. In der {\it NAG C Library} dient die Funktion nag\_corr\_cov zur Berechnung dieses Korrelationskoeffizienten.\\
-Liegen die Merkmale, deren Korrelationsstärke gemessen werden soll, nur in {\it ordinalskalierter} Form vor, d.h. sind alle möglichen Merkmalsausprägungen lediglich nach einer Reihenfolge sortierte Kategorien, kann auf den folgenden Korrelationskoeffizienten zurückgegriffen werden.
+Der {\it Korrelationskoeffizient nach Bravais und Pearson} (auch {\it empirischer Korrelationskoeffizient} oder {\it Produkt-Moment-Korrelation} genannt) misst die Stärke des {\it linearen} Zusammenhangs zweier Merkmale $X$ und $Y$, die mindestens in intervallskalierter Form vorliegen müssen, und deren gegebenen Messwerten $x_1,x_2,...,x_n$ bzw. $y_1,y_2,...,y_n$. Er ist wie folgt definiert:
 
-\subsection{Rangkorrelationskoeffizient nach Spearman}
+\begin{equation*}
+	r=\dfrac{s_{XY}}{s_Xs_Y}=\dfrac{\sum_{i=1}^{n}{(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum_{i=1}^{n}{(x_i-\bar{x})^2\sum_{i=1}^{n}{(y_i-\bar{y})^2}}}},
+\end{equation*}
 
-Der Rangkorrelationskoeffizient $r_{SP}$ nach Spearman misst die Stärke des \underline{mono-}\\\underline{tonen} Zusammenhangs zweier mindestens ordinalskalierter Merkmale, indem die ursprünglichen Merkmalsausprägungen vor der eigentlichen Berechnung in {\it Ränge} transformiert werden. Der eigentliche Rangkorrelationseffizient wird schließlich berechnet, indem der Korrelationskoeffizient nach Bravais und Pearson auf die transformierten Rangpaare angewendet wird. Der Wertebereich von $r_{SP}$ ist entsprechend gleich dem Wertebereich von $r$ und der berechnete Wert analog für die monotone Korrelation zu interpretieren. In der {\it NAG C Library} dient die Funktion nag\_ken\_spe\_corr\_coeff zur Berechnung dieses Korrelationskoeffizienten.
+\noindent Dabei steht $\bar{x}$ bzw. $\bar{y}$ für die {\it arithmetischen Mittelwerte} der Merkmale $X$ und $Y$, $s_{X}$ bzw. $s_{Y}$ für ihre jeweiligen {\it Standardabweichungen} und $s_{XY}$ für ihre {\it Kovarianz}. Diese sind wiederum wie folgt definiert:\\
 
-\subsection{Weiterführende Berechnungen}
+\noindent {\bf Arithmetischer Mittelwert}
+\begin{equation*}
+	\bar{x}=\dfrac{1}{n}\sum_{i=1}^{n}{x_i}=\dfrac{1}{n}(x_1+...+x_n)
+\end{equation*}
 
-Liegt eine Korrelation zwischen zwei Merkmalen vor, ist damit nicht bewiesen, dass auch ein \underline{kausaler} Zusammenhang vorliegt. Das Phänomen der sog. {\it Scheinkorrelation} besagt, dass eine Korrelation zwischen den Merkmale $X$ und $Y$ (z.B. Körpergröße und Wortschatz von Kindern) unter Umständen auf den Einfluss eines weiteren Merkmals $Z$ (z.B. Alter) zurückgeführt werden kann. Dies kann durch die Berechnung der partiellen Korrelation überprüft werden, wozu in der {\it NAG C Library} die Funktion nag\_partial\_corr dient. Diese und ggf. weitere Funktionen werden wir ebenfalls näher betrachten, sofern es der Rahmen dieser Arbeit erlaubt.
+\noindent {\bf Standardabweichung}
+\begin{equation*}
+	s_X=\sqrt{\dfrac{1}{n}\sum_{i=1}^{n}{(x_i-\bar{x})^2}}=\sqrt{\dfrac{1}{n}(x_1-\bar{x})^2+...+(x_n-\bar{x})^2}
+\end{equation*}
+
+\noindent {\bf Kovarianz}
+\begin{equation*}
+	s_{XY}=\dfrac{1}{n}\sum_{i=1}^{n}{(x_i-\bar{x})(y_i-\bar{y})}=\dfrac{1}{n}(x_1-\bar{x})(y_1-\bar{y})+...+(x_n-\bar{x})(y_n-\bar{y})
+\end{equation*}
+
+\noindent Dabei lassen sich $\bar{y}$ und $s_{Y}$ analog zu $\bar{x}$ und $s_{X}$ berechnen. Der gültige Wertebereich von $r$ ist $-1 \leq r \leq +1$ und folgendermaßen zu interpretieren:
+\begin{itemize}
+    \item $r>0$: Positive Korrelation: Es besteht ein gleichsinniger linearer Zusammenhang zwischen den Merkmalen, d.h. alle Paare $(x_i, y_i)$ mit $i=1,...,n$ der Merkmalsausprägungen bilden annähernd eine Gerade mit positiver Steigung.
+    \item $r<0$: Negative Korrelation: Es besteht ein gegensinniger linearer Zusammenhang zwischen den Merkmalen, d.h. alle Paare bilden annähernd eine Gerade mit negativer Steigung.
+    \item $r=0$: Keine Korrelation: Es besteht kein linearer Zusammenhang.
+\end{itemize}
+
+\noindent Liegen die Merkmale, deren Korrelation ermittelt werden soll, nicht in intervallskalierter, sondern nur in ordinalskalierter Form vor, kann auf den Spearman-Korrelationskoeffizienten zurückgegriffen werden (siehe Sektion 2.3).
+
+\subsubsection{NAG-Funktion}
+
+In der {\it NAG C Library} kann der Bravais-Pearson-Korrelationskoeffizient zweier mindestens intervallskalierter Merkmale mit Hilfe der Funktion {\it nag\_corr\_cov()} berechnet werden, welche wir nun näher betrachten werden. Sie ist folgendermaßen spezifiziert:\\
+
+\noindent void nag\_corr\_cov (Integer $n$, Integer $m$, const double $x[]$, Integer $tdx$,\\
+\hspace*{5mm} const Integer $sx[]$, const double $wt[]$, double *$sw$, double $wmean[]$,\\
+\hspace*{5mm} double $std[]$, double $r[]$, Integer $tdr$, double $v[]$, Integer $tdv$,\\
+\hspace*{5mm} NagError *$fail$)\\
+
+\noindent Die Parameter der Funktion sind in Eingabe- und Ausgabe-Parameter unterteilt und werden in den folgenden beiden Tabellen erklärt:\\
+
+\noindent {\bf Eingabe-Parameter}\\
+
+\noindent \begin{tabular}[ht]{|l|l|}
+  	\hline
+  	\textit{Name} & \textit{Beschreibung}\\
+  	\hline \hline
+  	$n$ & Anzahl der Beobachtungen im Datensatz ($n > 1$)\\ \hline
+  	$m$ & Anzahl der Merkmale im Datensatz ($m \geq 1$)\\ \hline
+	$x[n \times tdx]$ & Datenmatrix: $x[i - 1][j - 1]$ enthält die $i$-te Beobachtung\\
+	& des $j$-ten Merkmals\\ \hline
+	$tdx$ & Zeilenlänge der Datenmatrix $x$ ($tdx \geq m$)\\ \hline
+	$sx[m]$ & gibt für jedes Merkmal an, ob es in die Analyse einbezogen\\
+	& wird: einbezogen falls $sx[j-1] > 0$, sonst nicht ($sx[j-1] \geq 0$)\\ \hline
+	$wt[n]$ & gibt für jede Beobachtung ein Gewicht an ($wt[i-1] \geq 0$)\\ \hline
+	$tdr$, $tdv$ & beide analog zu $tdx$\\
+	\hline
+\end{tabular}\\\\
+
+\noindent {\bf Ausgabe-Parameter}\\
+	
+\noindent \begin{tabular}[ht]{|l|l|}
+  	\hline
+  	\textit{Name} & \textit{Beschreibung}\\
+  	\hline \hline
+	$sw$ & Summe der Gewichte falls $wt$ gesetzt, sonst gleich $n$\\ \hline
+  	$wmean[m]$ & Arithmetische Mittelwerte: $wmean[j - 1]$ enthält\\
+  	& den arithmetischen Mittelwert für das $j$-te Merkmal\\ \hline
+  	$std[m]$ & Standardabweichungen: $std[j - 1]$ enthält die\\
+  	& Standardabweichung für das $j$-te Merkmal\\ \hline
+  	$r[m \times tdr]$ & Korrelationsmatrix: $r[j - 1][k - 1]$ enthält den\\
+	& Korrelationskoeffizienten nach Bravais und Pearson\\
+	& für die Merkmale $j$ und $k$\\ \hline
+	$v[m \times tdv]$ & Kovarianzmatrix: $v[j - 1][k - 1]$ enthält die\\
+	& Kovarianz zwischen den Merkmalen $j$ und $k$\\
+  	\hline
+\end{tabular}\\\\
+
+\noindent {\bf Algorithmus}\\
+
+\noindent Der Algorithmus der Funktion berechnet aus der übergebenen Datenmatrix $x$ sukzessive die arithmetischen Mittelwerte (separat), Standardabweichungen (separat) sowie die Kovarianzen (paarweise) für alle Merkmale, die über $sx$ einbezogen wurden, und gibt sie über die jeweiligen Parameter aus. Dabei werden ggf. in $wt$ angegebene Gewichte für die Messwerte der Beobachtungen berücksichtigt (was hier auf Grund der Beschränkung der Arbeit vernachlässigt wird). An den Formeln in Sektion 2.1 lässt sich bereits erkennen, dass eine sukzessive Vorgehensweise nötig ist, da die einzelnen Berechnungen die jeweils vorherige Berechnung voraussetzen und somit aufeinander aufbauen. Abschließend wird für alle einbezogenen Merkmale paarweise der Bravais-Pearson-Korrelationskoeffizient berechnet und als Korrelationsmatrix $r$ ausgegeben.
+
+In der nächsten Sektion wird dies an unserem Beispiel nochmals verdeutlicht.
+
+\subsubsection{Anwendung}
+
+Angenommen, wir wollen feststellen, welche intervall- und verhältnisskalierten Merkmale des Beispieldatensatzes mindestens mittel ($|r|>0,5$) oder sogar stark ($|r|>0,8$) korrelieren. Dazu übergeben wir der Funktion {\it nag\_corr\_cov()} als Eingabe für $x$ den reduzierten Datensatz und beziehen alle in Frage kommenden Merkmale (nämlich die ersten fünf, vgl. Tabelle in Sektion 1.2) über $sx$ ein. Nun berechnet der Algorithmus im ersten Schritt zuerst für jedes Merkmal $X$ separat den arithmetischen Mittelwert, z.B. für die Nettomiete:
+\begin{equation*}
+	\bar{x}=\dfrac{1}{8}(214,14+406,93+603,34+826,26+...+1661,55)=915,61
+\end{equation*}
+
+\noindent Im zweiten Schritt wird ebenfalls für jedes Merkmal $X$ separat die Standardabweichung $s_X$ berechnet:
+\begin{equation*}
+	s_X=\sqrt{\dfrac{1}{8}(214,14-915,61)^2+...+(1661,55-915,61)^2}=466,02
+\end{equation*}
+
+\noindent Im dritten Schritt werden für alle Merkmale $X$ und $Y$ paarweise die Kovarianzen $s_{XY}$ berechnet, in der Kovarianzmatrix $v$ zusammengefasst und ausgegeben. Für Nettomiete und Wohnfläche ergibt sich z.B. folgende Rechnung:
+\begin{equation*}
+	\begin{split}
+		s_{XY}=& \dfrac{1}{8}(214,14-915,61)(36-96,75)+...\\
+		& +(1661,55-915,61)(150-96,75)=18147,94
+	\end{split}
+\end{equation*}
+
+\noindent Im letzten Schritt berechnet der Algorithmus schließlich für alle Merkmale paarweise den Bravais-Pearson-Korrelationskoeffizienten und gibt die zusammengefassten Ergebnisse in der Korrelationsmatrix $r$ aus (hier nun für den gesamten Datensatz, d.h. alle Beobachtungen):
+\begin{equation*}
+	r =
+	\begin{pmatrix}
+		1,00 & 0,47 & {\bf 0,71} & {\bf 0,54} & 0,05\\
+ 		0,47 & 1,00 & -0,23 & -0,27 & 0,29\\
+ 		0,71 & -0,23 & 1,00 & {\bf 0,84} & -0,20\\
+		0,54 & -0,27 & 0,84 & 1,00 & -0,15\\
+  		0,05 &  0,29 & -0,20 & -0,15 & 1,00\\
+	\end{pmatrix}
+\end{equation*}
+
+\noindent An der Korrelationsmatrix lässt sich schließlich ablesen, welche Merkmale mittel bis stark korrelieren: Sowohl die $i$-te Zeile als auch die $i$-te Spalte der Matrix  entsprechen den Korrelationskoeffizienten für das $i$-te Merkmal, gepaart mit allen anderen Merkmalen und sich selbst. Die Matrix ist folglich symmetrisch, weshalb nur die obere Hälfte betrachtet werden muss, und enthält auf der Diagonalen "`perfekte" Korrelationen, da jedes Merkmal natürlich maximal mit sich selbst korreliert. Im Beispiel wurden die mittel bis stark korrelierenden Merkmale markiert: Sowohl Nettomiete und Wohnfläche als auch Wohnfläche und Anzahl der Räume korrelieren stark. Außerdem korrelieren Nettomiete und Anzahl der Räume mittel.
+
+\subsection{Spearman-Rangkorrelationskoeffizient}
+
+Der {\it Rangkorrelationskoeffizient nach Spearman} misst die Stärke des {\it monotonen} Zusammenhangs zweier Merkmale $X$ und $Y$, die in mindestens ordinalskalierter Form vorliegen müssen, indem die ursprünglichen Messwerte vor der eigentlichen Berechnung in {\it Ränge} transformiert werden.
+
+Dabei wird jedem $x_i$ für $i=1,...,n$ als Rang die Zahl der Position zugewiesen, die $x_i$ erhält, wenn man $x_1, x_2, ..., x_n$ der Größe nach ordnet. Für die so geordneten Messwerte $x_{(1)}<x_{(2)}<...<x_{(n)}$ gilt dann $rg(x_{(i)})=i$. Mit jedem $y_i$ für $i=1,...,n$ wird analog verfahren. Aus den ursprünglichen Messwertpaaren $(x_i, y_i)$ ergeben sich somit die neuen Rangpaare $(rg(x_i), rg(y_i))$ für $i=1,...,n$.
+
+Treten Messwerte doppelt auf, ist die Rangvergabe nicht eindeutig. In einem solchen Fall werden deshalb sog. {\it Durchschnittsränge} gebildet, d.h. jedem der betroffenen Messwerte wird als Rang der arithmetische Mittelwert der potentiellen Ränge zugewiesen. Ein Beispiel: In einem Datensatz liegen drei gleiche Merkmalsausprägungen vor, welche die Ränge 5, 6 und 7 belegen könnten. Weil sie jedoch nicht eindeutig der Größe nach angeordnet werden können, erhalten alle drei den Durchschnittsrang $rg=(5+6+7):3=6$.
+
+Der eigentliche Rangkorrelationseffizient wird schließlich ermittelt, indem der Korrelationskoeffizient nach Bravais und Pearson für die transformierten Rangpaare $(rg(x_i), rg(y_i))$ für $i=1,...,n$ berechnet wird. Er ist somit wie folgt definiert:
+
+\begin{equation*}
+    r_{SP}=\dfrac{\sum_{i=1}^{n}{(rg(x_i)-\bar{rg}_X)(rg(y_i)-\bar{rg}_Y)}}{\sqrt{\sum_{i=1}^{n}{(rg(x_i)-\bar{rg}_X)^2\sum_{i=1}^{n}{(rg(y_i)-\bar{rg}_Y)^2}}}},
+\end{equation*}
+
+\noindent wobei $\bar{rg}_X$ und $\bar{rg}_Y$ für die arithmetischen Mittelwerte aller Ränge der Merkmale $X$ und $Y$ stehen. Der gültige Wertebereich von $r_{SP}$ ist gleich dem Wertebereich von $r$ und analog zu interpretieren.
+
+\subsubsection{NAG-Funktion}
+
+In der {\it NAG C Library} kann der Spearman-Korrelationskoeffizient zweier mindestens ordinalskalierter Merkmale mit Hilfe der Funktion {\it nag\_ken\_spe\_corr\_coeff()} berechnet werden. Wie ihr Name schon andeutet, wird mit dieser Funktion ebenfalls der {\it Kendall-Rangkorrelationskoeffizient} berechnet, welcher allerdings auf Grund der Beschränkung dieser Arbeit vernachlässigt wird. Sie ist wie folgt spezifiziert:\\
+
+\noindent void nag\_ken\_spe\_corr\_coeff (Integer $n$, Integer $m$, const double $x[]$, Integer $tdx$,\\
+\hspace*{5mm} const Integer $svar[]$, const Integer $sobs[]$, double $corr[]$, Integer $tdc$,\\
+\hspace*{5mm} NagError *$fail$)\\
+
+\noindent Die Parameter der Funktion sind ebenfalls in Eingabe- und Ausgabe-Parameter unterteilt, die in in den folgenden Tabellen erläutert werden:\\
+
+\noindent {\bf Eingabe-Parameter}\\
+
+\noindent \begin{tabular}[ht]{|l|l|}
+  	\hline
+  	\textit{Name} & \textit{Beschreibung}\\
+  	\hline \hline
+  	$n$ & Anzahl der Beobachtungen im Datensatz ($n > 1$)\\ \hline
+  	$m$ & Anzahl der Merkmale im Datensatz ($m \geq 2$)\\ \hline
+	$x[n \times tdx]$ & Datenmatrix: $x[i - 1][j - 1]$ enthält die $i$-te\\
+	& Beobachtung des $j$-ten Merkmals\\ \hline
+	$tdx$ & Zeilenlänge der Datenmatrix $x$ ($tdx \geq m$)\\ \hline
+	$svar[m]$ & gibt für jedes Merkmal an, ob es in die Analyse\\
+	& einbezogen wird: einbezogen falls $svar[j-1] > 0$,\\
+	& sonst nicht ($svar[j-1] \geq 0$)\\ \hline
+	$sobs[n]$ & gibt für jede Beobachtung an, ob sie in die Analyse\\
+	& einbezogen wird:  einbezogen falls $sobs[i-1] > 0$, \\
+	& sonst nicht ($sobs[i-1] \geq 0$)\\ \hline
+	$tdc$ & analog zu $tdx$\\
+	\hline
+\end{tabular}\\\\
+
+\noindent {\bf Ausgabe-Parameter}\\
+	
+\noindent \begin{tabular}[ht]{|l|l|}
+  	\hline
+  	\textit{Name} & \textit{Beschreibung}\\
+  	\hline \hline
+  	$corr[m \times tdc]$ & Korrelationsmatrix: $r[j - 1][k - 1]$ enthält den\\
+	& Korrelationskoeffizienten nach Spearman für die\\
+	& Merkmale $j$ und $k$\\
+  	\hline
+\end{tabular}\\\\
+
+\noindent {\bf Algorithmus}\\
+
+\noindent Der Algorithmus der Funktion berechnet für die einbezogenen Messwerte der übergebenen Datenmatrix $x$ die entsprechenden Ränge und gibt die neue, transformierte Datenmatrix $x'$ an die oben bereits erläuterte Funktion {\it nag\_corr\_cov()} weiter, welche auf deren Grundlage für alle einbezogenen Merkmale paarweise den Spearman-Rangkorrelationskoeffizienten berechnet. Abschließend wird die entsprechende Rückgabe als Korrelationsmatrix $corr$ ausgegeben.
+
+Dies wird in der nächsten Sektion wieder an unserem Beispiel verdeutlicht.
+
+\subsubsection{Anwendung}
+
+Leider sind im Beispieldatensatz keine ordinalskalierten Merkmale vorhanden, so dass wir wieder feststellen werden, welche intervall- und verhältnisskalierten Merkmale korrelieren. Darüber hinaus können wir anschließend die ermittelten Spearman-Rangkorrelationskoeffizienten mit den bereits für die gleichen Merkmale berechneten Bravais-Pearson-Korellationskoeffizienten vergleichen. Dazu übergeben wir der Funktion {\it nag\_ken\_spe\_corr\_coeff()} als Eingabe für $x$ den reduzierten Datensatz und beziehen alle in Frage kommenden Merkmale (wieder die ersten fünf) über $svar$ ein. Nun berechnet der Algorithmus im zuerst für jeden Messwert $x_i$ jedes Merkmals $X$ den entsprechenden Rang $rg(x_i)$, z.B. für das Baujahr:
+\begin{equation*}
+	\begin{split}
+		& x_{(1)}=1918 \Rightarrow rg(1918)=(1+2):2=1,5\\
+		& x_{(2)}=1918 \Rightarrow rg(1918)=(1+2):2=1,5\\
+		& x_{(3)}=1924 \Rightarrow rg(1924)=3\\
+		& x_{(4)}=1948 \Rightarrow rg(1948)=4\\
+		& x_{(5)}=1966 \Rightarrow rg(1966)=(5+6):2=5,5\\
+		& x_{(6)}=1966 \Rightarrow rg(1966)=(5+6):2=5,5\\
+		& x_{(7)}=1986 \Rightarrow rg(1986)=7\\
+		& x_{(8)}=1991 \Rightarrow rg(1991)=8
+	\end{split}
+\end{equation*}
+
+\noindent Für die gesamte Datenmatrix ergibt sich:
+\begin{equation*}
+	x =
+	\begin{pmatrix}
+		214,14 & 5,95 & 36 & 2 & 1948\\
+		406,93 & 6,26 & 65 & 2 & 1966\\
+		603,34 & 7,64 & 79 & 3 & 1986\\
+		826,26 & 8,88 & 93 & 3 & 1918\\
+		1000,41 & 9,81 & 102 & 3 & 1918\\
+		1227,12 & 10,14 & 121 & 5 & 1924\\
+		1385,12 & 10,82 & 128 & 6 & 1991\\
+		1661,55 & 11,08 & 150 & 5 & 1966\\
+	\end{pmatrix}
+	\Rightarrow
+	x' =
+	\begin{pmatrix}
+		1 & 1 & 1 & 1,5 & 4\\
+		2 & 2 & 2 & 1,5 & 5,5\\
+		3 & 3 & 3 & 4 & 7\\
+		4 & 4 & 4 & 4 & 1,5\\
+		5 & 5 & 5 & 4 & 1,5\\
+		6 & 6 & 6 & 6,5 & 3\\
+		7 & 7 & 7 & 8 & 8\\
+		8 & 8 & 8 & 6,5 & 5,5\\
+	\end{pmatrix}
+\end{equation*}
+
+\noindent Danach wird die neue $x'$ an die Funktion {\it nag\_corr\_cov()} weitergegeben, welche die Korrelationsmatrix $r$ berechnet und zurückgibt. Diese wird schließlich als Korrelationsmatrix $corr$ mit den Spearman-Rangkorrelationskoeffizienten für alle Merkmalspaare ausgegeben (hier nun für den gesamten Datensatz, d.h. alle Beobachtungen):
+\begin{equation*}
+	corr =
+	\begin{pmatrix}
+		1 & 0,46 & {\bf 0,70} & {\bf 0,55} & 0,13\\
+		0,33 & 1 & -0,23 & -0,28 & 0,30\\
+		0,52 & -0,16 & 1 & {\bf 0,86} & -0,11\\
+		0,43 & -0,21 & 0,74 & 1 & -0,12\\
+		0,10 & 0,21 & -0,08 & -0,09 & 1\\
+	\end{pmatrix}
+\end{equation*}
+
+\noindent Hierbei ist zu beachten, dass die Spearman-Rangkorrelationskoeffizienten nur in oberen Hälfte abgelesen werden können. In der unteren Hälfte sind die automatisch gleichzeitig ermittelten Kendall-Rangkorrelationskoeffizienten zu sehen. Wie offensichlich zu erkennen ist, liegen die berechneten Rangkorrelationskoeffizienten nach Spearman insgesamt recht nah an den Korrelationskoeffizienten nach Bravais und Pearson (vgl. Matrix $r$ in Sektion 2.1.2).
+
+\subsection{Partielle Korrellation}
+
+An dieser Stelle sei noch erwähnt, dass eine vorhandene Korrelation zwischen zwei Merkmalen nicht darauf schließen lässt, ob auch ein {\it kausaler} Zusammenhang vorliegt. Das Phänomen der sog. {\it Scheinkorrelation} besagt, dass eine Korrelation zwischen den Merkmalen $X$ und $Y$ (z.B. Körpergröße und Wortschatz von Kindern) unter Umständen auf den Einfluss eines weiteren Merkmals $Z$ (z.B. Alter) zurückgeführt werden kann. Dies kann durch die Berechnung des partiellen Korrelationskoeffizienten von $X$ und $Y$ unter $Z$ überprüft werden, wozu in der {\it NAG C Library} die Funktion {\it nag\_partial\_corr()} dient. Diese Funktion werden wir hier allerdings nicht näher betrachten, da es den Rahmen dieser Arbeit sprengen würde.
