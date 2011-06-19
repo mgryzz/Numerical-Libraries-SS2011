@@ -93,7 +93,8 @@ Für eine vollständige Beschreibung der Berechnungen mit Gewichtung sei der Les
 
 % TODO: Vielleicht umbenennen in NAG Library Funktion oder so?
 \subsubsection{Anwendung}
- 
+\label{sec:sim_reg_anwendung}
+
 Nach der Beschreibung der Berechnung der einfachen linearen Regression wollen wir nun auf die Anwendung mittels der Funktion nag\_simple\_linear\_regression eingehen.
 Die Funktionsdeklaration ist in Abbildung \ref{fig:nag_simple_linear} zu sehen.
 \begin{figure}[t]
@@ -125,7 +126,8 @@ Es sagt aus, ein wie großer Anteil einer Variation des abhängigen Merkmals dur
 Definiert ist es als Quadrat der Korrellation $R^2 = r_{XY}^2$ und nimmt daher Werte zwischen 0 und 1 an.
 Ist der Wert niedrig, deutet dies auf ein schlechtes Regressionsmodell hin, da der Wert der abhängigen Variable dann stak von anderen, nicht beachteten, Einflüßen abhängig ist.
 Zusätzlich wird noch die Summe der Fehlerquadrate (der minimierte Wert) in \lstinline{*rss} geschrieben.
-Falls diese Summe sehr groß ist, weist das darauf hin, dass die Regressionsfunktion eine zu niedrige komplexität haben könnte, um den Zusammenhang zwischen Regressor und Regressand hinreichend abzubilden.
+Falls diese Summe sehr groß ist, weist das darauf hin, dass die Regressionsfunktion eine zu niedrige Komplexität haben könnte, um den Zusammenhang zwischen Regressor und Regressand hinreichend abzubilden.
+Zuletzt gibt die Funktion über \lstinline{*fail} einen Fehler vom Typ \lstinline{NagError} aus, falls die Eingabeparameter falsch gesetzt wurde, oder das SVD Verfahren nicht konvergiert.
 
 % TODO: Erwähnen, dass Beispielaufruf in Beispielprogramm verfügbar ist.
 
@@ -167,7 +169,21 @@ Die multiple Regression ist zunächst einmal eine Erweiterung der einfachen Regr
 \end{equation}
 %TODO: Gleichung und Variablen erklären
 
-
+\begin{figure}[t]
+  \centering
+  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
+    \subfloat[][Subfloat 1]{
+      \includegraphics[width=0.7\textwidth]{figures/nm_wfl_distribution}
+      \label{fig:nm_wfl_distributions:normal}
+    }
+    \subfloat[][Subfloat 2]{
+      \includegraphics[width=0.7\textwidth]{figures/nm_wfl_distribution_log}
+      \label{fig:nm_wfl_distributions:log}
+    }
+    \caption{Global caption}
+  \end{narrow}
+  \label{fig:nm_wfl_distributions}
+\end{figure}
 
 \subsubsection{NAG Algorithmus}
 
@@ -192,10 +208,12 @@ In der NAG-Bibliothek wird die multiple Regression hauptsächlich durch die Funk
   \Vert X\beta - y \Vert_2 = \Vert Q^T X \beta - Q^T y \Vert_2 = \Vert R \beta - c \Vert_2 + \Vert d \Vert_2
 \end{equation}
 
+\subsubsection{Ergebnis}
+
 \subsubsection{Anwendung}
 
-
-
+Bei Benutzung der \naglib kann die multiple Regression durch die Funktion nag\_regsn\_mult\_linear berechnet werden.
+Die Deklaration dieser Methode wird in Abbildung \ref{fig:nag_multiple_linear} gezeigt.
 \begin{figure}[t]
   \centering
 \begin{lstlisting}
@@ -211,31 +229,37 @@ void nag_regsn_mult_linear (Nag_IncludeMean mean, Integer n,
   \label{fig:nag_multiple_linear}
 \end{figure}
 
-Zusatzlich zu nag\_regsn\_mult\_linear stellt die \naglib einige andere Funktionen zu Verfügung, die es ermöglichen das Regressionsmodell zu ändern, ohne die gesamte Regression erneut zu berechnen.
-Diese Funktionen nehmen neben anderen Argumenten die QR-Zerlegung (welche von der Hauptfunktion als Zwischenergebnis ausgegeben wird), die zugehörigen Informationen welche im Parameter $p$ gespeichert wurden und die Beobachtungsmatrix $X$ und berechnen daraus aktualisierte Werte für die obere rechte Dreiecksmatrix $R$ und den Vektor $c$.
+Da die Methode sehr viele Parameter (24) hat, werden wir uns hier auf die Interessantesten beschränken.
+Einige Parameter sind zudem äquivalent zu Parametern der Funktion nag\_simple\_linear\_regression, welche bereits in Sektion \ref{sec:sim_reg_anwendung} behandelt wurden und können auch genau so verwendet werden.
+Diese sind: \lstinline{mean}, \lstinline{n}, \lstinline{x[]}, \lstinline{y[]}, \lstinline{wt[]}, \lstinline{*rss} und \lstinline{*fail}.
+Für \lstinline{x[]} muss in diesem Fall verständlicherweise eine Matrix statt eines Vektors angegeben werden und die zulässigen Werte für \lstinline{mean} sind Nag\_MeanInclude (konstanten Term miteinbeziehen) und Nag\_MeanZero (kein konstanter Term).
+
+Zu den genannten Parametern kommen weitere Eingabeparameter hinzu, mit denen die Regressoren aus den Merkmalen im Datensatz ausgewählt werden können.
+Die Gesamtzahl an unabhängigen Variablen im Datensatz wird in \lstinline{m} gesetzt.
+Im Vektor \lstinline{sx[]} der Länge $m$ wird dann für alle Regressoren ein Wert $>0$ eingetragen, alle anderen Felder erhalten eine Null.
+Die Anzahl der Regressoren muss zusätzlich in \lstinline{ip} gegeben werden.
+Für \lstinline{tol} muss zudem ein Toleranzwert angegeben werden, der bestimmt, wie groß der zwischen zwei Zahlen sein darf, damit diese im Algorithmus noch als gleich groß behandelt werden. 
+Das hat vor allem Auswirkungen auf den Rang der unabhängigen Variablen und beeinflusst damit, ob das SVD-Verfahren zum Einsatz kommt (Falls \lstinline{tol=0} verwendet wird ist dies nie der Fall).
+
+Die Ausgabeparameter sind großteils von denen der einfachen Regressionsfunktion verschieden.
+Am wichtigsten ist \lstinline{b[]}, welcher die berechneten Koeffizienten $\beta_0, \beta_1, \dots$ enthält.
+Wie zuvor werden auch hier die zugehörigen Standardfehler in \lstinline{se[]} zurückgegeben.
+Dazu kommen nun noch die Residuen für jede Beobachtung im Datensatz in \lstinline{res[]}, welche es einfach machen Ausreißer zu identifizieren.
+Nach der Regression stehen außerdem Informationen zu den Verhältnissen der Regressoren untereinander in Form einer Kovarianzmatrix (\lstinline{cov}) zur Verfügung.
+Diese enthält die Varianzen der Merkmale auf der Diagonalen und zudem alle möglich Kombinationen an Kovarianzen, was zum Beispiel ein schnelle Berechnung der Pearson-Korrelation ermöglicht (siehe auch Sektion \ref{sec:corr_per}).
+Zuletzt geben \lstinline{*rank} und \lstinline{*svd} noch den Rang der Regressoren an und ob bei der Berechnung die Singulärwertzerlegung benutzt wurde.
+\\
+
+Zusätzlich zu nag\_regsn\_mult\_linear stellt die \naglib einige andere Funktionen zu Verfügung, die es ermöglichen das Regressionsmodell zu ändern, ohne die gesamte Regression erneut zu berechnen.
+Diese Funktionen nehmen neben anderen Argumenten die QR-Zerlegung (welche von der Hauptfunktion als Zwischenergebnis in \lstinline{q[]} ausgegeben wird), die zugehörigen Informationen welche im Ausgabeparameter \lstinline{p[]} gespeichert wurden und die Beobachtungsmatrix $X$ und berechnen daraus aktualisierte Werte für die obere rechte Dreiecksmatrix $R$ und den Vektor $c$.
 Im Gegensatz zu einer erneuten Berechnung mittels nag\_regsn\_mult\_linear hat dies den Vorteil, dass durch die Benutzung eines bereits bekannten Zwischenergebnisses Rechenzeit eingespart werden kann.
 So kann der Benutzer beispielsweise mit nag\_regsn\_mult\_linear\_addrem\_obs neue Beobachtungen zum Modell hinzufügen oder sie entfernen.
-Mittels nag\_regsn\_mult\_linear\_delete\_var und nag\_regsn\_mult\_linear\_add\_var werden aus dem Modell herausgenommen bzw. hinzugefügt, wobei die Beobachtungen im letzteren Fall schon in $X$ enthalten sein sollten.
+Mit den Methoden nag\_regsn\_mult\_linear\_delete\_var und nag\_regsn\_mult\_linear\_add\_var werden aus dem Modell herausgenommen bzw. hinzugefügt, wobei die Beobachtungen im letzteren Fall schon in $X$ enthalten sein sollten.
 Zusätzlich dazu ist es auch noch möglich die abhängige Variable zu tauschen (nag\_regsn\_mult\_linear\_newyvar).
 
 Nach Anwendung dieser Funktionen können die neuen Regressionskoeffizienten $\beta_0, \beta_1, \dots$ durch einen Aufruf von nag\_regsn\_mult\_linear\_upd\_model unter Angabe von $R$ und $c$ erhalten werden.
 Die einzelnen Funktionen werden in dieser Arbeit nicht einzelnd diskutiert, weitere Informationen sind aber unter \citep{nag:contents} verfügbar.
 
-\begin{figure}[t]
-  \centering
-  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
-    \subfloat[][Subfloat 1]{
-      \includegraphics[width=0.7\textwidth]{figures/nm_wfl_distribution}
-      \label{fig:nm_wfl_distributions:normal}
-    }
-    \subfloat[][Subfloat 2]{
-      \includegraphics[width=0.7\textwidth]{figures/nm_wfl_distribution_log}
-      \label{fig:nm_wfl_distributions:log}
-    }
-    \caption{Global caption}
-  \end{narrow}
-  \label{fig:nm_wfl_distributions}
-\end{figure}
 
 \begin{figure}[t]
   \centering
