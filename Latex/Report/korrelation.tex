@@ -1,6 +1,6 @@
 \section{Korrelation}
 
-Der Begriff {\it Korrelation} bezeichnet einen Zusammenhang zwischen zwei oder mehreren Merkmalen. Man sagt auch, dass diese Merkmale {\it korrelieren}. Wie stark dieser Zusammenhang ist, lässt sich messen, indem man verschiedene sog. {\it Korrelationskoeffizienten} berechnet. Im Folgenden werden wir zwei dieser Korrelationskoeffizienten vorstellen und im weiteren Verlauf der Arbeit näher untersuchen, wie ihre Berechnung in den entsprechenden Funktionen der {\it NAG C Library} implementiert ist.
+Der Begriff {\it Korrelation} bezeichnet einen Zusammenhang zwischen zwei oder mehreren Merkmalen. Man sagt auch, dass diese Merkmale {\it korrelieren}. Wie stark dieser Zusammenhang ist, lässt sich messen, indem man verschiedene sog. {\it Korrelationskoeffizienten} berechnet. Im Folgenden werden wir zwei dieser Korrelationskoeffizienten mit Rückgriff auf Fahrmeir et al. \cite{Fahrmeir2010} vorstellen und im weiteren Verlauf der Arbeit näher untersuchen, wie ihre Berechnung in den entsprechenden Funktionen der {\it NAG C Library} implementiert ist und diese angewendet werden kann.
 
 \subsection{Bravais-Pearson-Korrelationskoeffizient}
 \label{sec:corr_per}
@@ -39,7 +39,7 @@ Der {\it Korrelationskoeffizient nach Bravais und Pearson} (auch {\it empirische
 
 \subsubsection{NAG-Funktion}
 
-In der {\it NAG C Library} kann der Bravais-Pearson-Korrelationskoeffizient zweier mindestens intervallskalierter Merkmale mit Hilfe der Funktion {\it nag\_corr\_cov()} berechnet werden, welche wir nun näher betrachten werden. Sie ist folgendermaßen spezifiziert:\\
+In der {\it NAG C Library} kann der Bravais-Pearson-Korrelationskoeffizient zweier mindestens intervallskalierter Merkmale mit Hilfe der Funktion {\it nag\_corr\_cov()} berechnet werden, welche wir nun unter Berücksichtigung der Dokumentation \cite{nag:g02bxc} näher betrachten werden. Sie ist folgendermaßen spezifiziert:\\
 
 \noindent void nag\_corr\_cov (Integer $n$, Integer $m$, const double $x[]$, Integer $tdx$,\\
 \hspace*{5mm} const Integer $sx[]$, const double $wt[]$, double *$sw$, double $wmean[]$,\\
@@ -127,7 +127,7 @@ Angenommen, wir wollen feststellen, welche intervall- und verhältnisskalierten 
 
 \subsection{Spearman-Rangkorrelationskoeffizient}
 
-Der {\it Rangkorrelationskoeffizient nach Spearman} misst die Stärke des {\it monotonen} Zusammenhangs zweier Merkmale $X$ und $Y$, die in mindestens ordinalskalierter Form vorliegen müssen, indem die ursprünglichen Messwerte vor der eigentlichen Berechnung in {\it Ränge} transformiert werden.
+Der {\it Rangkorrelationskoeffizient nach Spearman} misst die Stärke des {\it monotonen} Zusammenhangs zweier Merkmale $X$ und $Y$, die in mindestens ordinalskalierter Form vorliegen müssen, indem die ursprünglichen Messwerte vor der eigentlichen Berechnung in {\it Ränge} transformiert werden \cite{Fahrmeir2010}.
 
 Dabei wird jedem $x_i$ für $i=1,...,n$ als Rang die Zahl der Position zugewiesen, die $x_i$ erhält, wenn man $x_1, x_2, ..., x_n$ der Größe nach ordnet. Für die so geordneten Messwerte $x_{(1)}<x_{(2)}<...<x_{(n)}$ gilt dann $rg(x_{(i)})=i$. Mit jedem $y_i$ für $i=1,...,n$ wird analog verfahren. Aus den ursprünglichen Messwertpaaren $(x_i, y_i)$ ergeben sich somit die neuen Rangpaare $(rg(x_i), rg(y_i))$ für $i=1,...,n$.
 
@@ -143,7 +143,7 @@ Der eigentliche Rangkorrelationseffizient wird schließlich ermittelt, indem der
 
 \subsubsection{NAG-Funktion}
 
-In der {\it NAG C Library} kann der Spearman-Korrelationskoeffizient zweier mindestens ordinalskalierter Merkmale mit Hilfe der Funktion {\it nag\_ken\_spe\_corr\_coeff()} berechnet werden. Wie ihr Name schon andeutet, wird mit dieser Funktion ebenfalls der {\it Kendall-Rangkorrelationskoeffizient} berechnet, welcher allerdings auf Grund der Beschränkung dieser Arbeit vernachlässigt wird. Sie ist wie folgt spezifiziert:\\
+In der {\it NAG C Library} kann der Spearman-Korrelationskoeffizient zweier mindestens ordinalskalierter Merkmale mit Hilfe der Funktion {\it nag\_ken\_spe\_corr\_coeff()} berechnet werden \cite{nag:g02brc}. Wie ihr Name schon andeutet, wird mit dieser Funktion ebenfalls der {\it Kendall-Rangkorrelationskoeffizient} berechnet, welcher allerdings auf Grund der Beschränkung dieser Arbeit vernachlässigt wird. Sie ist wie folgt spezifiziert:\\
 
 \noindent void nag\_ken\_spe\_corr\_coeff (Integer $n$, Integer $m$, const double $x[]$, Integer $tdx$,\\
 \hspace*{5mm} const Integer $svar[]$, const Integer $sobs[]$, double $corr[]$, Integer $tdc$,\\
@@ -186,7 +186,7 @@ In der {\it NAG C Library} kann der Spearman-Korrelationskoeffizient zweier mind
 
 \noindent {\bf Algorithmus}\\
 
-\noindent Der Algorithmus der Funktion berechnet für die einbezogenen Messwerte der übergebenen Datenmatrix $x$ die entsprechenden Ränge und gibt die neue, transformierte Datenmatrix $x'$ an die oben bereits erläuterte Funktion {\it nag\_corr\_cov()} weiter, welche auf deren Grundlage für alle einbezogenen Merkmale paarweise den Spearman-Rangkorrelationskoeffizienten berechnet. Abschließend wird die entsprechende Rückgabe als Korrelationsmatrix $corr$ ausgegeben.
+\noindent Der Algorithmus der Funktion berechnet für die einbezogenen Messwerte der übergebenen Datenmatrix $x$ die entsprechenden Ränge und ermittelt auf Grundlage der neuen, transformierten Datenmatrix $x'$ analog zur oben bereits erläuterten Funktion {\it nag\_corr\_cov()} für alle einbezogenen Merkmale paarweise den Spearman-Rangkorrelationskoeffizienten. Abschließend werden die Ergebnisse zusammengefasst als Korrelationsmatrix $corr$ ausgegeben.
 
 Dies wird in der nächsten Sektion wieder an unserem Beispiel verdeutlicht.
 
@@ -233,7 +233,7 @@ Leider sind im Beispieldatensatz keine ordinalskalierten Merkmale vorhanden, so 
 	\end{pmatrix}
 \end{equation*}
 
-\noindent Danach wird die neue $x'$ an die Funktion {\it nag\_corr\_cov()} weitergegeben, welche die Korrelationsmatrix $r$ berechnet und zurückgibt. Diese wird schließlich als Korrelationsmatrix $corr$ mit den Spearman-Rangkorrelationskoeffizienten für alle Merkmalspaare ausgegeben (hier nun für den gesamten Datensatz, d.h. alle Beobachtungen):
+\noindent Danach wird aus der neuen Datenmatrix $x'$ analag zur Funktion {\it nag\_corr\_cov()} die Korrelationsmatrix $r$ berechnet. Diese wird schließlich als Korrelationsmatrix $corr$ mit den Spearman-Rangkorrelationskoeffizienten für alle Merkmalspaare ausgegeben (hier nun für den gesamten Datensatz, d.h. alle Beobachtungen):
 \begin{equation*}
 	corr =
 	\begin{pmatrix}
@@ -249,4 +249,4 @@ Leider sind im Beispieldatensatz keine ordinalskalierten Merkmale vorhanden, so 
 
 \subsection{Partielle Korrellation}
 
-An dieser Stelle sei noch erwähnt, dass eine vorhandene Korrelation zwischen zwei Merkmalen nicht darauf schließen lässt, ob auch ein {\it kausaler} Zusammenhang vorliegt. Das Phänomen der sog. {\it Scheinkorrelation} besagt, dass eine Korrelation zwischen den Merkmalen $X$ und $Y$ (z.B. Körpergröße und Wortschatz von Kindern) unter Umständen auf den Einfluss eines weiteren Merkmals $Z$ (z.B. Alter) zurückgeführt werden kann. Dies kann durch die Berechnung des partiellen Korrelationskoeffizienten von $X$ und $Y$ unter $Z$ überprüft werden, wozu in der {\it NAG C Library} die Funktion {\it nag\_partial\_corr()} dient. Diese Funktion werden wir hier allerdings nicht näher betrachten, da es den Rahmen dieser Arbeit sprengen würde.
+An dieser Stelle sei noch erwähnt, dass eine vorhandene Korrelation zwischen zwei Merkmalen nicht darauf schließen lässt, ob auch ein {\it kausaler} Zusammenhang vorliegt. Das Phänomen der sog. {\it Scheinkorrelation} besagt, dass eine Korrelation zwischen den Merkmalen $X$ und $Y$ (z.B. Körpergröße und Wortschatz von Kindern) unter Umständen auf den Einfluss eines weiteren Merkmals $Z$ (z.B. Alter) zurückgeführt werden kann. Dies kann durch die Berechnung des partiellen Korrelationskoeffizienten von $X$ und $Y$ unter $Z$ überprüft werden, wozu in der {\it NAG C Library} die Funktion {\it nag\_partial\_corr()} dient \cite{nag:contents}. Diese Funktion werden wir hier allerdings nicht näher betrachten, da es den Rahmen dieser Arbeit sprengen würde.
