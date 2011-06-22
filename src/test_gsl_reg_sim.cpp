@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <gsl/gsl_fit.h>
 
@@ -14,16 +15,13 @@ int main (int argc, char* argv[])
 
   // Variables
   int iterations = 100;
+  int x_size = 2;
+  int y_size = 10;
+  bool read_matrix = false;
+  char *filename = "";
   Timer timer;
 
-  // Processing input parameters
-  int processed = 1;
-  while(processed < argc){
-    string option = argv[processed];
-    if(option == "-i"){
-      cout << "-i AAAAActivated!" << endl;
-    }
-  }
+  parse_arguments(argc, argv, &iterations, &read_matrix, &filename);
   
   cout << "Starting Speedtest of gsl_fit_linear!" << endl;
 

@@ -1,5 +1,8 @@
-CC = icc
-CXX = icpc
+#CC = icc
+#CXX = icpc
+
+CC = gcc
+CXX = g++
 
 GSLLIBS = -L/usr/local/lib -lgsl -lgslcblas -lguide -lpthread 
 GSLINCS = -I/usr/local/include

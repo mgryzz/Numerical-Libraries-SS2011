@@ -71,3 +71,71 @@ double string_to_double( const string& s )
     return 0;
   return x;
 } 
+
+void print_usage(){
+  cout << "Valid Parameters:" << endl
+       << "\t" << "-i" << endl
+       << "\t\t" << "Anzahl der auszuführenden Iterationen" << endl
+       << "\t" << "-f" << endl
+       << "\t\t" << "Hier kann eine csv-Datei angegeben werden, die die Beobachtungswerte für den Test enthält. Falls dieser Parameter nicht angegeben wird, wird eine Zufallsmatrix erstellt." << endl;
+}
+
+void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix, char *filename,
+		     int *xs, int *ys){
+  // Processing input parameters
+  int processed = 1;
+  while(processed < argc){
+    string option = argv[processed];
+    
+    // Hilfe ausgeben
+    if(option == "--help" || option == "-h"){
+      print_usage();
+      exit(0);
+    }
+    // Anzahl iterationen
+    else if(option == "-i"){
+      if(argc >= processed+2){
+	(*iterations) = argv[processed+1];
+	processed += 2;
+      }else{
+	cerr << "Parsing input arguments failed!" << endl;
+	print_usage();
+	exit(1);
+      }
+    }
+    // Eingabematrix
+    else if(option == "-f"){
+      if(argc >= processed+2){
+	(*read_matrix) = true;
+	(*filename) = argv[processed+1];
+	processed += 2;
+      }else{
+	cerr << "Parsing input arguments failed!" << endl;
+	print_usage();
+	exit(1);
+      }
+    }
+    // Größe der Beobachtungsmatrix
+    else if(option == "-xs"){
+      if(argc >= processed+2){
+	(*xs) = argv[processed+1];
+	processed += 2;
+      }else{
+	cerr << "Parsing input arguments failed!" << endl;
+	print_usage();
+	exit(1);
+      }
+    }
+    else if(option == "-ys"){
+      if(argc >= processed+2){
+	(*ys) = argv[processed+1];
+	processed += 2;
+      }else{
+	cerr << "Parsing input arguments failed!" << endl;
+	print_usage();
+	exit(1);
+      }
+    }
+  }
+}
+
