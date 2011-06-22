@@ -21,10 +21,14 @@ void Timer::stop(){
 
   long add_sec = this->_end.tv_sec - _start.tv_sec;
   long add_usec = this->_end.tv_usec - _start.tv_usec;
+  
+  if(add_usec < 0){
+    add_usec += 1000000;
+    add_sec--;
+  }
 
   this->_time_usec += add_usec;
   this->_time_sec += add_sec;
-
 
   // Überlauf bei den Mikrosekunden?
   if(this->_time_usec > 1000000){
