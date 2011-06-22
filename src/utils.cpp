@@ -80,7 +80,7 @@ void print_usage(){
        << "\t\t" << "Hier kann eine csv-Datei angegeben werden, die die Beobachtungswerte für den Test enthält. Falls dieser Parameter nicht angegeben wird, wird eine Zufallsmatrix erstellt." << endl;
 }
 
-void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix, char *filename,
+void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix, string *filename,
 		     int *xs, int *ys){
   // Processing input parameters
   int processed = 1;
@@ -107,6 +107,7 @@ void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix,
     else if(option == "-f"){
       if(argc >= processed+2){
 	(*read_matrix) = true;
+	// TODO: hier char* in String umwandeln
 	(*filename) = argv[processed+1];
 	processed += 2;
       }else{

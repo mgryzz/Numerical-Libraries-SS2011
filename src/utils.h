@@ -33,5 +33,5 @@ double string_to_double( const std::string& s );
  * Falls ein Parameter nicht angegeben wurde, wird der Wert der Variablen nicht geändert,
  * daher sollten alle Variablen mit Standartwerten initialisiert werden.
  */ 
-void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix, char *filename,
+void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix, string *filename,
 		     int *xs, int *ys);
