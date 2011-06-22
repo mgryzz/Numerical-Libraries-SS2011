@@ -17,5 +17,18 @@ class Timer{
   void stop();
   void reset();
 
+  /**
+   * Gibt einen lesbaren String mit der Laufzeit aus.
+   * 
+   * Für die Ausgabe auf der Konsole
+   */
   std::string getTimeString();
+  
+  /**
+   * Gibt die Laufzeit als einfache Zahl in Mikro- oder Millisekunden aus.
+   *
+   * Für die Ausgabe in eine Datei.
+   */
+  std::string getTimeString_ms();
+  std::string getTimeString_us();
 };

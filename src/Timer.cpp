@@ -50,3 +50,19 @@ string Timer::getTimeString(){
 
   return o.str();
 }
+
+string Timer::getTimeString_ms(){
+  ostringstream o;
+
+  o << this->_time_sec*1000 + this->_time_usec/1000;
+
+  return o.str();
+}
+
+string Timer::getTimeString_us(){
+  ostringstream o;
+
+  o << this->_time_sec*1000000 + this->_time_usec;
+
+  return o.str();
+}
