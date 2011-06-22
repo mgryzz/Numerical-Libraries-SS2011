@@ -12,6 +12,8 @@
 \usepackage{hyperref}
 \usepackage{verbatim}
 \usepackage[lofdepth,lotdepth]{subfig} 
+\usepackage{xspace} % Für dynamische Zwischenräume
+\usepackage{eurosym} % Für das €-Symbol
 
 \bibliographystyle{plainnat}
 
@@ -19,6 +21,8 @@
 \newcommand{\refsec}[1]{Sektion~\ref{#1}}
 \newcommand{\refeqn}[1]{Gleichung~(\ref{#1})}
 \newcommand{\reffig}[1]{Abbildung~\ref{#1}}
+
+\newcommand{\naglib}{{\it NAG C Library}\xspace}
 
 \newenvironment{narrow}[2]{% Für extra breite Bilder
   \begin{list}{}{%
