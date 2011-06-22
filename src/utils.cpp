@@ -77,11 +77,18 @@ void print_usage(){
        << "\t" << "-i" << endl
        << "\t\t" << "Anzahl der auszuführenden Iterationen" << endl
        << "\t" << "-f" << endl
-       << "\t\t" << "Hier kann eine csv-Datei angegeben werden, die die Beobachtungswerte für den Test enthält. Falls dieser Parameter nicht angegeben wird, wird eine Zufallsmatrix erstellt." << endl;
+       << "\t\t" << "Hier kann eine csv-Datei angegeben werden, die die Beobachtungswerte für den Test enthält. Falls dieser Parameter nicht angegeben wird, wird eine Zufallsmatrix erstellt." << endl
+       << "\t" << "-foms" << endl
+       << "\t\t" << "Falls gesetzt, wird als Ausgabe nur die Laufzeit in Millisekunden ohne Einheit ausgegeben" << endl
+       << "\t" << "-fous" << endl
+       << "\t\t" << "Ausgabe in Mikrosekunden." << endl
+       << "\t" << "-nv" << endl
+       << "\t\t" << "Schaltet alle Ausgaben ausser dem Ergebis ab." << endl;
+
 }
 
 void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix, string *filename,
-		     int *xs, int *ys){
+		     int *xs, int *ys, bool *ms_output, bool *us_output, bool *verbose){
   // Processing input parameters
   int processed = 1;
   while(processed < argc){
@@ -95,7 +102,7 @@ void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix,
     // Anzahl iterationen
     else if(option == "-i"){
       if(argc >= processed+2){
-	(*iterations) = argv[processed+1];
+	(*iterations) = atoi(argv[processed+1]);
 	processed += 2;
       }else{
 	cerr << "Parsing input arguments failed!" << endl;
@@ -119,7 +126,7 @@ void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix,
     // Größe der Beobachtungsmatrix
     else if(option == "-xs"){
       if(argc >= processed+2){
-	(*xs) = argv[processed+1];
+	(*xs) = atoi(argv[processed+1]);
 	processed += 2;
       }else{
 	cerr << "Parsing input arguments failed!" << endl;
@@ -129,13 +136,35 @@ void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix,
     }
     else if(option == "-ys"){
       if(argc >= processed+2){
-	(*ys) = argv[processed+1];
+	(*ys) = atoi(argv[processed+1]);
 	processed += 2;
       }else{
 	cerr << "Parsing input arguments failed!" << endl;
 	print_usage();
 	exit(1);
       }
+    }
+    // Ausgabe
+    else if(option == "-foms"){
+      (*ms_output) = true;
+      processed += 1;
+    }
+    else if(option == "-fous"){
+      (*us_output) = true;
+      processed += 1;
+    }
+    // Debugausgaben
+    else if(option == "-nv"){
+      (*verbose) = false;
+      processed += 1;
+    }
+
+    // Unbekannte Option
+    else{
+      cerr << "Unknown parameter: " << option << endl;
+      cerr << "Parsing input arguments failed!" << endl;
+      print_usage();
+      exit(1);
     }
   }
 }
