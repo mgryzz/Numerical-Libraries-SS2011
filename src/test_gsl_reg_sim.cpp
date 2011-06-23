@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <gsl/gsl_fit.h>
 
@@ -10,7 +9,7 @@ using namespace std;
 int main (int argc, char* argv[])
 {
 
-  // Variables
+  // Options
   int iterations = 100;
   int x_size = 2;
   int y_size = 10;
@@ -87,8 +86,18 @@ int main (int argc, char* argv[])
     double ret = gsl_fit_linear(x, xstride, y, ystride, n, &c0, &c1, &cov00, &cov01, 
 				&cov11, &sumsq);
   }
-
+  
   timer.stop();
+
+  if(verbose){
+    cout << "Ergebnisse: " << endl
+	 << "\t" << "alpha: " << c0 << endl
+	 << "\t" << "beta: " << c1 << endl
+	 << "\t" << "cov00: " << cov00 << endl
+	 << "\t" << "cov01: " << cov01 << endl
+	 << "\t" << "cov11: " << cov11 << endl
+	 << "\t" << "Fehlerquadratsumme: " << sumsq << endl;
+  }
     
   if(ms_output){
     cout << timer.getTimeString_ms() << endl;

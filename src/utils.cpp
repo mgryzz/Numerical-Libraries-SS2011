@@ -80,6 +80,10 @@ void print_usage(){
        << "\t\t" << "Hier kann eine csv-Datei angegeben werden, die die Beobachtungswerte für den Test enthält. Falls dieser Parameter nicht angegeben wird, wird eine Zufallsmatrix erstellt." << endl
        << "\t" << "-foms" << endl
        << "\t\t" << "Falls gesetzt, wird als Ausgabe nur die Laufzeit in Millisekunden ohne Einheit ausgegeben" << endl
+       << "\t" << "-xs" << endl
+       << "\t\t" << "Die Breite der einzulesenden Matrix." << endl
+       << "\t" << "-ys" << endl
+       << "\t\t" << "Die Höhe der einzulesenden Matrix." << endl
        << "\t" << "-fous" << endl
        << "\t\t" << "Ausgabe in Mikrosekunden." << endl
        << "\t" << "-nv" << endl
