@@ -11,7 +11,7 @@ int main (int argc, char* argv[])
 
   // Options
   int iterations = 100;
-  int x_size = 2;
+  int x_size = 3;
   int y_size = 10;
   bool read_matrix = false;
   bool ms_output = false, us_output = false;
@@ -28,9 +28,9 @@ int main (int argc, char* argv[])
   double x[y_size];
   double y[y_size];
 
-  size_t n = 10;
-  size_t xstride = 0;
-  size_t ystride = 0;
+  size_t n = y_size;
+  size_t xstride = 1;
+  size_t ystride = 1;
 
   if(read_matrix){
     read_matrix_from_file((double*) x_read, filename, x_size, y_size, true);
@@ -43,7 +43,7 @@ int main (int argc, char* argv[])
   cout << "Beobachtungsmatrix:" << endl;
   for(int i=0; i<y_size; i++){
     for(int j=0; j<x_size; j++){
-      cout << "\t" << x_read[j][i];
+      cout << "\t" << x_read[i][j];
     }
     cout << endl;
   }
@@ -52,7 +52,7 @@ int main (int argc, char* argv[])
   // Werte aus eingelesener Beobachtungsmatrix in Vektoren kopieren
   for(int i=0; i<y_size; i++){
     y[i] = x_read[i][0];
-    x[i] = x_read[i][1];
+    x[i] = x_read[i][2];
   }
 
   // Testausgabe
@@ -81,9 +81,10 @@ int main (int argc, char* argv[])
   // Running Benchmark
   timer.start();
 
+  double ret;
   for(int i=1; i<=iterations; i++){    
     
-    double ret = gsl_fit_linear(x, xstride, y, ystride, n, &c0, &c1, &cov00, &cov01, 
+    ret = gsl_fit_linear(x, xstride, y, ystride, n, &c0, &c1, &cov00, &cov01, 
 				&cov11, &sumsq);
   }
   
@@ -91,6 +92,7 @@ int main (int argc, char* argv[])
 
   if(verbose){
     cout << "Ergebnisse: " << endl
+	 << "\t" << "Rückgabewert: " << ret << endl
 	 << "\t" << "alpha: " << c0 << endl
 	 << "\t" << "beta: " << c1 << endl
 	 << "\t" << "cov00: " << cov00 << endl

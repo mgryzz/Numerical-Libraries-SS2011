@@ -9,7 +9,7 @@ GSLINCS = -I/usr/local/include
 
 INCLUDES = -I/rwthfs/rz/SW/NAG/mmu/c/intel_ilp64_mark9/include -I/opt/intel/Compiler/11.1/069/mkl/include -I/opt/intel/Compiler/11.1/069/mkl/include/fftw -I/opt/intel/Compiler/11.1/069/mkl/include/intel64/lp64 -I/opt/intel/Compiler/11.1/069/mkl/include/ia32 -L/rwthfs/rz/SW/NAG/mmu/c/intel_ilp64_mark9/lib -lnagc_nag -L/opt/intel/Compiler/11.1/069/mkl/lib/intel64 -L/opt/intel/Compiler/11.1/069/mkl/lib/ia32 -lrwthmkl -lpthread -openmp
 # TODO: Debug-flag vor dem testen wieder auskommentieren
-CFLAGS = #-debug all
+CFLAGS = # -debug all
 COMPILE = $(CC) $(INCLUDES) $(GSLINCS) $(GSLLIBS) $(CFLAGS) -c
 
 

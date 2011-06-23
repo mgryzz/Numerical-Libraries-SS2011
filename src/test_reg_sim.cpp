@@ -6,15 +6,15 @@
 #include "Timer.h"
 #include "utils.h"
 
-#define X(I, J) x[(I) * tdx + J]
+#define X(I, J) x_read[(I) * x_size + J]
 
 using namespace std;
 
-int main(void) {
+int main(int argc, char* argv[]) {
   
   // Options
   int iterations = 100;
-  int x_size = 2;
+  int x_size = 3;
   int y_size = 10;
   bool read_matrix = false;
   bool ms_output = false, us_output = false;
@@ -39,10 +39,34 @@ int main(void) {
     create_random_matrix(x_read, x_size, y_size);
   }
 
+  // Testausgabe
+  if(verbose){
+  cout << "Beobachtungsmatrix:" << endl;
+  for(int i=0; i<y_size; i++){
+    for(int j=0; j<x_size; j++){
+      cout << "\t" << X(i, j);
+    }
+    cout << endl;
+  }
+  }
+
   // Werte aus eingelesener Beobachtungsmatrix in Vektoren kopieren
   for(int i=0; i<y_size; i++){
-    y[i] = x_read[i][0];
-    x[i] = x_read[i][1];
+    y[i] = X(i, 0);
+    x[i] = X(i, 2);
+  }
+
+  // Testausgabe
+  if(verbose){
+  cout << "Vektor x:" << endl;
+  for(int i=0; i<y_size; i++){
+    cout << "\t" << x[i] << endl;
+  }
+
+  cout << "Vektor y:" << endl;
+  for(int i=0; i<y_size; i++){
+    cout << "\t" << y[i] << endl;
+  }
   }
 
   ///// Output ///// 
@@ -67,13 +91,14 @@ int main(void) {
   timer.stop();
    
   if(verbose){
-    // TODO: andere Parameter einfÃ¼gen
     cout << "Ergebnisse: " << endl
 	 << "alpha: " << a << endl
 	 << "beta: " << b << endl
 	 << "Standartfehler alpha: " << err_a << endl
       	 << "Standartfehler beta: " << err_b << endl
-	 << 
+	 << "Bestimmtheitsmaß: " << rsq << endl
+	 << "Fehlerquadratsumme: " << rss << endl
+	 << "Freiheitsgrade: " << df << endl;
   }
  
   if(ms_output){
