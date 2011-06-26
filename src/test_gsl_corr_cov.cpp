@@ -51,11 +51,11 @@ int main(int argc, char* argv[]) {
 		data1[i] = data_tmp[i][0];
 		data2[i] = data_tmp[i][2];
 	}
-	cout << data1[0] << "\t" << data1[1] << "\t" << data1[2] << endl;
-	cout << data2[0] << "\t" << data2[1] << "\t" << data2[2] << endl;
+
 	// leistungstest starten
-	cout << "Starte Leistungstest für nag_corr_cov()..." << endl;
-	cout << "Iterationen: " << iterations << endl;
+	if(verbose) {
+		cout << "Starte Leistungstest für gsl_stats_correlation()..." << endl;
+		cout << "Iterationen: " << iterations << endl;
 	
 	// timer starten
 	timer.start();
@@ -74,7 +74,13 @@ int main(int argc, char* argv[]) {
 	}
 	
 	// gemessene zeit ausgeben
-	cout << timer.getTimeString() << endl;
+	if(output_ms) {
+		cout << timer.getTimeString_ms() << endl;
+	} else if(output_us) {
+		cout << timer.getTimeString_us() << endl;    
+	} else {
+		cout << timer.getTimeString() << endl;
+	}
 	
 	return(0);
 	
