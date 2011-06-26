@@ -72,11 +72,7 @@ int main(int argc, char* argv[]) {
 		cout << endl;
 	
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 2ccb236500a7eab3245c104355586c0adf3f4f1a
 	// leistungstest starten
 	if(verbose) {
 		cout << "Starte Leistungstest für gsl_stats_correlation()..." << endl;
