@@ -38,7 +38,10 @@ int main(int argc, char* argv[]) {
 	size_t n = size_n; // anzahl beobachtungen
 	
 	// ausgabe
-	double correlation;
+	double correlation_00;
+	double correlation_01;
+	double correlation_10;
+	double correlation_11;
 			
 	// beoachtungsmatrix erstellen
 	if(read_file) {
@@ -77,13 +80,17 @@ int main(int argc, char* argv[]) {
 	if(verbose) {
 		cout << "Starte Leistungstest für gsl_stats_correlation()..." << endl;
 		cout << "Iterationen: " << iterations << endl;
+	}
 	
 	// timer starten
 	timer.start();
 	
 	// funktion aufrufen
 	for(int i = 1; i <= iterations; i++) {
-		correlation = gsl_stats_correlation(data1, stride1, data2, stride2, n);
+		correlation_00 = gsl_stats_correlation(data1, stride1, data1, stride1, n);
+		correlation_01 = gsl_stats_correlation(data1, stride1, data2, stride2, n);
+		correlation_10 = gsl_stats_correlation(data2, stride2, data1, stride1, n);
+		correlation_11 = gsl_stats_correlation(data2, stride2, data2, stride2, n);
 	}
 	
 	// timer stoppen
@@ -91,7 +98,10 @@ int main(int argc, char* argv[]) {
 	
 	// korrelation ausgeben
 	if(verbose) {
-		cout << "Korrelation: " << correlation << endl;
+		cout << "Korrelation (0,0): " << correlation_00 << endl;
+		cout << "Korrelation (0,1): " << correlation_01 << endl;
+		cout << "Korrelation (1,0): " << correlation_10 << endl;
+		cout << "Korrelation (1,1): " << correlation_11 << endl;
 	}
 	
 	// gemessene zeit ausgeben
