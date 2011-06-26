@@ -26,12 +26,14 @@ int main(int argc, char* argv[]) {
 	int iterations = 100;
 	bool read_file = false;
 	string file_name = "";
-	Integer size_m = 3;
-	Integer size_n = 10;
+	int size_m = 3;
+	int size_n = 10;
+	bool output_ms = false;
+	bool output_us = false;
 	bool verbose = true;
 	
 	// kommandozeile parsen
-	parse_arguments(argc, argv, &iterations, &read_file, &file_name, &size_m, &size_n, &verbose);
+	parse_arguments(argc, argv, &iterations, &read_file, &file_name, &size_m, &size_n, &output_ms, &output_us, &verbose);
 	
 	// eingabe
 	Integer n = size_n; // anzahl beobachtungen
@@ -82,7 +84,7 @@ int main(int argc, char* argv[]) {
 	}
 	
 	// gemessene zeit ausgeben
-	cout << "Gemessene Zeit:" << timer.getTimeString() << endl;
+	cout << timer.getTimeString() << endl;
   
 	return(0);
 	
