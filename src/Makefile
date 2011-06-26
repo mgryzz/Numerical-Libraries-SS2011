@@ -41,6 +41,9 @@ test_gsl_reg_sim: test_gsl_reg_sim.o utils.o Timer.o
 test_gsl_reg_mul: test_gsl_reg_mul.o utils.o Timer.o
 	$(CXX) $(GSLINCS) $(GSLLIBS) -o $@  test_gsl_reg_mul.o utils.o Timer.o	
 
+test_gsl_corr_cov: test_gsl_corr_cov.o utils.o Timer.o
+	$(CXX) $(GSLINCS) $(GSLLIBS) -o $@  test_gsl_corr_cov.o utils.o Timer.o
+
 %.o: %.cpp
 	$(COMPILE) -o $@ $<	
 

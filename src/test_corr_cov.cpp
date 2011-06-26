@@ -1,78 +1,105 @@
+// fertige header einbinden
 #include <iostream>
 #include <nag.h>
 #include <nag_stdlib.h>
 #include <nagg02.h>
 
+// eigene header einbinden
 #include "Timer.h"
 #include "utils.h"
 
+// makros definieren
 #define X(I, J) x[(I) * tdx + J]
 #define R(I, J) r[(I) * tdr + J]
 #define V(I, J) v[(I) * tdv + J]
 
+// namespace festlegen
 using namespace std;
 
-int main(void) {
-  cout << "Starting Speedtest of nag_corr_cov!" << endl;
-  
-  // Variables
-  int iterations = 100;
-  Timer timer;
-
-  // Running Benchmark
-  timer.start();
-
-  for(int i=1; i<=iterations; i++){
-    cout << "iteration " << i << endl;
-    
-    ///// INPUT /////
-
-    Integer n = 10; // Anzahl Beobachtungen
-    Integer m = 2;  // Anzahl Variablen
-    Integer tdx = m; // Schrittweite Beobachtungsmatrix
-    double *x = NAG_ALLOC(n*tdx, double);  // Beobachtungsmatrix
-
-    Integer *sx = (Integer *)0; // Einbezug Variablen
-    double *wt = (double *)0; // Gewichtung Beobachtungen
-    Integer tdr = m; // Schrittweite Korrelationsmatrix???
-    Integer tdv = m; // Schrittweite Kovarianzmatrix??? 
-
-    ///// Output ///// 
-    double sw; // Summe der Gewichte
-    double *wmean = NAG_ALLOC(m, double); // Erwartungswerte
-    double *std = NAG_ALLOC(m, double); // Standardabweichungen
-    double *r = NAG_ALLOC(n*tdr, double); // Korrelationsmatrix
-    double *v = NAG_ALLOC(m*tdv, double); // Kovarianzmatrix
-    NagError fail;
-    INIT_FAIL(fail);
-    
-    //x = {1,2,2,4,3,6,4,8,5,10,6,12,7,14,8,16,9,18,10,20};
-
-    X(0,0) = 1; X(0,1) = 3;
-    X(1,0) = 2; X(1,1) = 4;
-    X(2,0) = 3; X(2,1) = 6;
-    X(3,0) = 4; X(3,1) = 9;
-    X(4,0) = 5; X(4,1) = 10;
-    X(5,0) = 6; X(5,1) = 11;
-    X(6,0) = 7; X(6,1) = 14;
-    X(7,0) = 8; X(7,1) = 17;
-    X(8,0) = 9; X(8,1) = 18;
-    X(9,0) = 10; X(9,1) = 19;
-
-    nag_corr_cov(n, m, x, tdx, sx, wt, &sw, wmean, std, r, tdr, v, tdv, &fail);
-    cout << "correlation matrix:" << endl;
-
-    for (int i = 0; i < m; i++){
-      for (int j = 0; j < m; j++){
- 	cout << "\t" << R(i,j);
-      }
-      cout << endl;
-    }
-  }
-  
-  timer.stop();
-  
-  cout << timer.getTimeString() << endl;
-
-  return(0);
+/*
+* funktion main
+*/
+int main(int argc, char* argv[]) {
+	
+	// variablen deklarieren
+	// eigene
+	Timer timer;
+	int iterations = 100;
+	bool read_file = false;
+	string file_name = "";
+	int size_m = 2;
+	int size_n = 10;
+	bool output_ms = false;
+	bool output_us = false;
+	bool verbose = true;
+	
+	// kommandozeile parsen
+	parse_arguments(argc, argv, &iterations, &read_file, &file_name, &size_m, &size_n, &output_ms, &output_us, &verbose);
+	
+	// eingabe
+	Integer n = size_n; // anzahl beobachtungen
+	Integer m = size_m;  // anzahl merkmale
+	Integer tdx = m; // schrittweite beobachtungsmatrix
+	double *x = NAG_ALLOC(n * tdx, double);  // beobachtungsmatrix
+	Integer *sx = (Integer *)0; // einbezug merkmale
+	double *wt = (double *)0; // gewichtung beobachtungen
+	Integer tdr = m; // schrittweite korrelationsmatrix
+	Integer tdv = m; // schrittweite kovarianzmatrix
+	
+	// ausgabe
+	double sw; // summe gewichte
+	double *wmean = NAG_ALLOC(m, double); // erwartungswerte
+	double *std = NAG_ALLOC(m, double); // standardabweichungen
+	double *r = NAG_ALLOC(m * tdr, double); // korrelationsmatrix
+	double *v = NAG_ALLOC(m * tdv, double); // kovarianzmatrix
+	NagError fail; // fehler
+	INIT_FAIL(fail);
+	
+	// beoachtungsmatrix erstellen
+	if(read_file) {
+		read_matrix_from_file(x, file_name, size_m, size_n, true);
+	} else {
+		create_random_matrix(x, size_m, size_n);
+	}
+	
+	// leistungstest starten
+	if(verbose) {
+		cout << "Starte Leistungstest für nag_corr_cov()..." << endl;
+		cout << "Iterationen: " << iterations << endl;
+	}
+	
+	// timer starten
+	timer.start();
+	
+	// funktion aufrufen
+	for(int i = 1; i <= iterations; i++) {
+		nag_corr_cov(n, m, x, tdx, sx, wt, &sw, wmean, std, r, tdr, v, tdv, &fail);
+	}
+	
+	// timer stoppen
+	timer.stop();
+	
+	// korrelationsmatrix ausgeben
+	if(verbose) {
+		cout << "Korrelationsmatrix:" << endl;
+		
+		for(int i = 0; i < m; i++) {
+			for(int j = 0; j < m; j++) {
+				cout << "\t" << R(i, j);
+			}
+			cout << endl;
+		}
+	}
+	
+	// gemessene zeit ausgeben
+	if(output_ms) {
+		cout << timer.getTimeString_ms() << endl;
+	} else if(output_us) {
+		cout << timer.getTimeString_us() << endl;    
+	} else {
+		cout << timer.getTimeString() << endl;
+	}
+	
+	return(0);
+	
 }

@@ -1,88 +1,99 @@
+// fertige header einbinden
 #include <iostream>
 #include <nag.h>
 #include <nag_stdlib.h>
 #include <nagg02.h>
 
+// eigene header einbinden
 #include "Timer.h"
 #include "utils.h"
 
+// makros definieren
 #define X(I, J) x[(I) * tdx + J]
 #define CORR(I, J) corr[(I) * tdc + J]
 
+// namespace festlegen
 using namespace std;
 
-int main(void) {
-  cout << "Starting Speedtest of nag_ken_spe_corr_coeff!" << endl;
+/*
+* funktion main
+*/
+int main(int argc, char* argv[]) {
+
+	// variablen deklarieren
+	// eigene
+	Timer timer;
+	int iterations = 100;
+	bool read_file = false;
+	string file_name = "";
+	int size_m = 2;
+	int size_n = 10;
+	bool output_ms = false;
+	bool output_us = false;
+	bool verbose = true;
+	
+	// kommandozeile parsen
+	parse_arguments(argc, argv, &iterations, &read_file, &file_name, &size_m, &size_n, &output_ms, &output_us, &verbose);
+	
+	// eingabe
+	Integer n = size_n; // anzahl beobachtungen
+	Integer m = size_m;  // anzahl merkmale
+	Integer tdx = m; // schrittweite beobachtungsmatrix
+	double *x = NAG_ALLOC(n * tdx, double);  // beobachtungsmatrix
+	Integer *svar = (Integer *)0; // einbezug merkmale
+	Integer *sobs = (Integer *)0; // einbezug beobachtungen
+	Integer tdc = m; // schrittweite korrelationsmatrix
+	
+	//ausgabe
+	double *corr = NAG_ALLOC(m * tdc, double); // korrelationsmatrix
+	NagError fail; // fehler
+	INIT_FAIL(fail);
+	
+	// beoachtungsmatrix erstellen
+	if(read_file) {
+		read_matrix_from_file(x, file_name, size_m, size_n, true);
+	} else {
+		create_random_matrix(x, size_m, size_n);
+	}
+	
+	// leistungstest starten
+	if(verbose) {
+		cout << "Starte Leistungstest für nag_ken_spe_corr_coeff()..." << endl;
+		cout << "Iterationen: " << iterations << endl;
+	}
+	
+	// timer starten
+	timer.start();
+	
+	// funktion aufrufen
+	for(int i = 1; i <= iterations; i++) {
+		nag_ken_spe_corr_coeff(n, m, x, tdx, svar, sobs, corr, tdc, &fail);
+	}
+	
+	// timer stoppen
+	timer.stop();
+	
+	// korrelationsmatrix ausgeben
+	if(verbose) {
+		cout << "Korrelationsmatrix:" << endl;
+		
+		for(int i = 0; i < m; i++) {
+			for(int j = 0; j < m; j++) {
+				cout << "\t" << CORR(i, j);
+			}
+			cout << endl;
+		}
+	}
+	
+	// gemessene zeit ausgeben
+	if(output_ms) {
+		cout << timer.getTimeString_ms() << endl;
+	} else if(output_us) {
+		cout << timer.getTimeString_us() << endl;    
+	} else {
+		cout << timer.getTimeString() << endl;
+	}
   
-  // Variables
-  int iterations = 100;
-  Timer timer;
-
-  // Running Benchmark
-  timer.start();
-
-  for(int i=1; i<=iterations; i++){
-    cout << "iteration " << i << endl;
-    
-    ///// INPUT /////
-
-    Integer n = 10; // Anzahl Beobachtungen
-    Integer m = 10;  // Anzahl Variablen
-    double *x = NAG_ALLOC(n*m, double);  // Beobachtungsmatrix
-
-    Integer tdx = m; // Stride seprating matrix elements???
-    Integer *svar = (Integer *)0;
-    Integer *sobs = (Integer *)0;
-    Integer tdc = m; // tdx in corr???
-
-    ///// Output ///// 
-    double *corr = NAG_ALLOC(m*m, double); 
-    NagError fail;
-    INIT_FAIL(fail);
-    
-    //x = {1,2,2,4,3,6,4,8,5,10,6,12,7,14,8,16,9,18,10,20};
-
-//     X(0,0) = 1; X(0,1) = 2;
-//     X(1,0) = 2; X(1,1) = 4;
-//     X(2,0) = 3; X(2,1) = 6;
-//     X(3,0) = 4; X(3,1) = 8;
-//     X(4,0) = 5; X(4,1) = 10;
-//     X(5,0) = 6; X(5,1) = 12;
-//     X(6,0) = 7; X(6,1) = 14;
-//     X(7,0) = 8; X(7,1) = 16;
-//     X(8,0) = 9; X(8,1) = 18;
-//     X(9,0) = 10; X(9,1) = 20;
-
-    // read_matrix_from_file(x, "data/miete03.asc", m, n);
-
-    create_random_matrix(x, m, n);
-
-    // for (int i = 0; i < n; i++){
-//       for (int j = 0; j < m; j++){
-//  	cout << "\t" << X(i,j);
-//       }
-//       cout << endl;
-//     }
-
-    nag_ken_spe_corr_coeff(n, m, x, tdx, svar, sobs, corr, tdc, &fail);
-
-    // cout << "correlation matrix:" << endl;
-
-//     for (int i = 0; i < m; i++){
-//       for (int j = 0; j < m; j++){
-//  	cout << "\t" << CORR(i,j);
-//       }
-//       cout << endl;
-//     }
-  }
-  
-  // gettimeofday(&end, 0);
-  // runtime_sec = end.tv_sec - start.tv_sec;
-  // runtime_usec = end.tv_usec - start.tv_usec;
-  
-  timer.stop();
-
-  cout << timer.getTimeString() << endl;
-  
-  return(0);
+	return(0);
+	
 }
