@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
 	int iterations = 100;
 	bool read_file = false;
 	string file_name = "";
-	int size_m = 3;
+	int size_m = 2;
 	int size_n = 10;
 	bool output_ms = false;
 	bool output_us = false;
@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 	double data1[size_n]; // beobachtungen merkmal 1
 	size_t stride1 = 1; // schrittweite merkmal 1
 	double data2[size_n]; // beobachtungen merkmal 2
-	size_t stride2; // schrittweite merkmal 2
+	size_t stride2 = 1; // schrittweite merkmal 2
 	size_t n = size_n; // anzahl beobachtungen
 	
 	// ausgabe
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 	for(int i = 0; i < size_n; i++) {
 	
 		data1[i] = data_tmp[i][0];
-		data2[i] = data_tmp[i][2];
+		data2[i] = data_tmp[i][1];
 	
 	}
 	
