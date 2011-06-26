@@ -30,19 +30,29 @@ int main(int argc, char* argv[]) {
 	parse_arguments(argc, argv, &iterations, &read_file, &file_name, &size_m, &size_n, &output_ms, &output_us, &verbose);
 	
 	// eingabe
+	double data_tmp[size_n][size_m];
 	double data1[size_n]; // beobachtungen merkmal 1
 	size_t stride1 = 1; // schrittweite merkmal 1
 	double data2[size_n]; // beobachtungen merkmal 2
 	size_t stride2; // schrittweite merkmal 2
 	size_t n = size_n; // anzahl beobachtungen
-		
+	
+	// ausgabe
+	double correlation;
+			
 	// beoachtungsmatrix erstellen
 	if(read_file) {
-		read_matrix_from_file(x, file_name, size_m, size_n, true);
+		read_matrix_from_file((double *) data_tmp, file_name, size_m, size_n, true);
 	} else {
-		create_random_matrix(x, size_m, size_n);
+		create_random_matrix((double *) data_tmp, size_m, size_n);
 	}
 	
+	for(int i = 0; i < size_n; i++) {
+		data1[i] = data_tmp[i][0];
+		data2[i] = data_tmp[i][2];
+	}
+	cout << data1[0] << "\t" << data1[1] << "\t" << data1[2] << endl;
+	cout << data2[0] << "\t" << data2[1] << "\t" << data2[2] << endl;
 	// leistungstest starten
 	cout << "Starte Leistungstest für nag_corr_cov()..." << endl;
 	cout << "Iterationen: " << iterations << endl;

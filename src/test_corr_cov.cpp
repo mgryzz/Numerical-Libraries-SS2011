@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 	int iterations = 100;
 	bool read_file = false;
 	string file_name = "";
-	int size_m = 3;
+	int size_m = 2;
 	int size_n = 10;
 	bool output_ms = false;
 	bool output_us = false;
