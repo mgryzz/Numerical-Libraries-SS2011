@@ -47,12 +47,32 @@ int main(int argc, char* argv[]) {
 		create_random_matrix((double *) data_tmp, size_m, size_n);
 	}
 	
+	// beobachtungsvektoren erstellen
+	
 	for(int i = 0; i < size_n; i++) {
+	
 		data1[i] = data_tmp[i][0];
 		data2[i] = data_tmp[i][2];
+	
 	}
-	cout << data1[0] << "\t" << data1[1] << "\t" << data1[2] << endl;
-	cout << data2[0] << "\t" << data2[1] << "\t" << data2[2] << endl;
+	
+	// beobachtungsvektoren ausgeben
+	if(verbose) {
+		
+		cout << "Vektor 1:" << endl;
+		for(int i = 0; i < size_n; i++) {
+			cout << "\t" << data1[i];
+		}
+		cout << endl;
+		
+		cout << "Vektor 2:" << endl;
+		for(int i = 0; i < size_n; i++) {
+			cout << "\t" << data2[i];
+		}
+		cout << endl;
+	
+	}
+	
 	// leistungstest starten
 	cout << "Starte Leistungstest für nag_corr_cov()..." << endl;
 	cout << "Iterationen: " << iterations << endl;
