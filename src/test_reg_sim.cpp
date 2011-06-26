@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
   int iterations = 100;
   int x_size = 3;
   int y_size = 10;
+  int ip = 0; // Nicht benutzt
   bool read_matrix = false;
   bool ms_output = false, us_output = false;
   bool verbose = true;
@@ -23,7 +24,7 @@ int main(int argc, char* argv[]) {
   Timer timer;
 
   // Lese Kommandozeilen Argumente
-  parse_arguments(argc, argv, &iterations, &read_matrix, &filename, &x_size, &y_size,
+  parse_arguments(argc, argv, &iterations, &read_matrix, &filename, &x_size, &y_size, &ip,
 		  &ms_output, &us_output, &verbose);
 
   ///// INPUT /////
@@ -79,7 +80,7 @@ int main(int argc, char* argv[]) {
     cout << "Iterationen: " << iterations << endl;
   }
 
-    // Running Benchmark
+  // Running Benchmark
   timer.start();
 
   for(int i=1; i<=iterations; i++){
@@ -90,6 +91,11 @@ int main(int argc, char* argv[]) {
 
   timer.stop();
    
+  if(fail.code != NE_NOERROR){
+    cout << "Wärend der Regression ist ein Fehler aufgetreten: " 
+	 << fail.message << endl;
+  }
+
   if(verbose){
     cout << "Ergebnisse: " << endl
 	 << "alpha: " << a << endl
@@ -108,6 +114,11 @@ int main(int argc, char* argv[]) {
   }else{
     cout << timer.getTimeString() << endl;
   }
+
+  // Gebe Speicher frei
+  if(x_read) NAG_FREE(x_read);
+  if(x) NAG_FREE(x);
+  if(y) NAG_FREE(y);
 
   return(0);
 }

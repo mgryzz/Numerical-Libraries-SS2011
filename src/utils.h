@@ -34,4 +34,4 @@ double string_to_double( const std::string& s );
  * daher sollten alle Variablen mit Standartwerten initialisiert werden.
  */ 
 void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix, std::string *filename,
-		     int *xs, int *ys, bool *ms_output, bool *us_output, bool *debug);
+		     int *xs, int *ys, int *ip, bool *ms_output, bool *us_output, bool *debug);

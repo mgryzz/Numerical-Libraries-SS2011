@@ -13,6 +13,7 @@ int main (int argc, char* argv[])
   int iterations = 100;
   int x_size = 3;
   int y_size = 10;
+  int ip;
   bool read_matrix = false;
   bool ms_output = false, us_output = false;
   bool verbose = true;
@@ -20,7 +21,7 @@ int main (int argc, char* argv[])
   Timer timer;
 
   // Lese Kommandozeilen Argumente
-  parse_arguments(argc, argv, &iterations, &read_matrix, &filename, &x_size, &y_size,
+  parse_arguments(argc, argv, &iterations, &read_matrix, &filename, &x_size, &y_size, &ip,
 		  &ms_output, &us_output, &verbose);
   
   ///// INPUT /////

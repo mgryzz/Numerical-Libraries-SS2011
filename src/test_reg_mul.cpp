@@ -7,74 +7,90 @@
 #include "Timer.h"
 #include "utils.h"
 
-#define X(I, J) x[(I) * tdx + J]
+#define X(I, J) x[(I) * x_size + J]
 
 using namespace std;
 
-int main(void) {
-  cout << "Starting Speedtest nag_regsn_mult_linear!" << endl;
-  ///// Benchmark Variables /////
-  int iterations = 1000;
+int main(int argc, char* argv[]) {
+  
+  // Options
+  int iterations = 100;
+  int x_size = 3;
+  int y_size = 10;
+  int ip = 3;
+  bool read_matrix = false;
+  bool ms_output = false, us_output = false;
+  bool verbose = true;
+  string filename = "";
   Timer timer;
   
+  // Lese Kommandozeilen Argumente
+  parse_arguments(argc, argv, &iterations, &read_matrix, &filename, &x_size, &y_size, &ip,
+		  &ms_output, &us_output, &verbose);
+
+
   ///// Function variables /////
   // Input
 
   Nag_IncludeMean mean = Nag_MeanInclude; // Benutze konstanten Term 
-  Integer n = 2053; // Anzahl Beobachtungen
-  Integer m = 13; // Anzahl unabhängiger Variablen im Datensatz
+  Integer m = x_size; // Anzahl unabhängiger Variablen im Datensatz
   Integer tdx = m;
-  Integer ip = 6; // Anzahl unabhängiger Variablen im Modell
   Integer tdq = ip+1;
-  Integer sx[] = {0,1,1,1,1,1,0,0,0,0,0,0,0};
+  //Integer sx[] = {0,1,1,1,1,1,0,0,0,0,0,0,0};
+  Integer sx[m];
+  sx[0] = 0;
+  for(int i=1; i<m; i++){
+    if(i < ip)
+      sx[i] = 1;
+    else
+      sx[i] = 0;
+  }
+
   double tol = 0.000001; // Toleranz fü Matrix Elemente (falls < tol, dann 0)
 
-  double *x = NAG_ALLOC(n*tdx, double); // Beobachtungsmatrix
-  double *y = NAG_ALLOC(n, double); // Werte für abhängige Variable
-  //double *wt = NAG_ALLOC(n, double); // Gewichtungen
+  double *x = NAG_ALLOC(y_size*tdx, double); // Beobachtungsmatrix
+  double *y = NAG_ALLOC(y_size, double); // Werte für abhängige Variable
   double *wt = NULL;
 
   // Matrix einlesen
-  read_matrix_from_file(x, "data/miete03.asc", 13, 2053);
-
-  /*fstream file;
-  file.open("data/x-out.txt", ios::out|ios::trunc);
-
-  for (int i = 0; i < n; i++){
-    for (int j = 0; j < m; j++){
-      file << "\t" << X(i,j);
-    }
-    file << endl;
-   }
+  if(read_matrix){
+    read_matrix_from_file(x, filename, x_size, y_size, true);
+  }else{
+    create_random_matrix(x, x_size, y_size);
+  }
   
-  file.close();
-  */
+  // Testausgabe
+  if(verbose){
+  cout << "Beobachtungsmatrix:" << endl;
+  for(int i=0; i<y_size; i++){
+    for(int j=0; j<x_size; j++){
+      cout << "\t" << X(i, j);
+    }
+    cout << endl;
+  }
+  }
 
   // Werte für abhängige Variable in y kopieren 
-  for(int i=0; i<n; i++){
+  for(int i=0; i<y_size; i++){
     y[i] = X(i,0);
   }
 
-  // test output
-  /*
-  file.open("data/y-out.txt", ios::out|ios::trunc);
-
-  file << "y: " << endl;
-  for(int i=0; i<n; i++){
-    file << y[i] << endl;
+  // Testausgabe
+  if(verbose){
+  cout << "Vektor y:" << endl;
+  for(int i=0; i<y_size; i++){
+    cout << "\t" << y[i] << endl;
   }
-
-  file.close();
-  */
+  }
 
   /// Output 
   double rss = 0, df = 0;
   double *b = NAG_ALLOC(ip, double); // Die Koeffizienten
   double *se = NAG_ALLOC(ip, double); // Die Standartfehler
   double *cov = NAG_ALLOC((ip*ip+ip)/2, double); // ???
-  double *res = NAG_ALLOC(n, double); // Die Residuen
-  double *h = NAG_ALLOC(n, double); // Leverages
-  double *q = NAG_ALLOC(n*tdq, double); // orthogonale Matrix Q
+  double *res = NAG_ALLOC(y_size, double); // Die Residuen
+  double *h = NAG_ALLOC(y_size, double); // Leverages
+  double *q = NAG_ALLOC(y_size*tdq, double); // orthogonale Matrix Q
   Nag_Boolean svd; // Wurde SVD benutzt?
   Integer rank; // Rang der unabhängigen Variablen
   double *p = NAG_ALLOC(ip*(ip+2), double); //Informationen über QR-Zerlegung und SVD
@@ -83,15 +99,18 @@ int main(void) {
   NagError fail;
   INIT_FAIL(fail);
   
+  if(verbose){
+    cout << "Starting Speedtest nag_regsn_mult_linear!" << endl;
+    cout << "Iterationen: " << iterations << endl;
+  }
 
   ///// Running Benchmark /////
   timer.start();
   
   for(int i=1; i<=iterations; i++){
-    //cout << "iteration " << i << endl;   
-    
+     
     // Funktionsaufruf
-    nag_regsn_mult_linear(mean, n, x, tdx, m, sx, ip, y, wt, &rss, &df, b, se,
+    nag_regsn_mult_linear(mean, y_size, x, tdx, m, sx, ip, y, wt, &rss, &df, b, se,
 			  cov, res, h, q, tdq, &svd, &rank, p, tol, com_ar, &fail);
   }
 
@@ -102,8 +121,25 @@ int main(void) {
 	 << fail.message << endl;
   }
   
-  cout << "Anzahl Freiheitsgrade: " << df << endl;
-    
+  // TODO: Ergebnisse ausgeben?
+  if(verbose){
+    cout << "Ergebnisse:" << endl
+	 << "\t" << "Koeffizienten: (";
+    for(int i = 0; i<ip ; i++){
+      cout << b[i] << ", ";
+    }
+    cout << ")" << endl;
+  }
+  
+
+  if(ms_output){
+    cout << timer.getTimeString_ms() << endl;
+  }else if(us_output){
+    cout << timer.getTimeString_us() << endl;    
+  }else{
+    cout << timer.getTimeString() << endl;
+  }
+
   // Gebe Speicher frei
   if(x) NAG_FREE(x);
   if(y) NAG_FREE(y);
@@ -116,9 +152,6 @@ int main(void) {
   if(q) NAG_FREE(q);
   if(p) NAG_FREE(p);
   if(com_ar) NAG_FREE(com_ar);
-
-  // Gebe Laufzeitinformationen aus:
-  cout << timer.getTimeString() << endl;
 
   return(0);
 }

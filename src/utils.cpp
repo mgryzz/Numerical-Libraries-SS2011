@@ -84,6 +84,8 @@ void print_usage(){
        << "\t\t" << "Die Breite der einzulesenden Matrix." << endl
        << "\t" << "-ys" << endl
        << "\t\t" << "Die Höhe der einzulesenden Matrix." << endl
+       << "\t" << "-ip" << endl
+       << "\t\t" << "Anzahl an Regressoren" << endl
        << "\t" << "-fous" << endl
        << "\t\t" << "Ausgabe in Mikrosekunden." << endl
        << "\t" << "-nv" << endl
@@ -92,7 +94,7 @@ void print_usage(){
 }
 
 void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix, string *filename,
-		     int *xs, int *ys, bool *ms_output, bool *us_output, bool *verbose){
+		     int *xs, int *ys, int *ip, bool *ms_output, bool *us_output, bool *verbose){
   // Processing input parameters
   int processed = 1;
   while(processed < argc){
@@ -141,6 +143,17 @@ void parse_arguments(int argc, char* argv[], int *iterations, bool *read_matrix,
     else if(option == "-ys"){
       if(argc >= processed+2){
 	(*ys) = atoi(argv[processed+1]);
+	processed += 2;
+      }else{
+	cerr << "Parsing input arguments failed!" << endl;
+	print_usage();
+	exit(1);
+      }
+    }
+    // Regressoren
+    else if(option == "-ip"){
+      if(argc >= processed+2){
+	(*ip) = atoi(argv[processed+1]);
 	processed += 2;
       }else{
 	cerr << "Parsing input arguments failed!" << endl;
