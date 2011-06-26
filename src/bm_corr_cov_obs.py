@@ -19,7 +19,7 @@ for noObs in range(10,10000,10):
 	gsl_output = gsl_process.communicate()
 	
 	if gsl_output[1] or nag_output[1]:
-	print "Fehler!"
+		print "Fehler!"
 		sys.exit(1)
 	
 	file.write(str(noObs) + "\t" + nag_output[0][:-1] + "\t" + gsl_output[0][:-1] + "\n")

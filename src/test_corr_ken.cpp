@@ -57,8 +57,10 @@ int main(int argc, char* argv[]) {
 	}
 	
 	// leistungstest starten
-	cout << "Starte Leistungstest für nag_ken_spe_corr_coeff()..." << endl;
-	cout << "Iterationen: " << iterations << endl;
+	if(verbose) {
+		cout << "Starte Leistungstest für nag_ken_spe_corr_coeff()..." << endl;
+		cout << "Iterationen: " << iterations << endl;
+	}
 	
 	// timer starten
 	timer.start();
@@ -84,7 +86,13 @@ int main(int argc, char* argv[]) {
 	}
 	
 	// gemessene zeit ausgeben
-	cout << timer.getTimeString() << endl;
+	if(output_ms) {
+		cout << timer.getTimeString_ms() << endl;
+	} else if(output_us) {
+		cout << timer.getTimeString_us() << endl;    
+	} else {
+		cout << timer.getTimeString() << endl;
+	}
   
 	return(0);
 	
