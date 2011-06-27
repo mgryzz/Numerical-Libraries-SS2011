@@ -6,6 +6,11 @@
 \usepackage{amsmath}
 \usepackage[german]{babel} % Für deutche Umlaute
 \usepackage{tabularx} % Für die TabularX Umgebung
+\usepackage{listings}
+
+\lstloadlanguages{[ISO]C++}
+
+\lstset{basicstyle=\scriptsize}
 
 \MyLogo{
 \centering
@@ -220,7 +225,7 @@ Finale Präsentation}
   \pause\pause\pause\pause\pause\pause
 
   \begin{itemize}
-  \item NAG-Bibliothek is weitaus umfangreicher! 
+  \item NAG-Bibliothek ist weitaus umfangreicher! 
   \end{itemize}
 
 \end{frame}
@@ -269,7 +274,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Vergleich einfache Regression} 
+  \frametitle{Test einfache Regression} 
   
   \begin{itemize}
   \item Mietdatensatz:
@@ -283,7 +288,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Vergleich einfache Regression}
+  \frametitle{Test einfache Regression II}
 
   \begin{itemize}
   \item Zufällige Daten:
@@ -299,54 +304,201 @@ Finale Präsentation}
 \begin{frame}
   \frametitle{Vergleich multiple Regression}
   
-  \begin{block}{}
-    
+  \begin{block}{nag\_regsn\_mult\_linear}
+    \begin{itemize}
+    \item Regressionskoeffizienten
+    \item Quadratsumme der Residuen
+    \item Standartfehler
+    \item Kovarianzmatrix
+    \item Residuen
+    \item (Zwischenergebnisse)
+    \end{itemize}
   \end{block}
   
-  \begin{block}{}
-    
+  \begin{block}{gsl\_multifit\_linear}
+    \begin{itemize}
+    \item Regressionskoeffizienten
+    \item Quadratsumme der Residuen
+    \item Kovarianzmatrix
+    \end{itemize}
   \end{block}
 
 \end{frame}
 
-\begin{frame}
-  \frametitle{Vergleich multiple Regression}
-
-  \begin{figure}[t]
-    \centering
-    \includegraphics[width=10cm]{figures/multi_reg_comp_6_var.eps}
-  \end{figure}
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{Vergleich multiple Regression}
-
-  \begin{figure}[t]
-    \centering
-    \includegraphics[width=10cm]{figures/multi_reg_vars_2500_obs.eps}
-  \end{figure}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Vergleich multiple Regression}
+\begin{frame}[fragile]
+  \frametitle{Funktionsaufrufe multiple Regression}
   
-  \begin{figure}[t]
-    \centering
-    \includegraphics[width=10cm]{figures/multi_reg_vars_2500_obs_rand.eps}
-  \end{figure}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{block}{Testprogramm NAG}
+      \begin{lstlisting}
+timer.start();
+
+for(int i=1; i<=iterations; i++){
+  
+  nag_regsn_mult_linear(mean, 
+    y_size, x, tdx, m, sx, ip, 
+    y, wt, &rss, &df, b, se,
+    cov, res, h, q, tdq, &svd, 
+    &rank, p, tol, com_ar, &fail);
+
+}
+
+timer.stop();
+      \end{lstlisting}
+    \end{block}
+    \column{0.5\textwidth}
+    \begin{block}{Testprogramm GSL}
+      \begin{lstlisting}
+timer.start();
+
+for(int i=1; i<=iterations; i++){    
+  
+  gsl_multifit_linear(x, y, c, 
+    cov, &chisq, wspace);
+  
+  for(int i=0; i<ip; i++){
+    gsl_vector_set(se, i, 
+      sqrt(gsl_matrix_get(cov, 
+            i, i)));
+  }
+    
+  gsl_multifit_linear_residuals(x, 
+    y, c, r);
+}
+
+timer.stop();
+\end{lstlisting}
+\end{block}    
+\end{columns}
 
 \end{frame}
 
-\subsection{Zusammenfassung}
 \begin{frame}
-  \frametitle{Zusammenfassung Leistungsanalyse}
+  \frametitle{Testaufbau multiple Regression}
+  
+  \begin{block}{Test 1:}
+    \begin{itemize}
+    \item Iterationen: 100
+    \item Unabhängige Merkmale: 6
+    \item Beobachtungen variabel
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Test 2:}
+    \begin{itemize}
+    \item Iterationen: 100
+    \item Beobachtungen: 2500
+    \item Unabhängige Merkmale variabel
+    \end{itemize}
+  \end{block}
   
   \begin{itemize}
-  \item Wann NAG anwenden, wann GSL?
-  \item Rechenzeit
-  \item Funktionsumfang
+  \item Datensätze:
+    \begin{itemize}
+    \item Mietdatensatz
+    \item Zufällig erzeugte Daten
+    \end{itemize}
   \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test multiple Regression}
+
+  \begin{itemize}
+  \item Zufällige Daten:
+  \end{itemize}
+
+  \begin{figure}[t]
+    \centering
+    \includegraphics[width=9.5cm]{figures/multi_reg_comp_6_var.eps}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test multiple Regression II}
+  \begin{itemize}
+  \item Mietdatensatz:
+  \end{itemize}
+
+  \begin{figure}[t]
+    \centering
+    \includegraphics[width=9.5cm]{figures/multi_reg_vars_2500_obs.eps}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test multiple Regression III}
+  \begin{itemize}
+  \item Zufällige Daten:
+  \end{itemize}
+
+  \begin{figure}[t]
+    \centering
+    \includegraphics[width=9.5cm]{figures/multi_reg_vars_2500_obs_rand.eps}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Aktualisierung vs. Neuberechnung}
+    
+  \begin{itemize}
+  \item Funktionen zum Aktualisieren des Modells:
+    \begin{itemize}
+    \item nag\_regsn\_mult\_linear\_addrem\_obs
+    \item \alert<3>{nag\_regsn\_mult\_linear\_add\_var}
+    \item nag\_regsn\_mult\_linear\_delete\_var
+    \item nag\_regsn\_mult\_linear\_addrem\_obs
+    \item \alert<3>{nag\_regsn\_mult\_linear\_update\_model}
+    \end{itemize}
+  \end{itemize}
+
+  \pause
+
+  \begin{itemize}
+  \item Wie ändert sich die Performance mit diesen Funktionen?
+  \end{itemize}
+
+  \pause
+
+  \begin{itemize}
+  \item Testparameter:
+    \begin{itemize}
+    \item Iterationen: 100
+    \item Bobachtungen 2500
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test Aktualisierung}
+  
+  \begin{itemize}
+  \item Mietdatensatz:
+  \end{itemize}
+
+  \begin{figure}[t]
+    \centering
+    \includegraphics[width=9.5cm]{figures/multi_reg_vars_2500_obs_act.eps}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test Aktualisierung II}
+  
+  \begin{itemize}
+  \item Zufällige Daten:
+  \end{itemize}
+
+  \begin{figure}[t]
+    \centering
+    \includegraphics[width=9.5cm]{figures/multi_reg_vars_2500_obs_act_rand.eps}
+  \end{figure}
 
 \end{frame}
 
@@ -356,10 +508,12 @@ Finale Präsentation}
   \frametitle{Fazit}
   
   \begin{itemize}
-  \item NAG Bibliothek für Korrelation und Regression gut geignet
+  \item NAG Bibliothek für Korrelation und Regression gut geeignet
+  \item Im Vergleich zur GSL:
     \begin{itemize}
-    \item effiziente Implementierung
-    \item großer Funktionsumfang
+    \item (Meist) effizientere Implementierung
+    \item Größerer Funktionsumfang
+    \item Zusätzliche Hilfsfunktionen (z.B. nag\_step\_regsn)
     \item Funktionen werden umfangreich getestet
     \end{itemize}
   \end{itemize}
