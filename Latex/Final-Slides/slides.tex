@@ -33,22 +33,101 @@ Finale Präsentation}
 \section{Korrelation}
 
 \subsection{Wiederholung}
+
 \begin{frame}
-  \frametitle{Wiederholung}
+	\frametitle{Korrelation: Wiederholung}
+	
+	\begin{block}{Korrelation}
+		Zusammenhang zwischen zwei oder mehreren Merkmalen, dessen Stärke sich mit Hilfe von Korrelationskoeffizienten berechnen lässt
+	\end{block}
+	
+	\begin{block}{Bravais-Pearson-Korrelationskoeffizient}
+		misst die Stärke des linearen Zusammenhangs zweier mindestens intervallskalierter Merkmale $X$ und $Y$
+		
+		\begin{equation*}
+			r=\dfrac{s_{XY}}{s_Xs_Y}=\dfrac{\sum_{i=1}^{n}{(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum_{i=1}^{n}{(x_i-\bar{x})^2\sum_{i=1}^{n}{(y_i-\bar{y})^2}}}}
+		\end{equation*}
+		
+		\begin{itemize}
+			\item $\bar{x}$/$\bar{y}$: arithmetische Mittelwerte von $X$/$Y$
+			\item $s_{X}$/$s_{Y}$: Standardabweichungen von $X$/$Y$
+			\item $s_{XY}$: Kovarianz von $X$ und $Y$
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Korrelation: Berechnung}
+	
+	\begin{block}{Sukzessive Berechnung}
+		\begin{itemize}
+			\item arithmetische Mittelwerte (pro Merkmal)
+			\item Standardabweichungen (pro Merkmal)
+			\item Kovarianzmatrix (für alle Merkmalspaare)
+			\item Korrelationsmatrix (für alle Merkmalspaare)
+		\end{itemize}
+	\end{block}
+	
+	Interpretation der Ergebnisse:
+	
+	\begin{itemize}
+		\item $r>0$/$r=0$/$r<0$: positive/keine/negative Korrelation
+		\item $|r|<0.5$/$|r|\geq0.5$/$|r|\geq0.8$: schwache/mittlere/starke Korrelation
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Korrelation: Ergebnis Mietdatensatz}
+  
+  \begin{equation*}
+		R =
+		\begin{footnotesize}
+			\begin{pmatrix}
+				{\bf 1.00} & 0.47 & {\bf \textcolor{red}{0.71}} & {\bf \textcolor{red}{0.54}} & 0.05 & -0.07 & 0.16 & 0.15\\
+   			0.47 & {\bf 1.00} & -0.23 & -0.27 & 0.29 & -0.07 & 0.15 & 0.11\\
+  	 		0.71 & -0.23 & {\bf 1.00} & {\bf \textcolor{red}{0.84}} & -0.20 & -0.05 & 0.09 & 0.06\\
+	   		0.54 & -0.27 & 0.84 & {\bf 1.00} & -0.15 & 0.03 & 0.00 & 0.03\\
+  	 		0.05 &  0.29 & -0.20 & -0.15 & {\bf 1.00} & 0.31 & -0.11 & 0.06\\
+  			-0.07 & -0.07 & -0.05 & 0.03 & 0.31 & {\bf 1.00} & -0.31 & 0.06\\
+				0.16 &  0.15 & 0.09 & 0.00 & -0.11 & -0.31 & {\bf 1.00} & -0.12\\
+  			0.15 &  0.11 & 0.06 & 0.03 & 0.06 & 0.06 & -0.12 & {\bf 1.00}\\
+			\end{pmatrix}
+		\end{footnotesize}
+	\end{equation*}
 
 \end{frame}
 
 \subsection{Planänderungen}
-\begin{frame}
-  \frametitle{Planänderungen Korrelation}
 
+\begin{frame}
+  \frametitle{Korrelation: Planänderungen}
+	
+	Ursprünglich geplant:
+	\begin{itemize}
+		\item Bravais-Pearson-Korrelationskoeffizient
+		\item Rangkorrelationskoeffizienten
+		\begin{itemize}
+			\item Spearman-Rangkorrelationskoeffizient
+			\item Kendall-Rangkorrelationskoeffizient
+		\end{itemize}
+		\item Partielle Korrelation (optional)
+		\item Leistungsanalyse
+	\end{itemize}
+	
+	\pause
+	
+	Aus Platzgründen (weitgehend) vernachlässigt:
+	\begin{itemize}
+		\item Kendall-Rangkorrelationskoeffizient
+		\item Partielle Korrelation
+	\end{itemize}
 \end{frame}
 
 \section{Regression}
 
 \subsection{Wiederholung}
 \begin{frame}
-  \frametitle{Wiederholung Regression}
+  \frametitle{Regression: Wiederholung}
 
   \begin{block}{Regression}
     Bestimmung einer Funktion die den Zusammenhang zwischen einem Regressanden und einem oder mehreren Regressoren modelliert.
@@ -72,7 +151,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Berechnung Regression}
+  \frametitle{Regression: Berechnung}
 
   \begin{block}{Methode der kleinsten Quadrate}
     {\centering
@@ -104,7 +183,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Ergebnis Mietdatensatz}
+  \frametitle{Regression: Ergebnis Mietdatensatz}
   
   \begin{figure}[t]
     \centering
@@ -115,7 +194,7 @@ Finale Präsentation}
 
 \subsection{Planänderungen}
 \begin{frame}
-  \frametitle{Planänderungen Regression}
+  \frametitle{Regression: Planänderungen}
 
   \begin{itemize}
   \item Geplant:
@@ -135,42 +214,441 @@ Finale Präsentation}
 
 \end{frame}
 
-
 \section{Anwendung}
-\begin{frame}
-  \frametitle{Testprogramm}
 
+\begin{frame}[fragile]
+  \frametitle{Anwendung: Testprogramm}
+	
+	\begin{columns}
+		\column{.60\textwidth}
+			\begin{lstlisting}
+				#include <iostream>
+				#include <nag.h>
+				#include <nag_stdlib.h>
+				#include <nagg02.h>
+				
+				#include "Timer.h"
+				#include "utils.h"
+				
+				using namespace std;
+				
+				int main(int argc, char* argv[]) {
+	
+				  Timer timer;
+				
+				  int iterations = 100;
+				  bool read_file = false;
+				  string file_name = "";
+				  int size_m = 2;
+				  int size_n = 10;
+				  bool output_ms = false;
+				  bool output_us = false;
+				  bool verbose = true;
+					
+					
+					...
+			\end{lstlisting}
+		\column{.30\textwidth}
+			\begin{lstlisting}
+								
+				// nag-bibliothek
+				
+				
+				
+				// eigene klassen/
+				// funktionen
+				
+				
+				
+								
+				
+				// timer fuer tests
+				
+				// eigene argumente
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				...
+			\end{lstlisting}
+	\end{columns}
 \end{frame}
 
-\section{Leitungsanalyse}
+\begin{frame}[fragile]
+  \frametitle{Anwendung: Testprogramm}
+	
+	\begin{columns}
+		\column{.60\textwidth}
+			\begin{lstlisting}
+				parse_arguments(argc, argv,
+				&iterations, &read_file,
+				&file_name, &size_m, &size_n,
+				&output_ms, &output_us, &verbose);
+				
+				Integer n = size_n;
+				Integer m = size_m;
+				Integer tdx = m;
+				double *x = NAG_ALLOC(n * tdx, double);
+				Integer *sx = (Integer *)0;
+				double *wt = (double *)0;
+				Integer tdr = m;
+				Integer tdv = m;
+				
+				double sw;
+				double *wmean = NAG_ALLOC(m, double);
+				double *std = NAG_ALLOC(m, double);
+				double *r = NAG_ALLOC(m * tdr, double);
+				double *v = NAG_ALLOC(m * tdv, double);
+				NagError fail;
+				INIT_FAIL(fail);
+				
+				
+				
+				...
+			\end{lstlisting}
+		\column{.30\textwidth}
+			\begin{lstlisting}
+				// kommandozeilen-
+				// argumente parsen
+				
+				
+				
+				// nag-funktion
+				// eingabeparameter
+				
+				
+				
+				
+				
+				
+				
+				// nag-funktion
+				// ausgabeparameter
+				
+				
+				
+				
+				
+				
+				
+				
+				...
+			\end{lstlisting}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Anwendung: Testprogramm}
+	
+	\begin{columns}
+		\column{.60\textwidth}
+			\begin{lstlisting}
+				if(read_file) {
+				  read_matrix_from_file(x, file_name,
+				    size_m, size_n, true);
+				} else {
+				  create_random_matrix(x, size_m, size_n);
+				}
+				
+				if(verbose) {
+				  cout << "Starte Leistungstest fuer
+				    nag_corr_cov()..." << endl;
+				  cout << "Iterationen: " <<
+				    iterations << endl;
+				}
+				
+				timer.start();
+				
+				for(int i = 1; i <= iterations; i++) {
+				  nag_corr_cov(n, m, x, tdx, sx, wt, &sw,
+				    wmean, std, r, tdr, v, tdv, &fail);
+				}
+				
+				timer.stop();
+				
+				
+				...
+			\end{lstlisting}
+		\column{.30\textwidth}
+			\begin{lstlisting}
+				
+				// matrix aus datei
+				
+				
+				// matrix per zufall
+				
+				
+				// testausgabe
+				
+				
+				
+				
+				
+				
+				// timer starten
+				
+				
+				// nag-funktion
+				// anwenden
+				
+				
+				// timer stoppen
+				
+				
+				...
+			\end{lstlisting}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Anwendung: Testprogramm}
+	
+	\begin{columns}
+		\column{.60\textwidth}
+			\begin{lstlisting}
+				  if(verbose) {
+				    cout << "Korrelationsmatrix:" << endl;
+					
+				    for(int i = 0; i < m; i++) {
+				      for(int j = 0; j < m; j++) {
+				        cout << "\t" << R(i, j);
+				      }
+				      cout << endl;
+				    }
+				  }
+				
+				  if(output_ms) {
+				    cout << timer.getTimeString_ms() << endl;
+				  } else if(output_us) {
+				    cout << timer.getTimeString_us() << endl;    
+				  } else {
+				    cout << timer.getTimeString() << endl;
+				  }
+				
+				  return(0);
+				
+				}
+				
+				
+				...
+			\end{lstlisting}
+		\column{.30\textwidth}
+			\begin{lstlisting}
+				// korrelationsmatrix
+				// ausgeben
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				// berechnungszeit
+				// ausgeben
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				...
+			\end{lstlisting}
+	\end{columns}
+\end{frame}
+
+\section{Leistungsanalyse}
+
 \begin{frame}
-  \frametitle{Leistungsanalyse}
+  \frametitle{Leistungsanalyse: Testrahmen}
+  
+  \begin{block}{Verwendetes System (Rechner-Cluster RWTH Aachen)}
+  	System: Sun Fire X4450\\
+		\begin{itemize}
+			\item Anzahl Teilsysteme: 9\\
+			\item Architektur: x64\\
+			\item Betriebssystem: Linux (CentOS 5.6)\\
+			\item Prozessortyp: Xeon X7450 (6 x 2,66 GHz)\\
+			\item Anzahl Prozessoren/Kerne pro Teilsystem: 4/24 (insg. 36/216)\\
+			\item Arbeitsspeicher: 128 GByte
+		\end{itemize}
+  \end{block}
   
   \begin{itemize}
-  \item Allgemeine Informationen zur Analyse
-  \item Server, 
+		\item Testprogramme nicht parallel programmiert
   \end{itemize}
 \end{frame}
 
-\subsection{Gnu Scientific Library}
 \begin{frame}
-  \frametitle{Gnu Scientific Library}
+  \frametitle{Leistungsanalyse: Testrahmen}
+  
+  \begin{block}{Verwendeter Compiler}
+  	Intel C++ 64 Compiler (ICC) 11.1
+		\begin{itemize}
+			\item standardmäßig Optimierungsstufe O2 aktiviert, um Vergleichbarkeit der einzelnen Tests zu gewährleisten
+			\item keine individuellen Optionen gesetzt
+		\end{itemize}
+  \end{block}
   
   \begin{itemize}
-  \item Informationen zur GSL
-  \item Warum gerade diese Bibliothek?
+  	\item auf automatische Parallelisierung verzichtet
   \end{itemize}
+\end{frame}
+
+\subsection{GNU Scientific Library (GSL)}
+
+\begin{frame}
+  \frametitle{GNU Scientific Library (GSL)}
   
+  \begin{itemize}
+  	\item numerische Bibliothek für C und C++
+		\item freie Software unter der {\it GNU General Public License} ({\it GPL})
+		\item bietet insgesamt über 1000 Funktionen, darunter auch zahlreiche für statistische Berechnungen
+		\item weitere freie Erweiterungen und Wrapper für andere Programmiersprachen ({\it Fortran}, {\it Perl}, {\it Python} etc.) erhältlich
+		\item unter anderem von {\it PSPP} genutzt, einer freien Alternative zur professionellen Statistik-Software {\it PASW Statistics} (früher {\it SPSS Statistics})
+		\item neben {\it NAG C Library} auf dem Rechner-Cluster verfügbar
+  \end{itemize}
 \end{frame}
 
 \subsection{Korrelation}
+
 \begin{frame}
-  
+	\frametitle{Korrelation: Funktionsübersicht}
+	
+	\begin{columns}
+		\column{.45\textwidth}
+			\begin{block}{NAG-Funktionen}
+				nag\_corr\_cov\\
+				nag\_ken\_spe\_corr\_coeff\\
+				nag\_partial\_corr\\
+				nag\_sum\_sqs\\
+				nag\_sum\_sqs\_update\\
+				nag\_cov\_to\_corr\\
+				nag\_nearest\_correlation\\
+				nag\_robust\_corr\_estim\\
+				nag\_robust\_m\_corr\_user\_fn\\
+				nag\_robust\_m\_corr\_user\_fn\_no\_derr
+			\end{block}
+		\column{.45\textwidth}
+			\begin{block}{GSL-Funktionen}
+				gsl\_stats\_correlation\\
+				gsl\_stats\_covariance\\
+				gsl\_stats\_covariance\_m
+			\end{block}
+			\begin{itemize}
+				\item weitere Funktionen müssen selbst "`gebastelt"' werden
+			\end{itemize}
+	\end{columns}
+	
+	\begin{itemize}
+		\item im Bereich Korrelation stellt die NAG-Bibliothek wesentlich mehr fertige Funktionen zur Verfügung
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Korrelation: Vergleich NAG vs. GSL}
+	
+	Unterschiedliche Ausgaben der Funktionen:
+
+	\begin{block}{nag\_corr\_cov}
+		\begin{itemize}
+			\item Zwischenberechnungen: arithmetische Mittelwerte, Standardabweichungen und Kovarianzmatrix für alle Merkmale
+			\item Korrelationsmatrix mit Bravais-Pearson-Korrelationskoeffizienten für zwei oder mehr Merkmale
+		\end{itemize}
+	\end{block}
+	
+	\begin{block}{gsl\_stats\_correlation}
+		\begin{itemize}
+			\item Bravais-Pearson-Korrelationskoeffizient für genau zwei Merkmale
+		\end{itemize}
+	\end{block}
+	
+	\begin{itemize}
+			\item für Zwischenberechnungen bietet die GSL-Bibliothek andere Funktionen an, für eine Korrelationsmatrix allerdings nicht
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Korrelation: Testaufbau}
+	
+	\begin{block}{Testbedingungen}
+		\begin{itemize}
+			\item Anzahl Iterationen: 1000 pro Schritt
+			\item Anzahl Beobachtungen: variabel (10 bis 2050/10000) mit Schrittweite 10
+			\item Datensätze:
+			\begin{itemize}
+				\item {\it Münchener Mietspiegel 2003} (2054 Beobachtungen)
+				\item Zufallsdatensatz (10000 Beobachtungen)
+			\end{itemize}
+		\end{itemize}
+	\end{block}
+	
+	\begin{block}{Tests}
+		\begin{itemize}
+			\item nag\_corr\_cov vs. gsl\_stats\_correlation
+			\item nag\_corr\_cov vs. nag\_ken\_spe\_corr\_coeff
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Korrelation: Test I}
+	
+	Mietdatensatz:
+	
+	\begin{figure}[t]
+    \centering
+    \includegraphics[width=9cm]{figures/test_corr_1_rent.eps}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Korrelation: Test I}
+	
+	Zufallsdatensatz:
+	
+	\begin{figure}[t]
+    \centering
+    \includegraphics[width=9cm]{figures/test_corr_1_random.eps}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Korrelation: Test II}
+	
+	Mietdatensatz:
+	
+	\begin{figure}[t]
+    \centering
+    \includegraphics[width=9cm]{figures/test_corr_2_rent.eps}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Korrelation: Test II}
+	
+	Zufallsdatensatz:
+	
+	\begin{figure}[t]
+    \centering
+    \includegraphics[width=9cm]{figures/test_corr_2_random.eps}
+  \end{figure}
 \end{frame}
 
 \subsection{Regression}
 \begin{frame}
-  \frametitle{Funktionsübersicht Regression}
+  \frametitle{Regression: Funktionsübersicht}
   
   \begin{columns}
     \column{.45\textwidth}
@@ -231,7 +709,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Vergleich einfache Regression}
+  \frametitle{Einfache Regression: Vergleich}
   
   \begin{itemize}
   \item Die Funktionen geben unterschiedliche Ergebnisse aus:
@@ -257,7 +735,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Testaufbau einfache Regression}
+  \frametitle{Einfache Regression: Testaufbau}
 
   \begin{block}{Leistungsanalyse:}
     \begin{itemize}
@@ -274,7 +752,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Test einfache Regression} 
+  \frametitle{Einfache Regression: Test I} 
   
   \begin{itemize}
   \item Mietdatensatz:
@@ -288,7 +766,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Test einfache Regression II}
+  \frametitle{Einfache Regression: Test II}
 
   \begin{itemize}
   \item Zufällige Daten:
@@ -302,7 +780,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Vergleich multiple Regression}
+  \frametitle{Multiple Regression: Vergleich}
   
   \begin{block}{nag\_regsn\_mult\_linear}
     \begin{itemize}
@@ -326,7 +804,7 @@ Finale Präsentation}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Funktionsaufrufe multiple Regression}
+  \frametitle{Multiple Regression: Funktionsaufrufe}
   
   \begin{columns}
     \column{0.5\textwidth}
@@ -375,7 +853,7 @@ timer.stop();
 \end{frame}
 
 \begin{frame}
-  \frametitle{Testaufbau multiple Regression}
+  \frametitle{Multiple Regression: Testaufbau}
   
   \begin{block}{Test 1:}
     \begin{itemize}
@@ -404,7 +882,7 @@ timer.stop();
 \end{frame}
 
 \begin{frame}
-  \frametitle{Test multiple Regression}
+  \frametitle{Multiple Regression: Test I}
 
   \begin{itemize}
   \item Zufällige Daten:
@@ -418,7 +896,7 @@ timer.stop();
 \end{frame}
 
 \begin{frame}
-  \frametitle{Test multiple Regression II}
+  \frametitle{Multiple Regression: Test II}
   \begin{itemize}
   \item Mietdatensatz:
   \end{itemize}
@@ -430,7 +908,7 @@ timer.stop();
 \end{frame}
 
 \begin{frame}
-  \frametitle{Test multiple Regression III}
+  \frametitle{Multiple Regression: Test III}
   \begin{itemize}
   \item Zufällige Daten:
   \end{itemize}
@@ -475,7 +953,7 @@ timer.stop();
 \end{frame}
 
 \begin{frame}
-  \frametitle{Test Aktualisierung}
+  \frametitle{Aktualisierung: Test I}
   
   \begin{itemize}
   \item Mietdatensatz:
@@ -489,7 +967,7 @@ timer.stop();
 \end{frame}
 
 \begin{frame}
-  \frametitle{Test Aktualisierung II}
+  \frametitle{Aktualisierung: Test II}
   
   \begin{itemize}
   \item Zufällige Daten:
