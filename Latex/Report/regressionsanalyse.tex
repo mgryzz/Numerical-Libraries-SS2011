@@ -27,37 +27,37 @@ In diesem Falle ist der Mietpreis der Regressand und die Raumanzahl ist der Regr
 \end{figure}
 Ziel der Regression ist es nun, den Mietpreis als Funktion der Raumanzahl darzustellen:
 \begin{equation*}
- M = f(R) + \epsilon
+ M = f(R) + \epsilon ~.
 \end{equation*}
 Dabei ist $f$ eine beliebige Funktion und $\epsilon$ ein Fehlerterm.
 Dieser wird benötigt, da die den Merkmalen zugehörigen Datensätze $(m_1, \dots, m_n)$, bzw. $(r_1, \dots, r_n)$ nie \textit{genau} auf der Regressionsgeraden liegen, sondern durch Messfehler oder nicht berücksichtigte Abhängigkeiten abweichen.
 Der Erwartungswert für diese Fehler ist immer $0$. 
 Um auch für kleinere Stichproben Aussagen über die Verteilung der Schätzer machen zu können, wird meinst zusätzlich eine Normalverteilung angenommen \cite[S. 479]{Fahrmeir2010}:
 \begin{equation*}
-  E(\epsilon_i) = 0 \text{ und } \epsilon_i \sim N(0,\sigma^2), i = 1, \dots, n
+  E(\epsilon_i) = 0 \text{ und } \epsilon_i \sim N(0,\sigma^2), i = 1, \dots, n ~.
 \end{equation*}
 Diese Arbeit konzentriert sich nur auf lineare Funktionen $f$, aber in Abschnitt \ref{sec:mult_reg} wird gezeigt, wie auch ein logarithmischer Zusammenhang zwischen Regressand und Regressor miteinbezogen werden kann.
 Hier ist aber ein linearer Zusammenhang naheliegend, daher wählen wir auch einen einfachen linearen Ansatz:
 \begin{equation*}
-  M = \alpha + \beta R + \epsilon
+  M = \alpha + \beta R + \epsilon ~.
 \end{equation*}
 Dieser Ansatz lässt sich natürlich auf beliebige Merkmale übertragen.
 Um nun die Ausgleichsgerade wie in Abbildung \ref{fig:nm_rooms_distribution} zu erhalten, ist es nötig die Parameter $\alpha$ und $\beta$ so zu schätzen, dass der quadratische Fehler minimal wird.
 Dieses Verfahren wird  \textit{Methode der kleinsten Quadrate} (KQ-Methode) genannt.
 Formal sieht der Ansatz wie folgt aus:
 \begin{equation*}
-  \sum\limits_{i=1}^{n} \epsilon^2 = \sum\limits_{i=1}^{n} (m_i - \alpha - \beta r_i)^2 \rightarrow \min\limits_{\alpha, \beta}
+  \sum\limits_{i=1}^{n} \epsilon^2 = \sum\limits_{i=1}^{n} (m_i - \alpha - \beta r_i)^2 \rightarrow \min\limits_{\alpha, \beta} ~.
 \end{equation*}
 Die minimierenden Werte werden mit $\hat\alpha$ und $\hat\beta$ notiert und als \textit{Kleinste-Quadrate-Schätzer} bezeichnet.
 Für unseren linearen Ansatz können beide Schätzer relativ einfach berechnet werden.
 Der Regressionskoeffizient $\hat\beta$ ist allgemein für zwei Merkmale $X$ und $Y$ gegeben durch
 \begin{equation*}
-  \hat\beta = \frac{\tilde s_{XY}}{\tilde{s}^2_X} = \frac{\sum\limits_{i=1}^{n} y_i x_i - n \bar y \bar x}{\sum\limits_{i=1}^{n} x_i^2 - n \bar{x}^2}
+  \hat\beta = \frac{\tilde s_{XY}}{\tilde{s}^2_X} = \frac{\sum\limits_{i=1}^{n} y_i x_i - n \bar y \bar x}{\sum\limits_{i=1}^{n} x_i^2 - n \bar{x}^2} ~.
 \end{equation*}
 wobei $\tilde{s}^2_X$ die Varianz von $X$ und $\tilde s_{XY}$ die Kovarianz von $X$ und $Y$ bezeichnet. 
 Wenn der Koeffizient bekannt ist, kann er in dir folgende Gleichung eingesetzt werden um die Konstante $\alpha$ zu erhalten:
 \begin{equation*}
-  \alpha = \bar y - \hat\beta \bar x
+  \alpha = \bar y - \hat\beta \bar x ~.
 \end{equation*}
 Die Beweise für beide Rechnungen wurden hier aus Platzgründen ausgelassen, sind aber in \citet[S. 155]{Fahrmeir2010} zu finden.
 % TODO: Muss der Durchschnitt hier erklärt werden?
@@ -72,7 +72,7 @@ Durch einfaches Einsetzen der Daten erhalten wir folgendes Ergebnis (Alle Zahlen
 \begin{equation*}
   \hat\alpha = \bar m - \hat\beta \bar r 
   = 570.1 - 136 * 2.6 
-  \approx 216.8
+  \approx 216.8 ~.
 \end{equation*}
 Somit hat die Ausgleichsgerade in Abbildung \ref{fig:nm_rooms_distribution} die Gleichung $\hat m = 216.8 + 136 r$
 Wir schreiben hier $\hat m$, da die Regressionsgerade eine Schätzung für die Nettomiete ist.
@@ -87,23 +87,19 @@ Die Berechnung in der Funktion nag\_simple\_linear\_regression der \naglib erfol
 Dies führt dazu dass bei der Methode der kleinsten Quadrate auch die Fehler gewichtet eingehen, daher ist der Ansatz zur Minimierung dann $\sum\limits_{i=1}^{n}w_i\epsilon_i \rightarrow min$, wobei $w_i$ die Gewichtungen für die einzelnen Datenpunkte sind.
 Für eine vollständige Beschreibung der Berechnungen mit Gewichtung sei der Leser auf \cite{nag:simple_regression} verwiesen.
 
-% TODO: Vielleicht umbenennen in NAG Library Funktion oder so?
 \subsubsection{Methodenaufruf}
 \label{sec:sim_reg_anwendung}
 
 Nach der Beschreibung der Berechnung der einfachen linearen Regression wollen wir nun auf die Anwendung mittels der Funktion nag\_simple\_linear\_regression eingehen.
-Die Funktionsdeklaration ist in Abbildung \ref{fig:nag_simple_linear} zu sehen.
+Die Funktionsdeklaration ist in Listing \ref{lst:nag_simple_linear} zu sehen.
 \begin{figure}[t]
-  \centering
-\begin{lstlisting}
-void nag_simple_linear_regression (Nag_SumSquare mean, 
-     Integer n, const double x[], const double y[], 
-     const double wt[], double *a, double *b, double *a_serr, 
-     double *b_serr, double *rsq, double *rss, double *df,
-     NagError *fail)
-\end{lstlisting}
-  \caption{Deklaration der Methode "nag\_simple\_linear\_regression", mit der eine einfache lineare Regression berechnet werden kann. }
-  \label{fig:nag_simple_linear}
+  \begin{lstlisting}[caption={Deklaration der Methode \glqq nag\_simple\_linear\_regression\grqq, mit der eine einfache lineare Regression berechnet werden kann.}\label{lst:nag_simple_linear}, captionpos=b]
+    void nag_simple_linear_regression (Nag_SumSquare mean, 
+    Integer n, const double x[], const double y[], 
+    const double wt[], double *a, double *b, double *a_serr, 
+    double *b_serr, double *rsq, double *rss, double *df,
+    NagError *fail)
+  \end{lstlisting} 
 \end{figure}
 Es existieren insgesamt 13 Parameter, von denen die ersten Fünf Eingabe- und die Restlichen Ausgabeparameter sind.
 
@@ -147,7 +143,7 @@ Zuletzt gibt die Funktion über \lstinline{*fail} einen Fehler vom Typ \lstinlin
 
 \end{comment}
 
-\subsection{Multiple lineare Regression}
+\subsection{Multiple Lineare Regression}
 \label{sec:mult_reg}
 
 % TODO: Referenzen!
@@ -163,7 +159,7 @@ Diese können mit der multiplen linearen Regression gelöst werden, welche nun v
 Die multiple Regression ist zunächst einmal eine Erweiterung der einfachen Regression auf eine beliebige Anzahl von Regressoren.
 Dementsprechend wird auch das Regressionsmodell selbst auf $p$ unabhängige Merkmale erweitert:
 \begin{equation*}
-  Y_i = \beta_0 + \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i, \quad i = 1, \dots, n
+  Y_i = \beta_0 + \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i, \quad i = 1, \dots, n ~.
 \end{equation*}
 Die Notation ist wie folgt:
 Das abhängige Merkmal $Y$ ist in den Zufallsvariablen $Y_i, \dots, Y_n$ modeliert und $x_{1j}, \dots, x_{nj}$ sind jeweils die beobachteten Werte für die $j$ verschiedenen Regressoren.
@@ -174,13 +170,13 @@ Die Idee zur Berechnung der Koeffizienten ist die Selbe wie zuvor:
 Wieder wird die kleinste Quadrate Methode verwendet und den quadratischen Fehler zu minimieren:
 \begin{equation*}
   \label{eq:kq_mul}
-  \sum\limits_{i=1}^{n} (Y_i - \beta_0 -\beta_1 x_1 - \dots - \beta_p x_{ip})^2 \rightarrow \min\limits_{\beta_0,\beta_1,\dots,\beta_n}
+  \sum\limits_{i=1}^{n} (Y_i - \beta_0 -\beta_1 x_1 - \dots - \beta_p x_{ip})^2 \rightarrow \min\limits_{\beta_0,\beta_1,\dots,\beta_n} ~.
 \end{equation*}
 Damit dieses Minimierungsproblem eine eindeutige Lösung $\hat\beta_0, \hat\beta_1, \dots, \hat\beta_p$ hat, müssen nach \citep[S.496]{Fahrmeir2010} die beiden folgenden Voraussetzungen erfüllt sein:
 \begin{enumerate}
   \item Es müssen mindestens so viele Beobachtungen vorliegen, wie es Variablen im Regressionsansatz gibt. 
     Für gute Schätzungen sollte die Anzahl der Beobachtungen sogar deutlich größer sein.
-  \item Die Merkmale müssen voneinander unabhängig sein, d.h. es darf nicht möglich sein eine Regressionsvariable als Linearkombination der anderen Variablen zu schreiben: $X_j \neq \sum\limits_{k\neq j} a_k X_k + b$ muss gelten!
+  \item Die Merkmale müssen voneinander unabhängig sein, d.h. es darf nicht möglich sein eine Regressionsvariable als Linearkombination der anderen Variablen zu schreiben: $X_j \neq \sum\limits_{k\neq j} a_k X_k + b,~ \forall a_k, b$ muss gelten!
     Ist dies nicht der Fall ist mindestens eine der Variablen überflüssig, da mehrere den gleichen Anteil der Varianz des Regressanden erklären.  
 \end{enumerate}
 
@@ -197,7 +193,7 @@ In der NAG-Bibliothek wird die multiple Regression hauptsächlich durch die Funk
 Da die Berechnung wie bereits erwähnt mit Hilfe von Matrizen erfolgt, können wir den Minimierungsan"-satz der KQ-Methode wie folgt anpassen:
 \begin{equation*}
   \label{eq:minimization}
-  \sum\limits^{N}_{n=1} \epsilon^2_n = \epsilon^T \epsilon = (y - X \beta)^T (y - X \beta) \rightarrow \min\limits_{\beta}
+  \sum\limits^{N}_{n=1} \epsilon^2_n = \epsilon^T \epsilon = (y - X \beta)^T (y - X \beta) \rightarrow \min\limits_{\beta} ~.
 \end{equation*}
 $\epsilon$ ist dabei der Vektor, der alle $\epsilon_i$ enthält und $X$ ist eine $n \times p$ Matrix mit den beobachteten Werten für alle Regressoren.
 Außerdem sind $y$ und $\beta$ Vektoren, die beobachteten Werten für den Regressanden und die Koeffizienten beinhalten. 
@@ -206,7 +202,7 @@ Anschließend werden die Fehlervektoren, durch ihre Definition, die Abweichung d
 Da der Wurzel-Operator keinen Einfluß auf den Wert des Minimums hat, können wir die Forderung wie folgt umformulieren:
 \begin{equation*}
   \label{eq:minimization_general}
-  \Vert X\beta - y \Vert_2 \rightarrow \min\limits_{\beta}
+  \Vert X\beta - y \Vert_2 \rightarrow \min\limits_{\beta} ~.
 \end{equation*}
 Um dieses Minimum zu erhalten, wird in nag\_regsn\_mult\_linear die QR-Zerlegung der Matrix $X$ berechnet.
 
@@ -216,7 +212,7 @@ Es ist nicht bekannt welches dieser Verfahren von der \naglib verwendet wird, al
 Für unsere Berechnung können wir uns nun einige Eigenschaften der Matrizen $Q$ und $R$ zunutze machen und den zu minimierenden Term erneut umschreiben:
 \begin{equation*}
   \label{eq:orthogonal_transformation}
-  \Vert X\beta - y \Vert_2 = \Vert Q^T X \beta - Q^T y \Vert_2 = \Vert R_1 \beta - c \Vert_2 + \Vert d \Vert_2
+  \Vert X\beta - y \Vert_2 = \Vert Q^T X \beta - Q^T y \Vert_2 = \Vert R_1 \beta - c \Vert_2 + \Vert d \Vert_2 ~.
 \end{equation*}
 Im ersten Schritt kommt uns zugute, dass die 2-Norm bei orthogonaler Transformation den Wert erhält.
 Daher können wir den Term mit $Q^T$ multiplizieren (die Orthogonalität wird beim Transponieren erhalten).
@@ -227,14 +223,14 @@ Die letzte Umformung gibt auch direkt den nach der Minimierung verbleibenden Res
 
 Um nun die Werte für die Koeffizienten zu erhalten, muss das folgende Gleichungssystem gelöst werden:
 \begin{equation*}
-  R\hat\beta = c_1
+  R\hat\beta = c_1 ~.
 \end{equation*}
 Dabei gilt $R_1 = \begin{bmatrix} R \\ 0\end{bmatrix}$ ($R$ enthält nur die ersten $p$ Zeilen aus $R_1$) und $c_1$ ist ein Vektor mit den ersten $p$ Einträgen aus $c$. 
 Da $R$ eine obere rechte Dreiecksmatrix ist, ist dies durch Rückwärtseinsetzen möglich.
 Dies führt allerdings nur zu einem eindeutigen Ergebnis, falls $R$ vollen Rang hat.
-Da diese Forderung aber äquivalent dazu ist, dass $X$ einen vollen Rang hat \citep[S. 225]{Golub1989}, können wir im in unserem Anwendungsfall davon ausgehen, dass dies fast immer zutrifft, da die Zahl der Beobachtungen aber ohnehin immer größer sein sollte als die Zahl der einbezogenen Merkmale (und die Beobachtungen normalerweise verschieden sind).
+Da diese Forderung aber äquivalent dazu ist, dass $X$ einen vollen Rang hat \citep[S. 225]{Golub1989}, können wir in unserem Anwendungsfall davon ausgehen, dass dies fast immer zutrifft, da die Zahl der Beobachtungen ohnehin immer größer sein sollte als die Zahl der einbezogenen Merkmale (und die Beobachtungen normalerweise verschieden sind).
 Falls der Rang von $R$ dennoch nicht voll sein sollte, wird die Singulärwertzerlegung (SVD-Verfahren) angewandt um ein Ergebnis zu finden. 
-Diese wird hier nicht vorgestellt, weitere Informationen können aber in \cite{wikipedia:svd}, \cite{nag:g02dac} und \citep[S. 239f]{Golub1989} gefunden werden.
+Diese wird hier nicht vorgestellt, weitere Informationen können aber in \cite{nag:g02dac} und \citep[S. 239f]{Golub1989} gefunden werden.
 
 \begin{comment}
 \subsubsection{Singulärwertzerlegung}
@@ -268,24 +264,24 @@ Diese Verteilung ist in Abbildung \ref{fig:nm_wfl_distributions:normal} in Abhä
 Es ist erkennbar, dass die Größe der Fehler mit steigender Wohnfläche zunimmt, was die Güte des Ergebnisses vermindert.
 Eine bessere Verteilung ist mit einer logarithmischen Skala erkennbar (vgl. Abb. \ref{fig:nm_wfl_distributions:log}), weswegen wir $log(NM)$ anstelle von $NM$ als Zielvariable wählen:
 \begin{equation*}
- log(NM) = \beta_0 + \beta_1 W + \beta_2 Bj + \beta_3 gL + \epsilon
+ log(NM) = \beta_0 + \beta_1 W + \beta_2 Bj + \beta_3 gL + \epsilon ~.
 \end{equation*}
 
 Unter Benutzung des zuvor vorgestellten Algorithmus erhalten wir folgenden Vektor mit den Regressionskoeffizienten:
 \begin{equation*}
-  \beta = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \beta_3 \end{pmatrix} = \begin{pmatrix} 8.63 \\ 0.02 \\ -0.002 \\ 0.15 \end{pmatrix}
+  \beta = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \beta_3 \end{pmatrix} = \begin{pmatrix} -2.83 \\ 0.01 \\ 0.004 \\ 0.11 \end{pmatrix}
 \end{equation*}
 Wenn diese Werte jetzt wieder in den Regressionansatz eingesetzt werden, erhalten wir das Ergebnis:
 \begin{eqnarray*}
-  log(NM) & = & -2.83 + 0.01 W + 0.004 Bj + 0.11 gL + \epsilon\\
-  \Rightarrow NM & = & exp(-2.83) exp(0.01 W) exp(0.004 Bj) exp(0.11 gL)
+  \log(NM) & = & -2.83 + 0.01 W + 0.004 Bj + 0.11 gL + \epsilon\\
+  \Rightarrow NM & = & \exp(-2.83) \exp(0.01 W) \exp(0.004 Bj) \exp(0.11 gL) ~.
 \end{eqnarray*}
 In der zweiten Zeile wurde der Regressionsansatz dabei wieder rücktransformiert, damit wir eine Aussage über die Nettomiete erhalten und nicht über ihren Logarithmus.
 
 Da das Merkmal \glqq gute Wohnlage\grqq~ binär ist, können wir nun noch die Basismiete und den Aufpreis für eine Wohnung in guter Wohnlage bestimmen: $NM = NM_B \alpha$.
 Die Basismiete $NM_B$ ergibt sich, wenn $gL$ auf 0 gesetzt wird:
 \begin{equation*}
-  NM_B = 0.059 * exp(0.012 W) exp(0.004 Bj)
+  NM_B = 0.059 \cdot \exp(0.012 W) \exp(0.004 Bj) ~.
 \end{equation*}
 Dieses Verhältnis zwischen Nettobasismiete, Wohnfläche und Baujahr ist in Abbildung \ref{fig:3d_result} geplottet.
 \begin{figure}[t]
@@ -304,10 +300,9 @@ Für eine Wohnung in guter Wohnlage muss also mit einem Aufschlag von $11.1 \%$ 
 \subsubsection{Methodenaufruf}
 
 Bei Benutzung der \naglib kann die multiple Regression durch die Funktion nag\_regsn\_mult\_linear berechnet werden.
-Die Deklaration dieser Methode wird in Abbildung \ref{fig:nag_multiple_linear} gezeigt.
+Die Deklaration dieser Methode wird in Listing \ref{lst:nag_multiple_linear} gezeigt.
 \begin{figure}[t]
-  \centering
-\begin{lstlisting}
+\begin{lstlisting}[caption={Deklaration der Methode nag\_regsn\_mult\_linear, welche eine multiple lineare Regression ausführt.}\label{lst:nag_multiple_linear},captionpos=b]
 void nag_regsn_mult_linear (Nag_IncludeMean mean, Integer n, 
     const double x[], Integer tdx, Integer m, 
     const Integer sx[], Integer ip, const double y[], 
@@ -316,8 +311,6 @@ void nag_regsn_mult_linear (Nag_IncludeMean mean, Integer n,
     double q[], Integer tdq, Nag_Boolean *svd, Integer *rank, 
     double p[], double tol, double com_ar[], NagError *fail)
 \end{lstlisting}
-  \caption{Deklaration der Methode nag\_regsn\_mult\_linear, welche eine multiple lineare Regression ausführt.}
-  \label{fig:nag_multiple_linear}
 \end{figure}
 
 Da die Methode sehr viele Parameter (24) hat, werden wir uns hier auf die Interessantesten beschränken.
@@ -329,7 +322,7 @@ Zu den genannten Parametern kommen weitere Eingabeparameter hinzu, mit denen die
 Die Gesamtzahl an unabhängigen Variablen im Datensatz wird in \lstinline{m} gesetzt.
 Im Vektor \lstinline{sx[]} der Länge $m$ wird dann für alle Regressoren ein Wert $>0$ eingetragen, alle anderen Felder erhalten eine Null.
 Die Anzahl der Regressoren muss zusätzlich in \lstinline{ip} gegeben werden.
-Für \lstinline{tol} muss zudem ein Toleranzwert angegeben werden, der bestimmt, wie groß der zwischen zwei Zahlen sein darf, damit diese im Algorithmus noch als gleich groß behandelt werden. 
+Für \lstinline{tol} muss zudem ein Toleranzwert angegeben werden, der bestimmt, wie groß der Unterschied zwischen zwei Zahlen sein darf, damit diese im Algorithmus noch als gleich groß behandelt werden. 
 Das hat vor allem Auswirkungen auf den Rang der unabhängigen Variablen und beeinflusst damit, ob das SVD-Verfahren zum Einsatz kommt (Falls \lstinline{tol=0} verwendet wird ist dies nie der Fall).
 
 Die Ausgabeparameter sind großteils von denen der einfachen Regressionsfunktion verschieden.
@@ -342,7 +335,7 @@ Zuletzt geben \lstinline{*rank} und \lstinline{*svd} noch den Rang der Regressor
 \\
 
 Zusätzlich zu nag\_regsn\_mult\_linear stellt die \naglib einige andere Funktionen zu Verfügung, die es ermöglichen das Regressionsmodell zu ändern, ohne die gesamte Regression erneut zu berechnen.
-Diese Funktionen nehmen neben anderen Argumenten die QR-Zerlegung (welche von der Hauptfunktion als Zwischenergebnis in \lstinline{q[]} ausgegeben wird), die zugehörigen Informationen welche im Ausgabeparameter \lstinline{p[]} gespeichert wurden und die Beobachtungsmatrix $X$ und berechnen daraus aktualisierte Werte für die obere rechte Dreiecksmatrix $R$ und den Vektor $c$.
+Diese Funktionen benötigen neben anderen Argumenten die QR-Zerlegung (welche von der Hauptfunktion als Zwischenergebnis in \lstinline{q[]} ausgegeben wird), die zugehörigen Informationen (\lstinline{p[]}) und die Beobachtungsmatrix $X$ und berechnen daraus aktualisierte Werte für die obere rechte Dreiecksmatrix $R$ und den Vektor $c$.
 Im Gegensatz zu einer erneuten Berechnung mittels nag\_regsn\_mult\_linear hat dies den Vorteil, dass durch die Benutzung eines bereits bekannten Zwischenergebnisses Rechenzeit eingespart werden kann.
 So kann der Benutzer beispielsweise mit nag\_regsn\_mult\_linear\_addrem\_obs neue Beobachtungen zum Modell hinzufügen oder sie entfernen.
 Mit den Methoden nag\_regsn\_mult\_linear\_delete\_var und nag\_regsn\_mult\_linear\_add\_var werden aus dem Modell herausgenommen bzw. hinzugefügt, wobei die Beobachtungen im letzteren Fall schon in $X$ enthalten sein sollten.
