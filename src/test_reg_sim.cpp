@@ -2,10 +2,8 @@
 #include <nag.h>
 #include <nag_stdlib.h>
 #include <nagg02.h>
-
 #include "Timer.h"
 #include "utils.h"
-
 #define X(I, J) x_read[(I) * x_size + J]
 
 using namespace std;
