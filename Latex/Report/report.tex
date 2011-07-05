@@ -82,10 +82,25 @@ LuFG Informatik 12 (Prof. Dr. rer. nat. Uwe Naumann)}
 % Anhang
 \appendix
 
-\section{C-Programm für den Leistungstest}
-Hier den Quelltext einfügen...
+% TODO: Ist tiny zu klein?
+\lstset{basicstyle=\tiny, numberstyle=\tiny}
 
+\section{C-Programme für den Leistungstest}
 
+\subsection{Einfache Regression NAG}
+\lstinputlisting{../../src/test_reg_sim_print.cpp}
+
+\subsection{Multiple Regression NAG}
+\lstinputlisting{../../src/test_reg_mul_print.cpp}
+
+\subsection{Multiple Regression GSL}
+\lstinputlisting{../../src/test_gsl_reg_mul_fair_print.cpp}
+
+\subsection{Multiple Regression Aktualisierungsmethode}
+\lstinputlisting{../../src/test_reg_mul_act_print.cpp}
+
+\section{Makefile}
+\lstinputlisting{../../src/Makefile}
 
 \end{document}
 % LocalWords:  aloha
