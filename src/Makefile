@@ -22,11 +22,15 @@ test_reg_sim: test_reg_sim.o utils.o Timer.o
 	$(CXX) $(INCLUDES) -o $@ test_reg_sim.o utils.o Timer.o
 test_reg_mul: test_reg_mul.o utils.o Timer.o
 	$(CXX) $(INCLUDES) -o $@ test_reg_mul.o utils.o Timer.o
+test_reg_mul_act: test_reg_mul_act.o utils.o Timer.o
+	$(CXX) $(INCLUDES) -o $@  test_reg_mul_act.o utils.o Timer.o
 
 ##### GSL Targets #####
 
 test_gsl_reg_sim: test_gsl_reg_sim.o utils.o Timer.o
 	$(CXX) $(GSLINCS) $(GSLLIBS) -o $@  test_gsl_reg_sim.o utils.o Timer.o
+test_gsl_reg_mul_fair: test_gsl_reg_mul_fair.o utils.o Timer.o
+	$(CXX) $(GSLINCS) $(GSLLIBS) -o $@  test_gsl_reg_mul_fair.o utils.o Timer.o	
 test_gsl_reg_mul: test_gsl_reg_mul.o utils.o Timer.o
 	$(CXX) $(GSLINCS) $(GSLLIBS) -o $@  test_gsl_reg_mul.o utils.o Timer.o	
 test_gsl_corr_cov: test_gsl_corr_cov.o utils.o Timer.o
