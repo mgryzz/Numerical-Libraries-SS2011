@@ -53,27 +53,6 @@ int main(int argc, char* argv[]) {
 		data2[i] = data_tmp[i][1];
 	}
 	
-	// beobachtungsvektoren ausgeben
-	if(verbose) {
-		cout << "Vektor 1:" << endl;
-		for(int i = 0; i < size_n; i++) {
-			cout << "\t" << data1[i];
-		}
-		cout << endl;
-		
-		cout << "Vektor 2:" << endl;
-		for(int i = 0; i < size_n; i++) {
-			cout << "\t" << data2[i];
-		}
-		cout << endl;
-	}
-
-	// leistungstest starten
-	if(verbose) {
-		cout << "Starte Leistungstest f�r gsl_stats_correlation()..." << endl;
-		cout << "Iterationen: " << iterations << endl;
-	}
-	
 	// timer starten
 	timer.start();
 	
@@ -84,11 +63,6 @@ int main(int argc, char* argv[]) {
 	
 	// timer stoppen
 	timer.stop();
-	
-	// korrelation ausgeben
-	if(verbose) {
-		cout << "Korrelation: " << correlation << endl;
-	}
 	
 	// gemessene zeit ausgeben
 	if(output_ms) {
