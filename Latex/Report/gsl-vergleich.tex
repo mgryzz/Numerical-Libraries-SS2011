@@ -1,9 +1,10 @@
-\section{Vergleich mit Gnu Scientific Library}
+\section{Vergleich mit GNU Scientific Library}
 
-In diesem Abschnitt wollen wir die \naglib mit der {\it Gnu Scientific Library} (GSL) vergleichen.
-Als Kriterien verwenden wir zum einen den gebotenen Funktionsumfang in den Bereichen Korrelation und Regression, als auch die Leistung der Funktionen.
+In diesem Abschnitt werden wir die \naglib mit der {\it GNU Scientific Library} ({\it GSL}) vergleichen. Als Kriterien verwenden wir sowohl den jeweils gebotenen Funktionsumfang in den Bereichen Korrelation und Regression als auch die Leistung der entsprechenden Funktionen.
 
-% TODO: Kurze Einführung GSL 
+Die {\it GNU Scientific Library}
+
+% TODO: Kurze Einführung GSL
 
 \subsection{Funktionsumfang}
 \label{sec:funktionsumfang}
@@ -37,7 +38,32 @@ Zuletzt existieren hier auch Funktionen für spezialisiertere Regressionsarten, 
 
 % TODO: Cluster, Compiler (kurz)
 
-% Graphik mit allen Kurven:
+% Graphik mit allen Kurven (Korrelation):
+\begin{figure}[h]
+  \centering
+  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (zufälliger Datensatz)]{
+      \label{fig:analysis:test_corr_1_random}
+      \includegraphics[width=0.6\textwidth]{figures/test_corr_1_random}
+    }
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (Münchener Mietspiegel 2003 \cite{Fahrmeir2011})]{
+      \label{fig:analysis:test_corr_1_rent}
+      \includegraphics[width=0.6\textwidth]{figures/test_corr_1_rent}
+    }\\
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (zufälliger Datensatz)]{
+      \label{fig:analysis:test_corr_2_random}
+      \includegraphics[width=0.6\textwidth]{figures/test_corr_2_random}
+    }
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (Münchener Mietspiegel 2003 \cite{Fahrmeir2011})]{
+      \label{fig:analysis:test_corr_2_rent}
+      \includegraphics[width=0.6\textwidth]{figures/test_corr_2_rent}
+    }\\
+  \end{narrow}
+  \caption{Ergebnisse der Leistungsanalyse zur Korrelation}
+  \label{fig:analysis}
+\end{figure}
+
+% Graphik mit allen Kurven (Regression):
 \begin{figure}[h]
   \centering
   \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
@@ -66,7 +92,7 @@ Zuletzt existieren hier auch Funktionen für spezialisiertere Regressionsarten, 
       \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_act_rand}
     }
   \end{narrow}
-  \caption{Ergebnisse der Leistungsanalyse.}
+  \caption{Ergebnisse der Leistungsanalyse zur Regression}
   \label{fig:analysis}
 \end{figure}
 
