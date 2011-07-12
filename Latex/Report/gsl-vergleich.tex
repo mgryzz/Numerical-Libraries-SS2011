@@ -2,14 +2,14 @@
 
 In diesem Abschnitt werden wir die \naglib mit der {\it GNU Scientific Library} ({\it GSL}) vergleichen. Als Kriterien verwenden wir sowohl den jeweils gebotenen Funktionsumfang in den Bereichen Korrelation und Regression als auch die Leistung der entsprechenden Funktionen.
 
-Die {\it GNU Scientific Library}
-
-% TODO: Kurze Einführung GSL
+Die {\it GNU Scientific Library} ist eine unter der {\it GNU General Public License} ({\it GPL}) frei veröffentlichte numerische Bibliothek für {\it C} und {\it C++} \cite{GSL2011}. Zudem sind weitere Wrapper für andere Programmiersprachen ({\it Fortran}, {\it Perl}, {\it Python} etc.) sowie freie Erweiterungen erhältlich. Die Bibliothek bietet insgesamt über 1000 Funktionen, darunter auch zahlreiche für statistische Berechnungen, und wird unter anderem von {\it PSPP} genutzt, einer freien Alternative zur professionellen Statistik-Software {\it PASW Statistics} (ehemals {\it SPSS Statistics}).
 
 \subsection{Funktionsumfang}
 \label{sec:funktionsumfang}
 
-% TODO: Hier kommt der Funktionsumfang für die Korrelation hin...
+Im Bereich der Korrelation gibt es zwischen der \naglib und der {\it GNU Scientific Library} wesentliche Unterschiede in der Funktionalität \cite{gsl:correlation}: Während erstere Funktionen zur Berechnung verschiedener Korrelationskoeffizienten und partieller Korrelation ({\it nag\_corr\_cov}, {\it nag\_ken\_spe\_corr\_coeff}, {\it nag\_partial\_corr}), zur Kovarianz ({\it nag\_sum\_sqs}, {\it nag\_sum\_sqs\_update}, {\it nag\_cov\_to\_corr}), zur robusten Korrelation ({\it nag\_robust\_}*) sowie zur Approximation ({\it nag\_nearest\_correlation}) anbietet, bietet letztere nur eine einzige Funktion ({\it gsl\_stats\_correlation}) an, mit welcher der Korrelationskoeffizient nach Bravais und Pearson berechnet werden kann. Eine Funktion zur Berechnung des Rangkorrelationskoeffizienten nach Spearman oder partieller Korrelation fehlt. Falls weitere Funktionen benötigt werden, müssen sie mit Hilfe anderer verfügbarer Funktionen zur Statistik selbst programmiert werden. Eine weitere Einschränkung der {\it GSL}-Funktion gegenüber der entsprechenden {\it NAG}-Funktion ({\it nag\_corr\_cov}) besteht darin, dass immer nur die Korrelation genau zweier Merkmale berechnet werden kann, die als Vektoren übergeben werden müssen. Als Ergebnis gibt die Funktion ausschließlich den berechneten Korrelationskoeffizienten in Form einer Gleitkommazahl zurück. Die {\it NAG}-Funktion zeigt sich wesentlich flexibler, ist es doch möglich, ihr eine Matrix mit zwei oder mehr Merkmalen zu übergeben, zu denen sie paarweise Korrelationskoeffizienten berechnet und wiederum in Form einer Matrix zurückgibt. Darüber hinaus gibt sie zusätzlich Zwischenberechnungen aus (siehe \refsec{sec:brav_pear_korr_funk}).
+
+Insgesamt lässt sich also festhalten, dass die \naglib in diesem Bereich eine wesentlich größere Anzahl Funktionen bietet als die {\it GNU Scientific Library}, welche sich außerdem durch eine größere Flexibilität auszeichnen.
 
 Auch im Bereich der Regression gibt es große Unterschiede in der Funktionalität.
 Die in dieser Arbeit behandelten Regressionsarten finden sich aber in beiden Bibliotheken.
@@ -36,13 +36,15 @@ Zuletzt existieren hier auch Funktionen für spezialisiertere Regressionsarten, 
 \subsection{Leistungsanalyse}
 \label{sec:leistungsanalyse}
 
-% TODO: Cluster, Compiler (kurz)
+Die Leistungsanalyse wurde auf dem Rechner-Cluster der {\it RWTH Aachen} durchgeführt. Es wurde ein System aus 9 {\it Sun Fire X4450}-Teilsystemen verwendet, welche jeweils über 4 {\it Xeon X7450}-Prozessoren mit 6 Kernen, eine Taktfrequenz von 2,66 GHz und x64-Architektur verfügten. Insgesamt standen somit 36 Prozessoren bzw. 216 Kerne sowie 128 GByte Arbeitsspeicher zur Verfügung. Es ist allerdings anzumerken, dass die Testprogramme nicht parallel programmiert wurden. Als Betriebssystem wurde {\it Linux} ({\it CentOS 5.6}) eingesetzt. Die Testprogramme wurden mit dem {\it Intel C++ 64 Compiler} ({\it ICC}) {\it 11.1} und aktivierter Optimierungsstufe O2 kompiliert, um Vergleichbarkeit der einzelnen Tests zu gewährleisten. Sonstige individuelle Optionen wurden nicht gesetzt.
+
+Im Anhang dieser Arbeit sind exemplarisch die Quellcodes jeweils zweier Testprogramme zu Korrelation und Regression zu finden. Die übrigen Testprogramme sind analog aufgebaut und werden daher nicht alle aufgeführt.
 
 % Graphik mit allen Kurven (Korrelation):
 \begin{figure}[h]
   \centering
   \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (zufälliger Datensatz)]{
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (Zufallsdatensatz)]{
       \label{fig:analysis:test_corr_1_random}
       \includegraphics[width=0.6\textwidth]{figures/test_corr_1_random}
     }
@@ -50,7 +52,7 @@ Zuletzt existieren hier auch Funktionen für spezialisiertere Regressionsarten, 
       \label{fig:analysis:test_corr_1_rent}
       \includegraphics[width=0.6\textwidth]{figures/test_corr_1_rent}
     }\\
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (zufälliger Datensatz)]{
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (Zufallsdatensatz)]{
       \label{fig:analysis:test_corr_2_random}
       \includegraphics[width=0.6\textwidth]{figures/test_corr_2_random}
     }
@@ -60,7 +62,7 @@ Zuletzt existieren hier auch Funktionen für spezialisiertere Regressionsarten, 
     }\\
   \end{narrow}
   \caption{Ergebnisse der Leistungsanalyse zur Korrelation}
-  \label{fig:analysis}
+  \label{fig:analysis:correlation}
 \end{figure}
 
 % Graphik mit allen Kurven (Regression):
@@ -93,10 +95,16 @@ Zuletzt existieren hier auch Funktionen für spezialisiertere Regressionsarten, 
     }
   \end{narrow}
   \caption{Ergebnisse der Leistungsanalyse zur Regression}
-  \label{fig:analysis}
+  \label{fig:analysis:regression}
 \end{figure}
 
-% TODO: Leistungsanalyse Korrelationsfunktion ...
+Hinsichtlich der Korrelation wurden zwei Tests durchgeführt: Im ersten Test wurde die {\it NAG}-Funktion zur Berechnung des Korrelationskoeffizienten nach Bravais und Pearson ({\it nag\_corr\_cov}) mit ihrem {\it GSL}-Pendant ({\it gsl\_stats\_correlation}) verglichen. Im zweiten Test wurden innerhalb der\naglib die Funktion zur Berechnung des Korrelationskoeffizienten nach Bravais und Pearson sowie jene zur Berechnung des Rangkorrelationskoeffizienten nach Spearman verglichen.
+
+Der Testaufbau war in beiden Fällen gleich: Die verglichenen Funktionen erhielten pro Durchgang als Eingabe jeweils zwei Merkmale aus einem Zufallsdatensatz sowie anschließend aus dem {\it Münchener Mietspiegel 2003} \cite{Fahrmeir2011}. Während eines Durchgangs wurde die Anzahl der Beobachtungen schrittweise von 10 auf 10000 (Zufallsdatensatz) bzw. 2050 ({\it Münchener Mietspiegel 2003}) erhöht. Die Schrittweite betrug dabei 10. In jedem Schritt wurde die jeweilige Funktion 1000 mal berechnet und die gesamte Berechnungszeit gemessen.
+
+Die Ergebnisse des ersten Tests sind in \reffig{fig:analysis:test_corr_1_random} und \reffig{fig:analysis:test_corr_1_rent} zu sehen. Wie gut ersichtlich ist, zeigen beide Funktionen ein lineares Wachstum, wobei die Berechnungszeit der {\it GSL}-Funktion bis zu etwa 900 Beobachtungen geringer als die der {\it NAG}-Funktion ist. Diese zeigt sich jedoch für jede größere Anzahl Beobachtungen im Durchschnitt (d.h. unter Relativierung der sichtbaren Schwankungen der Berechnungszeit) als geeigneter: Bei einer Anzahl von 10000 Beobachtungen braucht sie bereits etwa 45 ms weniger. Eine Empfehlung zur Verwendung der beiden Funktionen könnte daher lauten, erstere nur für kleine Datensätze zu verwenden und letztere für größere Datensätze ab etwa 900 Beobachtungen. Insgesamt hat hier also die {\it NAG}-Funktion die Nase vorn.
+
+Die Ergebnisse des zweiten Tests können in \reffig{fig:analysis:test_corr_1_random} und \reffig{fig:analysis:test_corr_1_rent} abgelesen werden. Hier ist deutlich erkennbar, dass die Funktion zur Berechnung des Korrelationskoeffizienten nach Bravais und Pearson wesentlich schneller ist als jene zur Berechnung des Rangkorrelationskoeffizienten nach Spearman. Dies ist vermutlich durch die Berechnung der Ränge zu erklären, welche letztere Funktion zusätzlich leisten muss: Wenn man bedenkt, dass zur Rangbildung alle Beobachtungen zuerst nach ihren Messwerten sortiert werden müssen (siehe \refsec{sec:spear_rangkorr}) und es bekanntermaßen bisher keinen Sortieralgorithmus mit einer Worst-Case-Laufzeit von weniger als $\mathcal{O}(n \log{n})$ gibt. Eine Empfehlung ist daher, letztere Funktion wirklich nur dann einzusetzen, wenn sie zur Berechnung der Korrelation von ordinalskalierten Merkmalen unbedingt benötigt wird.
 
 Für die Regression werden jeweils die Funktionen für die einfache und multiple lineare Regression der \naglib mit den Funktionen der GSL verglichen.
 In Abbildung \ref{fig:analysis:sim_reg_rent} sind die Berechnungszeiten der Funktionen nag\_simple\_linear\_"-regression und gsl\_fit\_linear bei steigender Beobachtungszahl und unter Benutzung der Daten des Münchener Mietspiegels gezeigt.

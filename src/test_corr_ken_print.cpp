@@ -15,9 +15,6 @@
 // namespace festlegen
 using namespace std;
 
-/*
-* funktion main
-*/
 int main(int argc, char* argv[]) {
 
 	// variablen deklarieren
