@@ -112,7 +112,7 @@ Für die normale Berechnung kann 'Nag\_AboutMean' angegeben werden.
 
 Die Ergebnisse der Regression $\hat\alpha$ und $\hat\beta$ sind nach Ausführung der Methode über die Zeiger \lstinline{*a} und \lstinline{*b} erreichbar.
 Zudem werden auch einige Informationen zurückgegeben, die helfen die Güte des Regressionsansatzes zu überprüfen.
-Da sind zunächst die Standartfehler \lstinline{*a_serr} und \lstinline{*b_serr}, die einen Hinweis darauf geben, wie genau die Koeffizienten geschätzt werden konnten.
+Da sind zunächst die Standardfehler \lstinline{*a_serr} und \lstinline{*b_serr}, die einen Hinweis darauf geben, wie genau die Koeffizienten geschätzt werden konnten.
 Einen Hinweis auf die Güte des Regressionsmodells gibt das Bestimmtheitsmaß $R^2$ in \lstinline{*rsq}.
 Es sagt aus, ein wie großer Anteil einer Variation des abhängigen Merkmals durch das unabhängige Merkmal erklärt wird.
 Definiert ist es als Quadrat der Korrelation $R^2 = r_{XY}^2$ und nimmt daher Werte zwischen 0 und 1 an.
@@ -152,7 +152,7 @@ Im letzten Abschnitt haben wir behandelt, wie man mittels einfacher Regression d
 Allerdings stößt die einfache Regression an Grenzen, wenn der Regressand von vielen Merkmalen beeinflusst wird, wobei die einzelnen Korrelationen an sich schwach sind.
 Weiterhin bleiben offene Fragen: 
 Wie verändert sich die Verteilung der Nettomieten zur Wohnfläche mit steigendem Baujahr?
-Und wie groß ist der Einfluß von guter bzw. bester Wohnlage auf den Wohnungspreis? 
+Und wie groß ist der Einfluss von guter bzw. bester Wohnlage auf den Wohnungspreis? 
 Diese können mit der multiplen linearen Regression gelöst werden, welche nun vorgestellt wird.
 
 % Für die Berechnung über Matrizen wird \cite{Fahrmeir1984} für die theoretischen Grundlagen verwendet.
@@ -162,8 +162,8 @@ Dementsprechend wird auch das Regressionsmodell selbst auf $p$ unabhängige Merk
   Y_i = \beta_0 + \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i, \quad i = 1, \dots, n ~.
 \end{equation*}
 Die Notation ist wie folgt:
-Das abhängige Merkmal $Y$ ist in den Zufallsvariablen $Y_i, \dots, Y_n$ modeliert und $x_{1j}, \dots, x_{nj}$ sind jeweils die beobachteten Werte für die $j$ verschiedenen Regressoren.
-Außerdem sind die Fehlerterme $\epsilon_1, \dots, \epsilon_j$ genauso modeliert wie in Sektion \ref{sec:sim_reg} und $\beta_0$ bis $\beta_n$ bezeichnen die Regressionskoeffizienten.
+Das abhängige Merkmal $Y$ ist in den Zufallsvariablen $Y_i, \dots, Y_n$ modelliert und $x_{1j}, \dots, x_{nj}$ sind jeweils die beobachteten Werte für die $j$ verschiedenen Regressoren.
+Außerdem sind die Fehlerterme $\epsilon_1, \dots, \epsilon_j$ genauso modelliert wie in Sektion \ref{sec:sim_reg} und $\beta_0$ bis $\beta_n$ bezeichnen die Regressionskoeffizienten.
 $\beta_0$ nimmt dabei die Rolle des konstanten Terms ein, den zuvor $\alpha$ innehatte.
 
 Die Idee zur Berechnung der Koeffizienten ist die Selbe wie zuvor:
@@ -199,7 +199,7 @@ $\epsilon$ ist dabei der Vektor, der alle $\epsilon_i$ enthält und $X$ ist eine
 Außerdem sind $y$ und $\beta$ Vektoren, die beobachteten Werten für den Regressanden und die Koeffizienten beinhalten. 
 Der erste Schritt ist dabei nur ein formales Umschreiben des KQ-Ansatzes durch Vektoren.
 Anschließend werden die Fehlervektoren, durch ihre Definition, die Abweichung der berechneten Werte ($X\beta$) von den tatsächlichen Werten ($y$), ersetzt.
-Da der Wurzel-Operator keinen Einfluß auf den Wert des Minimums hat, können wir die Forderung wie folgt umformulieren:
+Da der Wurzel-Operator keinen Einfluss auf den Wert des Minimums hat, können wir die Forderung wie folgt umformulieren:
 \begin{equation*}
   \label{eq:minimization_general}
   \Vert X\beta - y \Vert_2 \rightarrow \min\limits_{\beta} ~.
@@ -327,7 +327,7 @@ Das hat vor allem Auswirkungen auf den Rang der unabhängigen Variablen und beei
 
 Die Ausgabeparameter sind großteils von denen der einfachen Regressionsfunktion verschieden.
 Am wichtigsten ist \lstinline{b[]}, welcher die berechneten Koeffizienten $\beta_0, \beta_1, \dots$ enthält.
-Wie zuvor werden auch hier die zugehörigen Standartfehler in \lstinline{se[]} zurückgegeben.
+Wie zuvor werden auch hier die zugehörigen Standardfehler in \lstinline{se[]} zurückgegeben.
 Dazu kommen nun noch die Residuen für jede Beobachtung im Datensatz in \lstinline{res[]}, welche es einfach machen Ausreißer zu identifizieren.
 Nach der Regression stehen außerdem Informationen zu den Verhältnissen der Regressoren untereinander in Form einer Kovarianzmatrix (\lstinline{cov}) zur Verfügung.
 Diese enthält die Varianzen der Merkmale auf der Diagonalen und zudem alle möglich Kombinationen an Kovarianzen, was zum Beispiel ein schnelle Berechnung der Pearson-Korrelation ermöglicht (siehe auch Sektion \ref{sec:brav_pear_korr}).
@@ -362,7 +362,7 @@ Die einzelnen Funktionen werden in dieser Arbeit nicht einzeln diskutiert, weite
 %Berechnet werden kann es auch durch eine Quadrierung des Bravais-Pearson Korrelationskoeffizienten, was den starken Zusammenhang von Korrelation und Regressionsanalyse zeigt.
 
 %Für die Modellvalidierung stehen verschiedene Werkzeuge zur Verfügung, welche bei der Bewertung der Güte der Regression und deren Verbesserung genutzt werden können.
-%In diese Kategorie fallen zum Beispiel der Cooks-Abstand (ermittelt besonders einflußreiche Punkte), die T-Statistik (Testet, ob eine unabhängige Variable für die Regression wichtig ist) oder der Durbin-Watson-Test (Ermittelt, ob die Residuen von den zuvor gemessenen Werten abhängig sind.
+%In diese Kategorie fallen zum Beispiel der Cooks-Abstand (ermittelt besonders einflussreiche Punkte), die T-Statistik (Testet, ob eine unabhängige Variable für die Regression wichtig ist) oder der Durbin-Watson-Test (Ermittelt, ob die Residuen von den zuvor gemessenen Werten abhängig sind.
 %In dieser Arbeit werden diese allerdings nicht weiter behandelt werden.
 
 %%% Local Variables: 
