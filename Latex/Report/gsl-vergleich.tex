@@ -40,64 +40,6 @@ Die Leistungsanalyse wurde auf dem Rechner-Cluster der {\it RWTH Aachen} durch"-
 
 Im Anhang dieser Arbeit sind exemplarisch die Quellcodes jeweils zweier Testprogramme zu Korrelation und Regression zu finden. Die übrigen Testprogramme sind analog aufgebaut und werden daher nicht alle aufgeführt.
 
-% Graphik mit allen Kurven (Korrelation):
-\begin{figure}[h]
-  \centering
-  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (Zufallsdatensatz)]{
-      \label{fig:analysis:test_corr_1_random}
-      \includegraphics[width=0.6\textwidth]{figures/test_corr_1_random}
-    }
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (Münchener Mietspiegel 2003 \cite{Fahrmeir2011})]{
-      \label{fig:analysis:test_corr_1_rent}
-      \includegraphics[width=0.6\textwidth]{figures/test_corr_1_rent}
-    }\\
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (Zufallsdatensatz)]{
-      \label{fig:analysis:test_corr_2_random}
-      \includegraphics[width=0.6\textwidth]{figures/test_corr_2_random}
-    }
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (Münchener Mietspiegel 2003 \cite{Fahrmeir2011})]{
-      \label{fig:analysis:test_corr_2_rent}
-      \includegraphics[width=0.6\textwidth]{figures/test_corr_2_rent}
-    }\\
-  \end{narrow}
-  \caption{Ergebnisse der Leistungsanalyse zur Korrelation}
-  \label{fig:analysis:correlation}
-\end{figure}
-
-% Graphik mit allen Kurven (Regression):
-\begin{figure}[h]
-  \centering
-  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
-    \subfloat[][Dauer der einfachen linearen Regression von NAG und GSL mit zunehmenden Beobachtungen aus dem Mietspiegeldatensatz\cite{Fahrmeir2011}.]{
-      \label{fig:analysis:sim_reg_rent}
-      \includegraphics[width=0.6\textwidth]{figures/simple_reg_comp_rent}
-    }
-    \subfloat[][Dauer der einfachen linearen Regression von NAG und GSL mit zufälligen Daten.]{
-      \label{fig:analysis:sim_reg_rand}
-      \includegraphics[width=0.6\textwidth]{figures/simple_reg_comp}
-    }\\
-    \subfloat[][Dauer der multiplen Regression von NAG und GSL mit 6 Merkmalen und zufälligen Daten.]{
-      \label{fig:analysis:mul_reg_obs}
-      \includegraphics[width=0.6\textwidth]{figures/multi_reg_comp_6_var}
-    }
-    \subfloat[][Dauer der multiplen Regression von NAG und GSL mit 2500 Beobachtungen und zufälligen Daten.]{
-      \label{fig:analysis:mul_reg_vars}
-      \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_rand}
-    }\\
-    \subfloat[][Unterschied zwischen direkter Berechnung und Aktualisierung mit Daten aus dem  Mietspiegeldatensatz\cite{Fahrmeir2011}.]{
-      \label{fig:analysis:mul_reg_rent_act}
-      \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_act}
-    }
-    \subfloat[][Unterschied zwischen direkter Berechnung und Aktualisierung mit zufälligen Daten]{
-      \label{fig:analysis:mul_reg_rand_act}
-      \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_act_rand}
-    }
-  \end{narrow}
-  \caption{Ergebnisse der Leistungsanalyse zur Regression}
-  \label{fig:analysis:regression}
-\end{figure}
-
 Hinsichtlich der Korrelation wurden zwei Tests durchgeführt: Im ersten Test wurde die {\it NAG}-Funktion zur Berechnung des Korrelationskoeffizienten nach Bravais und Pearson ({\it nag\_corr\_cov}) mit ihrem {\it GSL}-Pendant ({\it gsl\_stats\_correlation}) verglichen. Im zweiten Test wurden innerhalb der\naglib die Funktion zur Berechnung des Korrelationskoeffizienten nach Bravais und Pearson sowie jene zur Berechnung des Rangkorrelationskoeffizienten nach Spearman verglichen.
 
 Der Testaufbau war in beiden Fällen gleich: Die verglichenen Funktionen erhielten pro Durchgang als Eingabe jeweils zwei Merkmale aus einem Zufallsdatensatz sowie anschließend aus dem {\it Münchener Mietspiegel 2003} \cite{Fahrmeir2011}. Während eines Durchgangs wurde die Anzahl der Beobachtungen schrittweise von 10 auf 10000 (Zufallsdatensatz) bzw. 2050 ({\it Münchener Mietspiegel 2003}) erhöht. Die Schrittweite betrug dabei 10. In jedem Schritt wurde die jeweilige Funktion 1000 mal berechnet und die gesamte Berechnungszeit gemessen.
@@ -129,6 +71,64 @@ Außerdem haben wir noch die Geschwindigkeit der Methoden zur Aktualisierung ein
 Als veränderbaren Faktor benutzen wir hier wieder die Anzahl der Regressoren bei 100 Iterationen.
 Es ist sowohl bei der Verwendung der Mietdaten (Abbildung \ref{fig:analysis:mul_reg_rent_act}), als auch bei der Verwendung von zufälligen Daten (Abbildung \ref{fig:analysis:mul_reg_rand_act}) zu erkennen, dass die Aktualisierungsmethode besser skaliert und um eine Faktor von 8 oder mehr schneller ist.
 Dabei muss allerdings, wie schon zuvor erwähnt, berücksichtigt werden, dass die Regressionsergebnisse nicht äquivalent sind.
+
+% Graphik mit allen Kurven (Korrelation):
+\begin{figure}[H]
+  \centering
+  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (Zufallsdatensatz)]{
+      \label{fig:analysis:test_corr_1_random}
+      \includegraphics[width=0.6\textwidth]{figures/test_corr_1_random}
+    }
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (Münchener Mietspiegel 2003 \cite{Fahrmeir2011})]{
+      \label{fig:analysis:test_corr_1_rent}
+      \includegraphics[width=0.6\textwidth]{figures/test_corr_1_rent}
+    }\\
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (Zufallsdatensatz)]{
+      \label{fig:analysis:test_corr_2_random}
+      \includegraphics[width=0.6\textwidth]{figures/test_corr_2_random}
+    }
+    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (Münchener Mietspiegel 2003 \cite{Fahrmeir2011})]{
+      \label{fig:analysis:test_corr_2_rent}
+      \includegraphics[width=0.6\textwidth]{figures/test_corr_2_rent}
+    }\\
+  \end{narrow}
+  \caption{Ergebnisse der Leistungsanalyse zur Korrelation}
+  \label{fig:analysis:correlation}
+\end{figure}
+
+% Graphik mit allen Kurven (Regression):
+\begin{figure}[H]
+  \centering
+  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
+    \subfloat[][Dauer der einfachen linearen Regression von NAG und GSL mit zunehmenden Beobachtungen aus dem Mietspiegeldatensatz\cite{Fahrmeir2011}.]{
+      \label{fig:analysis:sim_reg_rent}
+      \includegraphics[width=0.6\textwidth]{figures/simple_reg_comp_rent}
+    }
+    \subfloat[][Dauer der einfachen linearen Regression von NAG und GSL mit zufälligen Daten.]{
+      \label{fig:analysis:sim_reg_rand}
+      \includegraphics[width=0.6\textwidth]{figures/simple_reg_comp}
+    }\\
+    \subfloat[][Dauer der multiplen Regression von NAG und GSL mit 6 Merkmalen und zufälligen Daten.]{
+      \label{fig:analysis:mul_reg_obs}
+      \includegraphics[width=0.6\textwidth]{figures/multi_reg_comp_6_var}
+    }
+    \subfloat[][Dauer der multiplen Regression von NAG und GSL mit 2500 Beobachtungen und zufälligen Daten.]{
+      \label{fig:analysis:mul_reg_vars}
+      \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_rand}
+    }\\
+    \subfloat[][Unterschied zwischen direkter Berechnung und Aktualisierung mit Daten aus dem  Mietspiegeldatensatz\cite{Fahrmeir2011}.]{
+      \label{fig:analysis:mul_reg_rent_act}
+      \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_act}
+    }
+    \subfloat[][Unterschied zwischen direkter Berechnung und Aktualisierung mit zufälligen Daten]{
+      \label{fig:analysis:mul_reg_rand_act}
+      \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_act_rand}
+    }
+  \end{narrow}
+  \caption{Ergebnisse der Leistungsanalyse zur Regression}
+  \label{fig:analysis:regression}
+\end{figure}
 
 %%% Local Variables: 
 %%% mode: latex
