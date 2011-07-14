@@ -32,7 +32,7 @@ Ziel der Regression ist es nun, den Mietpreis als Funktion der Raumanzahl darzus
 Dabei ist $f$ eine beliebige Funktion und $\epsilon$ ein Fehlerterm.
 Dieser wird benötigt, da die den Merkmalen zugehörigen Datensätze $(m_1, \dots, m_n)$, bzw. $(r_1, \dots, r_n)$ nie \textit{genau} auf der Regressionsgeraden liegen, sondern durch Messfehler oder nicht berücksichtigte Abhängigkeiten abweichen.
 Der Erwartungswert für diese Fehler ist immer $0$. 
-Um auch für kleinere Stichproben Aussagen über die Verteilung der Schätzer machen zu können, wird meinst zusätzlich eine Normalverteilung angenommen \cite[S. 479]{Fahrmeir2010}:
+Um auch für kleinere Stichproben Aussagen über die Verteil"-ung der Schätzer machen zu können, wird meinst zusätzlich eine Normalverteilung angenommen \cite[S. 479]{Fahrmeir2010}:
 \begin{equation*}
   E(\epsilon_i) = 0 \text{ und } \epsilon_i \sim N(0,\sigma^2), i = 1, \dots, n ~.
 \end{equation*}
@@ -85,7 +85,7 @@ Daher wird die Annahme, wenn auch grundsätzlich richtig, wohl nur auf wenige Wo
 
 Die Berechnung in der Funktion nag\_simple\_linear\_regression der \naglib erfolgt grundsätzlich wie oben beschrieben, allerdings mit einer Ausnahme: Es ist zusätzlich möglich die einzelnen Datenpunkte zu gewichten.
 Dies führt dazu dass bei der Methode der kleinsten Quadrate auch die Fehler gewichtet eingehen, daher ist der Ansatz zur Minimierung dann $\sum\limits_{i=1}^{n}w_i\epsilon_i \rightarrow min$, wobei $w_i$ die Gewichtungen für die einzelnen Datenpunkte sind.
-Für eine vollständige Beschreibung der Berechnungen mit Gewichtung sei der Leser auf \cite{nag:simple_regression} verwiesen.
+Für eine vollständige Beschreibung der Berechnungen mit Gewichtung sei der Leser auf \cite{nag:g02cac} verwiesen.
 
 \subsubsection{Methodenaufruf}
 \label{sec:sim_reg_anwendung}
@@ -338,8 +338,8 @@ Zusätzlich zu nag\_regsn\_mult\_linear stellt die \naglib einige andere Funktio
 Diese Funktionen benötigen neben anderen Argumenten die QR-Zerlegung (welche von der Hauptfunktion als Zwischenergebnis in \lstinline{q[]} ausgegeben wird), die zugehörigen Informationen (\lstinline{p[]}) und die Beobachtungsmatrix $X$ und berechnen daraus aktualisierte Werte für die obere rechte Dreiecksmatrix $R$ und den Vektor $c$.
 Im Gegensatz zu einer erneuten Berechnung mittels nag\_regsn\_mult\_linear hat dies den Vorteil, dass durch die Benutzung eines bereits bekannten Zwischenergebnisses Rechenzeit eingespart werden kann.
 So kann der Benutzer beispielsweise mit nag\_regsn\_mult\_linear\_addrem\_obs neue Beobachtungen zum Modell hinzufügen oder sie entfernen.
-Mit den Methoden nag\_regsn\_mult\_linear\_delete\_var und nag\_regsn\_mult\_linear\_add\_var werden aus dem Modell herausgenommen bzw. hinzugefügt, wobei die Beobachtungen im letzteren Fall schon in $X$ enthalten sein sollten.
-Zusätzlich dazu ist es auch noch möglich die abhängige Variable zu tauschen (nag\_regsn\_mult\_linear\_newyvar).
+Mit den Methoden nag\_regsn\_mult\_linear\_delete\_var und nag"-\_regsn\_mult\_linear\_add\_var werden aus dem Modell herausgenommen bzw. hinzu"-gefügt, wobei die Beobachtungen im letzteren Fall schon in $X$ enthalten sein sollten.
+Zusätzlich dazu ist es auch noch möglich die abhängige Variable zu tauschen (nag\_regsn\_mult\_linear\_"-newyvar).
 
 Nach Anwendung dieser Funktionen können die neuen Regressionskoeffizienten $\beta_0, \beta_1, \dots$ durch einen Aufruf von nag\_regsn\_mult\_linear\_upd\_model unter Angabe von $R$ und $c$ erhalten werden.
 Die einzelnen Funktionen werden in dieser Arbeit nicht einzeln diskutiert, weitere Informationen sind aber unter \citep{nag:contents} verfügbar.

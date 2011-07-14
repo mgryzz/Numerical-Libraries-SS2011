@@ -9,7 +9,9 @@
 \usepackage{listings}
 \usepackage{url}
 \usepackage[numbers]{natbib}
+%\usepackage{jurabib}
 \usepackage{hyperref}
+\usepackage{breakurl}
 \usepackage{verbatim}
 \usepackage[lofdepth,lotdepth]{subfig} 
 \usepackage{xspace} % Für dynamische Zwischenräume
@@ -76,7 +78,6 @@ LuFG Informatik 12 (Prof. Dr. rer. nat. Uwe Naumann)}
 \input{zusammenfassung}
 
 
-%TODO: Vor Abgabe darauf achten, dass die Links nicht über den Rand hinausgehen
 \bibliography{report}
 
 % Anhang
@@ -93,20 +94,13 @@ LuFG Informatik 12 (Prof. Dr. rer. nat. Uwe Naumann)}
 \subsection{Bravais-Pearson-Korrelationskoeffizient (GSL)}
 \lstinputlisting{../../src/test_gsl_corr_cov_print.cpp}
 
-\subsection{Einfache Regression NAG}
-\lstinputlisting{../../src/test_reg_sim_print.cpp}
-
-\subsection{Multiple Regression NAG}
+\subsection{Multiple Regression (NAG)}
+\label{sec:appendix:mul_reg_nag}
 \lstinputlisting{../../src/test_reg_mul_print.cpp}
 
-\subsection{Multiple Regression GSL}
+\subsection{Multiple Regression (GSL)}
+\label{sec:appendix:mul_reg_gsl}
 \lstinputlisting{../../src/test_gsl_reg_mul_fair_print.cpp}
-
-\subsection{Multiple Regression Aktualisierungsmethode}
-\lstinputlisting{../../src/test_reg_mul_act_print.cpp}
-
-\section{Makefile}
-\lstinputlisting{../../src/Makefile}
 
 \end{document}
 % LocalWords:  aloha

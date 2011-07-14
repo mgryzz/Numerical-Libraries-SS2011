@@ -36,7 +36,7 @@ Zuletzt existieren hier auch Funktionen für spezialisiertere Regressionsarten, 
 \subsection{Leistungsanalyse}
 \label{sec:leistungsanalyse}
 
-Die Leistungsanalyse wurde auf dem Rechner-Cluster der {\it RWTH Aachen} durchgeführt. Es wurde ein System aus 9 {\it Sun Fire X4450}-Teilsystemen verwendet, welche jeweils über 4 {\it Xeon X7450}-Prozessoren mit 6 Kernen, eine Taktfrequenz von 2,66 GHz und x64-Architektur verfügten. Insgesamt standen somit 36 Prozessoren bzw. 216 Kerne sowie 128 GByte Arbeitsspeicher zur Verfügung. Es ist allerdings anzumerken, dass die Testprogramme nicht parallel programmiert wurden. Als Betriebssystem wurde {\it Linux} ({\it CentOS 5.6}) eingesetzt. Die Testprogramme wurden mit dem {\it Intel C++ 64 Compiler} ({\it ICC}) {\it 11.1} und aktivierter Optimierungsstufe O2 kompiliert, um Vergleichbarkeit der einzelnen Tests zu gewährleisten. Sonstige individuelle Optionen wurden nicht gesetzt.
+Die Leistungsanalyse wurde auf dem Rechner-Cluster der {\it RWTH Aachen} durch"-geführt. Es wurde ein System aus 9 {\it Sun Fire X4450}-Teilsystemen verwendet, welche jeweils über 4 {\it Xeon X7450}-Prozessoren mit 6 Kernen, eine Taktfrequenz von 2,66 GHz und x64-Architektur verfügten. Insgesamt standen somit 36 Prozessoren bzw. 216 Kerne sowie 128 GByte Arbeitsspeicher zur Verfügung. Es ist allerdings anzumerken, dass die Testprogramme nicht parallel programmiert wurden. Als Betriebssystem wurde {\it Linux} ({\it CentOS 5.6}) eingesetzt. Die Testprogramme wurden mit dem {\it Intel C++ 64 Compiler} ({\it ICC}) {\it 11.1} und aktivierter Optimierungsstufe O2 kompiliert, um Vergleichbarkeit der einzelnen Tests zu gewährleisten. Sonstige individuelle Optionen wurden nicht gesetzt.
 
 Im Anhang dieser Arbeit sind exemplarisch die Quellcodes jeweils zweier Testprogramme zu Korrelation und Regression zu finden. Die übrigen Testprogramme sind analog aufgebaut und werden daher nicht alle aufgeführt.
 
@@ -107,7 +107,7 @@ Die Ergebnisse des ersten Tests sind in \reffig{fig:analysis:test_corr_1_random}
 Die Ergebnisse des zweiten Tests können in \reffig{fig:analysis:test_corr_1_random} und \reffig{fig:analysis:test_corr_1_rent} abgelesen werden. Hier ist deutlich erkennbar, dass die Funktion zur Berechnung des Korrelationskoeffizienten nach Bravais und Pearson wesentlich schneller ist als jene zur Berechnung des Rangkorrelationskoeffizienten nach Spearman. Dies ist vermutlich durch die Berechnung der Ränge zu erklären, welche letztere Funktion zusätzlich leisten muss: Wenn man bedenkt, dass zur Rangbildung alle Beobachtungen zuerst nach ihren Messwerten sortiert werden müssen (siehe \refsec{sec:spear_rangkorr}) und es bekanntermaßen bisher keinen Sortieralgorithmus mit einer Worst-Case-Laufzeit von weniger als $\mathcal{O}(n \log{n})$ gibt. Eine Empfehlung ist daher, letztere Funktion wirklich nur dann einzusetzen, wenn sie zur Berechnung der Korrelation von ordinalskalierten Merkmalen unbedingt benötigt wird.
 
 Für die Regression werden jeweils die Funktionen für die einfache und multiple lineare Regression der \naglib mit den Funktionen der GSL verglichen.
-In Abbildung \ref{fig:analysis:sim_reg_rent} sind die Berechnungszeiten der Funktionen nag\_simple\_linear\_"-regression und gsl\_fit\_linear bei steigender Beobachtungszahl und unter Benutzung der Daten des Münchener Mietspiegels gezeigt.
+In Abbildung \ref{fig:analysis:sim_reg_rent} sind die Berechnungszeiten der Funktionen nag\_simple"-\_linear\_regression und gsl\_fit\_linear bei steigender Beobachtungszahl und unter Benutzung der Daten des Münchener Mietspiegels gezeigt.
 Die angegebenen Zeiten entsprechen dabei jeweils 1000 Berechnungen.
 Es ist zu erkennen, dass die NAG Funktion weit besser skaliert und bei 2500 Beobachtungen um den Faktor 3-4 schneller ist.
 Dabei ist aber zu berücksichtigen, dass bei der NAG Funktion zusätzlich zum Regressionskoeffizienten und der Quadratsumme der Residuen noch und das Bestimmtheitsmaß und den Standardfehler berechnet, während die GSL Funktion zusätzlich die Kovarianzen der Koeffizienten zurück gibt.
@@ -118,7 +118,7 @@ Für den Vergleich der Leistungsfähigkeit bei der Berechnung der multiplen line
 Zum einen wird wieder sukzessive die Anzahl der Beobachtungen erhöht zum anderen ist die Zahl der Regressoren variabel. 
 Für beide Ansätze werden zufällige Daten benutzt, da die Anzahl der Beobachtungen und der Variablen hier nicht limitiert sind.
 % TODO: Nummer des Anhangs einfügen
-Da die Funktionen, wie auch bei der einfachen Regression, wieder nicht die gleichen Resultate zurück liefern, wurde bei der GSL Funktion zusätzlich das Bestimmtheitsmaß und die Residuen berechnet, um einigermaßen vergleichbare Daten zu erhalten (siehe Anhang ??).
+Da die Funktionen, wie auch bei der einfachen Regression, wieder nicht die gleichen Resultate zurück liefern, wurde bei der GSL Funktion zusätzlich das Bestimmtheitsmaß und die Residuen berechnet, um einigermaßen vergleichbare Daten zu erhalten.
 Die Ergebnisse bei variablen Beobachtungen und sechs Regressoren sind in Abbildung \ref{fig:analysis:mul_reg_obs} zu sehen.
 Die beiden Bibliotheken liegen hier fast gleichauf, wobei sich leichte Vorteile für die GSL zeigen.
 Abbildung \ref{fig:analysis:mul_reg_vars} zeigt die Ergebnisse bei einer steigender Anzahl an Variablen bei 2500 Beobachtungen.
