@@ -48,39 +48,6 @@ Die Ergebnisse des ersten Tests sind in \reffig{fig:analysis:test_corr_1_random}
 
 Die Ergebnisse des zweiten Tests können in \reffig{fig:analysis:test_corr_1_random} und \reffig{fig:analysis:test_corr_1_rent} abgelesen werden. Hier ist deutlich erkennbar, dass die Funktion zur Berechnung des Korrelationskoeffizienten nach Bravais und Pearson wesentlich schneller ist als jene zur Berechnung des Rangkorrelationskoeffizienten nach Spearman. Dies ist vermutlich durch die Berechnung der Ränge zu erklären, welche letztere Funktion zusätzlich leisten muss: Wenn man bedenkt, dass zur Rangbildung alle Beobachtungen zuerst nach ihren Messwerten sortiert werden müssen (siehe \refsec{sec:spear_rangkorr}) und es bekanntermaßen bisher keinen Sortieralgorithmus mit einer Worst-Case-Laufzeit von weniger als $\mathcal{O}(n \log{n})$ gibt. Eine Empfehlung ist daher, letztere Funktion wirklich nur dann einzusetzen, wenn sie zur Berechnung der Korrelation von ordinalskalierten Merkmalen unbedingt benötigt wird.
 
-% Graphik mit allen Kurven (Korrelation):
-\begin{figure}[H]
-  \centering
-  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (Zufallsdatensatz)]{
-      \label{fig:analysis:test_corr_1_random}
-      \includegraphics[width=0.6\textwidth]{figures/test_corr_1_random}
-    }
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten mit NAG und GSL (Münchener Mietspiegel 2003 \cite{Fahrmeir2011})]{
-      \label{fig:analysis:test_corr_1_rent}
-      \includegraphics[width=0.6\textwidth]{figures/test_corr_1_rent}
-    }\\
-  \end{narrow}
-  \caption{Ergebnisse der Leistungsanalyse zur Korrelation 1}
-  \label{fig:analysis:correlation1}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (Zufallsdatensatz)]{
-      \label{fig:analysis:test_corr_2_random}
-      \includegraphics[width=0.6\textwidth]{figures/test_corr_2_random}
-    }
-    \subfloat[][Dauer der Berechnung des Bravais-Pearson-Korrelationskoeffizienten und des Spearman-Rangkorrelationskoeffizienten mit NAG (Münchener Mietspiegel 2003 \cite{Fahrmeir2011})]{
-      \label{fig:analysis:test_corr_2_rent}
-      \includegraphics[width=0.6\textwidth]{figures/test_corr_2_rent}
-    }\\
-  \end{narrow}
-  \caption{Ergebnisse der Leistungsanalyse zur Korrelation 2}
-  \label{fig:analysis:correlation2}
-\end{figure}
-
 Für die Regression werden jeweils die Funktionen für die einfache und multiple lineare Regression der \naglib mit den Funktionen der GSL verglichen.
 In Abbildung \ref{fig:analysis:sim_reg_rent} sind die Berechnungszeiten der Funktionen nag\_simple"-\_linear\_regression und gsl\_fit\_linear bei steigender Beobachtungszahl und unter Benutzung der Daten des Münchener Mietspiegels gezeigt.
 Die angegebenen Zeiten entsprechen dabei jeweils 1000 Berechnungen.
@@ -104,55 +71,6 @@ Außerdem haben wir noch die Geschwindigkeit der Methoden zur Aktualisierung ein
 Als veränderbaren Faktor benutzen wir hier wieder die Anzahl der Regressoren bei 100 Iterationen.
 Es ist sowohl bei der Verwendung der Mietdaten (Abbildung \ref{fig:analysis:mul_reg_rent_act}), als auch bei der Verwendung von zufälligen Daten (Abbildung \ref{fig:analysis:mul_reg_rand_act}) zu erkennen, dass die Aktualisierungsmethode besser skaliert und um eine Faktor von 8 oder mehr schneller ist.
 Dabei muss allerdings, wie schon zuvor erwähnt, berücksichtigt werden, dass die Regressionsergebnisse nicht äquivalent sind.
-
-% Graphik mit allen Kurven (Regression):
-\begin{figure}[H]
-  \centering
-  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
-    \subfloat[][Dauer der einfachen linearen Regression von NAG und GSL mit zunehmenden Beobachtungen aus dem Mietspiegeldatensatz\cite{Fahrmeir2011}.]{
-      \label{fig:analysis:sim_reg_rent}
-      \includegraphics[width=0.6\textwidth]{figures/simple_reg_comp_rent}
-    }
-    \subfloat[][Dauer der einfachen linearen Regression von NAG und GSL mit zufälligen Daten.]{
-      \label{fig:analysis:sim_reg_rand}
-      \includegraphics[width=0.6\textwidth]{figures/simple_reg_comp}
-    }\\
-  \end{narrow}
-  \caption{Ergebnisse der Leistungsanalyse zur Regression 1}
-  \label{fig:analysis:regression1}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
-    \subfloat[][Dauer der multiplen Regression von NAG und GSL mit 6 Merkmalen und zufälligen Daten.]{
-      \label{fig:analysis:mul_reg_obs}
-      \includegraphics[width=0.6\textwidth]{figures/multi_reg_comp_6_var}
-    }
-    \subfloat[][Dauer der multiplen Regression von NAG und GSL mit 2500 Beobachtungen und zufälligen Daten.]{
-      \label{fig:analysis:mul_reg_vars}
-      \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_rand}
-    }\\
-  \end{narrow}
-  \caption{Ergebnisse der Leistungsanalyse zur Regression 2}
-  \label{fig:analysis:regression2}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \begin{narrow}{-0.2\textwidth}{0.2\textwidth}
-    \subfloat[][Unterschied zwischen direkter Berechnung und Aktualisierung mit Daten aus dem  Mietspiegeldatensatz\cite{Fahrmeir2011}.]{
-      \label{fig:analysis:mul_reg_rent_act}
-      \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_act}
-    }
-    \subfloat[][Unterschied zwischen direkter Berechnung und Aktualisierung mit zufälligen Daten]{
-      \label{fig:analysis:mul_reg_rand_act}
-      \includegraphics[width=0.6\textwidth]{figures/multi_reg_vars_2500_obs_act_rand}
-    }
-  \end{narrow}
-  \caption{Ergebnisse der Leistungsanalyse zur Regression 3}
-  \label{fig:analysis:regression3}
-\end{figure}
 
 %%% Local Variables: 
 %%% mode: latex
